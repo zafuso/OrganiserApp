@@ -27,6 +27,8 @@ public static class MauiProgram
                 fonts.AddFont("fa-solid-900.ttf", "FAS");
             });
 
+        builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+
         builder.Services.AddSingleton<EventService>();
         builder.Services.AddSingleton<EventOverviewViewModel>();
         builder.Services.AddSingleton<EventOverviewPage>();

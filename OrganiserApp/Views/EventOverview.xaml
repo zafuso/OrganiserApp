@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:OrganiserApp.Models"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:helpers="clr-namespace:OrganiserApp.Helpers"
+             xmlns:fontAwesome="clr-namespace:FontAwesome"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             Title="Event Overview"
+             x:Class="OrganiserApp.Views.EventOverviewPage"
+             x:DataType="viewmodel:EventOverviewViewModel">
+
+    <Grid>
+        <RefreshView>
+            <CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Event">
+                        <Grid Padding="8">
+                            <Frame HeightRequest="125" Style="{StaticResource CardView}">
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label
+                                    FontSize="Large"
+                                    Text="{Binding Name}"
+                                    VerticalOptions="Center" 
+                                    Style="{StaticResource LabelHeader}"/>
+
+                                    <HorizontalStackLayout>
+                                        <Label
+                                        FontSize="Small"
+                                        Text="{x:Static helpers:CmIcons.Icon193}"
+                                        FontFamily="Icons"
+                                        TextColor="{StaticResource Black100}"
+                                        VerticalOptions="Center"/>
+                                        <Label
+                                        FontSize="Small"
+                                        Text="{Binding StartAt}"
+                                        VerticalOptions="Center"
+                                        Style="{StaticResource MainLabel}"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout>
+                                        <Label
+                                        FontSize="Small"
+                                        Text="{x:Static helpers:CmIcons.Icon192}"
+                                        FontFamily="Icons"
+                                        TextColor="{StaticResource Black100}"
+                                        VerticalOptions="Center"/>
+                                        <Label
+                                        FontSize="Small"
+                                        Text="{Binding EndAt}"
+                                        VerticalOptions="Center"
+                                        Style="{StaticResource MainLabel}"/>
+                                    </HorizontalStackLayout>
+
+                                    <HorizontalStackLayout HorizontalOptions="Start">
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{x:Static fontAwesome:FontAwesomeIcons.Coins}"
+                                                FontFamily="FAS"
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                TextColor="{StaticResource Black100}"
+                                                VerticalOptions="Center"/>
+                                                    <Label
+                                                FontSize="Small"
+                                                VerticalOptions="Center"
+                                                Style="{StaticResource MainLabel}">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="€"/>
+                                                        <Span Text="{Binding EventSummary.Content.Revenue}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </HorizontalStackLayout>
+
+                                        <HorizontalStackLayout>
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{x:Static helpers:CmIcons.Icon214}"
+                                                FontFamily="Icons"
+                                                TextColor="{StaticResource Black100}"
+                                                VerticalOptions="Center"/>
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{Binding EventSummary.Content.Sales}"
+                                                VerticalOptions="Center"
+                                                Style="{StaticResource MainLabel}"/>
+                                        </HorizontalStackLayout>                                        
+                                    </HorizontalStackLayout>                                    
+                                </VerticalStackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Header>
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout Margin="8">
+                             <Picker 
+                                HorizontalOptions="FillAndExpand"
+                                ItemsSource="{Binding EventListTypes}"
+                               <!-- SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"-->
+                                FontFamily="Medium">
+                                <!--<Picker.Behaviors>
+                                    <xct:EventToCommandBehavior 
+                                    EventName="PropertyChanged"
+                                    Command="{Binding RefreshCommand}"/>
+                                </Picker.Behaviors> -->
+                            </Picker>
+                            <Button 
+                                Text="+ New event"
+                                HorizontalOptions="End"
+                                Style="{StaticResource ButtonPrimary}"                            
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        </HorizontalStackLayout>
+                        <Frame CornerRadius="48"
+                               Padding="0">
+                            <HorizontalStackLayout
+                                HorizontalOptions="Center" 
+                                Padding="4" 
+                                BackgroundColor="{StaticResource Black10}">
+                                <Button x:Name="ButtonAll" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
+                                <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
+                                <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label
+                                Text="{Binding Title}"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="40"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </CollectionView.Header>
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+ 
+</ContentPage>
