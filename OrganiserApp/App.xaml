@@ -1,0 +1,241 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OrganiserApp"
+             x:Class="OrganiserApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <x:String x:Key="IconTimeOpen">&#xe9bd;</x:String>
+            <x:String x:Key="IconTimeFill">&#xe9bc;</x:String>
+
+            <Color x:Key="WindowBackgroundColorDark">#101E1E</Color>
+            <Color x:Key="WindowBackgroundColor">#ffffff</Color>
+
+            <Color x:Key="CardBackground">#ffffff</Color>
+            <Color x:Key="CardBackgroundDark">#344055</Color>
+
+            <Color x:Key="TextColor">#101E1E</Color>
+            <Color x:Key="TextColorDark">#ffffff</Color>
+
+            <Color x:Key="Blue5">#F2F8FF</Color>
+            <Color x:Key="Blue10">#E5F2FF</Color>
+            <Color x:Key="Blue20">#CCE5FF</Color>
+            <Color x:Key="Blue40">#99CCFF</Color>
+            <Color x:Key="Blue60">#66B2FF</Color>
+            <Color x:Key="Blue80">#3399FF</Color>
+            <Color x:Key="Blue100">#007FFF</Color>
+            <Color x:Key="Blue110">#0074E8</Color> <!-- Primary Blue -->
+            <Color x:Key="Blue120">#036BD2</Color>
+            <Color x:Key="Blue140">#0658A5</Color>
+            <Color x:Key="Blue144">#07549C</Color>
+            <Color x:Key="Blue180">#0D314B</Color>
+
+            <Color x:Key="Black2">#FBFBFC</Color>
+            <Color x:Key="Black5">#F5F5F6</Color>
+            <Color x:Key="Black10">#EAEBEE</Color>
+            <Color x:Key="Black20">#D6D9DD</Color>
+            <Color x:Key="Black40">#AEB3BB</Color>
+            <Color x:Key="Black60">#858C99</Color>
+            <Color x:Key="Black71">#6F7786</Color>
+            <Color x:Key="Black80">#5D6677</Color>
+            <Color x:Key="Black100">#344055</Color>
+            <Color x:Key="Black120">#212E39</Color>
+            <Color x:Key="Black140">#101E1E</Color><!-- Primary Black -->
+
+            <Color x:Key="Green10">#EBFBF4</Color>
+            <Color x:Key="Green20">#D8F8EA</Color>
+            <Color x:Key="Green40">#B1F1D5</Color>
+            <Color x:Key="Green60">#8BEAC1</Color>
+            <Color x:Key="Green80">#64E3AC</Color>
+            <Color x:Key="Green100">#3DDC97</Color><!-- Primary Success -->
+            <Color x:Key="Green140">#2A9066</Color>
+            <Color x:Key="Green146">#28855F</Color>
+            <Color x:Key="Green180">#194436</Color>
+
+            <Color x:Key="Orange10">#FFF5E5</Color>
+            <Color x:Key="Orange20">#FFEDCC</Color>
+            <Color x:Key="Orange40">#FFDB99</Color>
+            <Color x:Key="Orange60">#FFC866</Color>
+            <Color x:Key="Orange80">#FFB633</Color>
+            <Color x:Key="Orange100">#FFA400</Color> <!-- Primary Warning -->
+            <Color x:Key="Orange140">#9F6E0C</Color>
+            <Color x:Key="Orange141">#9F6E0C</Color>
+            <Color x:Key="Orange180">#403818</Color>
+
+            <Color x:Key="Red10">#FFECEE</Color>
+            <Color x:Key="Red20">#FFDBDE</Color>
+            <Color x:Key="Red40">#FFB6BE</Color>
+            <Color x:Key="Red60">#FF929D</Color>
+            <Color x:Key="Red80">#FF6D7D</Color>
+            <Color x:Key="Red100">#FF495C</Color><!-- Primary Error -->
+            <Color x:Key="Red118">#D44050</Color>
+            <Color x:Key="Red140">#9F3743</Color>
+            <Color x:Key="Red180">#40262A</Color>
+
+            <Color x:Key="Cyan100">#04E4F4</Color>
+            <Color x:Key="Cyan200">#0C949E</Color>
+
+            <Color x:Key="Teal100"> #1BFCD5</Color>
+            <Color x:Key="Teal200">#0E8C76</Color>
+
+            <Style ApplyToDerivedTypes="True" TargetType="Page">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource WindowBackgroundColor}, Dark={StaticResource WindowBackgroundColorDark}}" />
+            </Style>
+
+            <Style x:Key="CardView" TargetType="Frame">
+                <Setter Property="BorderColor" Value="#D6D9DD" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="IsClippedToBounds" Value="True"/>
+            </Style>
+
+            <Style x:Key="ButtonPrimary" TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="Padding" Value="16, 4"></Setter>
+                <Setter Property="CornerRadius" Value="48"></Setter>
+                <Setter Property="FontFamily" Value="Bold"></Setter>
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Blue110}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Blue40}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ButtonSecondary" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+                <Setter Property="TextColor" Value="{StaticResource Blue110}"></Setter>
+                <Setter Property="FontFamily" Value="Medium"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Blue10}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="{StaticResource Blue40}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Blue5}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ButtonTertiary" TargetType="Button" BasedOn="{StaticResource ButtonSecondary}">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ButtonFilter" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+                <Setter Property="TextColor" Value="{StaticResource Black100}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Black10}"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Black10}" />
+                                    <Setter Property="TextColor" Value="{StaticResource Black100}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Black10}" />
+                                    <Setter Property="TextColor" Value="{StaticResource Black100}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ButtonOutline" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
+                <Setter Property="TextColor" Value="{StaticResource Blue110}"></Setter>
+                <Setter Property="FontFamily" Value="Medium"></Setter>
+                <Setter Property="BorderWidth" Value="2" />
+                <Setter Property="BorderColor" Value="{StaticResource Blue110}"/>
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor" Value="{StaticResource Blue40}" />
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="MainLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Black100}"/>
+                <Setter Property="FontFamily" Value="Medium"></Setter>
+            </Style>
+            <Style x:Key="LabelHeader" TargetType="Label" BasedOn="{StaticResource MainLabel}">
+                <Setter Property="TextColor" Value="{StaticResource Black140}"/>
+            </Style>
+
+            <Style x:Key="LabelIcon" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource Black100}"/>
+                <Setter Property="FontFamily" Value="Icons"/>
+            </Style>
+
+            <Style x:Key="BaseFrame" TargetType="Frame">
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="CornerRadius" Value="16"/>
+            </Style>
+
+            <Style x:Key="BaseGrid" TargetType="Grid">
+                <Setter Property="Padding" Value="16,8"/>
+            </Style>
+
+            <Style x:Key="BaseProgress" TargetType="ProgressBar">
+                <Setter Property="ProgressColor" Value="{StaticResource Blue110}"/>
+                <Setter Property="Margin" Value="8"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
