@@ -1,10 +1,13 @@
+using OrganiserApp.ViewModels;
+
 namespace OrganiserApp.Views;
 
 public partial class EventOverviewPage : ContentPage
 {
-	public EventOverviewPage()
+	public EventOverviewPage(EventOverviewViewModel viewModel)
 	{
 		InitializeComponent();
+        BindingContext = viewModel;
         ButtonAll.BackgroundColor = Color.FromRgb(255, 255, 255);
     }
 

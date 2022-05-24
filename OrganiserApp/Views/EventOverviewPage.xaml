@@ -5,6 +5,7 @@
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
              xmlns:helpers="clr-namespace:OrganiserApp.Helpers"
              xmlns:fontAwesome="clr-namespace:FontAwesome"
+             xmlns:cmIcons="clr-namespace:CmIcons"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
@@ -13,8 +14,12 @@
              x:DataType="viewmodel:EventOverviewViewModel">
 
     <Grid>
-        <RefreshView>
-            <CollectionView>
+        <RefreshView
+            Command="{Binding GetEventListCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView
+                ItemsSource="{Binding EventList}"
+                EmptyView="No Events Found">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Event">
                         <Grid Padding="8">
@@ -29,7 +34,7 @@
                                     <HorizontalStackLayout>
                                         <Label
                                         FontSize="Small"
-                                        Text="{x:Static helpers:CmIcons.Icon193}"
+                                        Text="{x:Static cmIcons:CmIcons.Icon193}"
                                         FontFamily="Icons"
                                         TextColor="{StaticResource Black100}"
                                         VerticalOptions="Center"/>
@@ -43,7 +48,7 @@
                                     <HorizontalStackLayout>
                                         <Label
                                         FontSize="Small"
-                                        Text="{x:Static helpers:CmIcons.Icon192}"
+                                        Text="{x:Static cmIcons:CmIcons.Icon192}"
                                         FontFamily="Icons"
                                         TextColor="{StaticResource Black100}"
                                         VerticalOptions="Center"/>
@@ -80,7 +85,7 @@
                                         <HorizontalStackLayout>
                                             <Label
                                                 FontSize="Small"
-                                                Text="{x:Static helpers:CmIcons.Icon214}"
+                                                Text="{x:Static cmIcons:CmIcons.Icon214}"
                                                 FontFamily="Icons"
                                                 TextColor="{StaticResource Black100}"
                                                 VerticalOptions="Center"/>
@@ -102,10 +107,11 @@
                         <HorizontalStackLayout Margin="8">
                             <Picker 
                                 HorizontalOptions="FillAndExpand"
-                                ItemsSource="{Binding EventListTypes}"
-                               <!-- SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"-->
                                 FontFamily="Medium">
-                                <!--<Picker.Behaviors>
+                               <!-- SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"
+                                ItemsSource="{Binding EventListTypes}"
+                                
+                                <Picker.Behaviors>
                                     <xct:EventToCommandBehavior 
                                     EventName="PropertyChanged"
                                     Command="{Binding RefreshCommand}"/>
@@ -136,6 +142,13 @@
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </CollectionView.Header>
+                <CollectionView.Footer>
+                    <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
+                        <Button Command="{Binding LoadMoreEventsCommand}" 
+                        Text="Load More" 
+                        Style="{StaticResource ButtonSecondary}" />
+                    </HorizontalStackLayout>
+                </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
     </Grid>

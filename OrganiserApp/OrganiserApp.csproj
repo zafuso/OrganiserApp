@@ -49,6 +49,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\Android\Resources\xml\network_security_config.xml" />
 	  <None Remove="Resources\Fonts\cm-icons.ttf" />
 	  <None Remove="Resources\Fonts\fa-brand-400.ttf" />
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
@@ -64,19 +65,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\EventOverview.xaml.cs">
-	    <DependentUpon>EventOverview.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\NewPage1.xaml">
+	  <MauiXaml Update="Views\EventOverviewPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
