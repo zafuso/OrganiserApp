@@ -1,11 +1,11 @@
-﻿namespace OrganiserApp.Views;
+namespace OrganiserApp.Views;
 
 public partial class EventOverviewPage : ContentPage
 {
 	public EventOverviewPage()
 	{
-        InitializeComponent();
-		ButtonAll.BackgroundColor = Color.FromRgb(255,255,255);
+		InitializeComponent();
+        ButtonAll.BackgroundColor = Color.FromRgb(255, 255, 255);
     }
 
     private void Button_All_Clicked(object sender, EventArgs e)
