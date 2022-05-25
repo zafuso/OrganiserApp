@@ -19,10 +19,10 @@ namespace OrganiserApp.ViewModels
 
     public partial class EventOverviewViewModel : BaseViewModel
     {
-        public ObservableRangeCollection<Event> EventList { get; } = new();
-        public List<VirtualEventFilter> FilterEventsList { get; set; }
-        EventService eventService;
-        IConnectivity connectivity;
+        public ObservableCollection<Event> EventList { get; set; } = new();
+
+        private readonly EventService eventService;
+        private readonly IConnectivity connectivity;
 
         [ObservableProperty]
         public int eventsCount;
@@ -32,18 +32,18 @@ namespace OrganiserApp.ViewModels
         bool isRefreshing;
         [ObservableProperty]
         bool canLoadMore;
+
         bool LoadMore = false;
+        bool FilterChanged = false;
         int skip;
-
-
-        EventListType selectedType = EventListType.Upcoming;
+        int take = 5;
         FilterDateRangeType dateRange;
-
-        VirtualEventFilter selectedFilter = null;
-        public VirtualEventFilter SelectedFilter
+        public List<string> EventListTypes { get; } = Enum.GetNames(typeof(EventListType)).ToList();
+        EventListType selectedType = EventListType.Upcoming;
+        public EventListType SelectedType
         {
-            get => selectedFilter;
-            set => SetProperty(ref selectedFilter, value);
+            get => selectedType;
+            set => SetProperty(ref selectedType, value);
         }
 
         public EventOverviewViewModel(EventService eventService, IConnectivity connectivity)
@@ -51,10 +51,6 @@ namespace OrganiserApp.ViewModels
             Title = "Event Overview";
             this.eventService = eventService;
             this.connectivity = connectivity;
-            FilterEventsList = new List<VirtualEventFilter>();
-           
-            PopulateEventListFilter();
-            selectedFilter = FilterEventsList[0];
             dateRange = FilterDateRangeType.all;
 
             Task.Run(async () => await GetEventListAsync());
@@ -77,19 +73,29 @@ namespace OrganiserApp.ViewModels
 
                 IsBusy = true;
                 CanLoadMore = false;
-                var response = await eventService.GetEventListAsync(selectedType, skip);
-                if (response.Headers.TryGetValues("X-TF-PAGINATION-TOTAL", out IEnumerable<string> headerValues)) {
+                take = 5;
+
+                if (EventList.Count != 0)
+                {
+                    if (FilterChanged)
+                    {
+                        take = EventList.Count;
+                        skip = 0;
+                    }
+
+                    if (!LoadMore)
+                    {
+                        EventList.Clear();
+                    }                    
+                }
+                var response = await eventService.GetEventListAsync(selectedType, skip, take);
+                if (response.Headers.TryGetValues("X-TF-PAGINATION-TOTAL", out IEnumerable<string> headerValues))
+                {
                     TotalItems = Int32.Parse(headerValues.FirstOrDefault());
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
                 var eventList = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
-
-                if ((EventList.Count != 0) && !LoadMore)
-                {
-                    skip = 0;
-                    EventList.Clear();
-                }
 
                 foreach (var item in eventList)
                 {
@@ -101,9 +107,10 @@ namespace OrganiserApp.ViewModels
                         item.EndAt = FormatHelper.FormatISO8601ToDateTimeString(item.EndAt);
                         item.EventSummary.Content.Revenue = FormatHelper.FormatPrice(item.EventSummary.Content.Revenue);
                     }
+
+                    EventList.Add(item);
                 }
 
-                EventList.AddRange(eventList);
                 EventsCount = EventList.Count;
             }
             catch (Exception e)
@@ -116,60 +123,13 @@ namespace OrganiserApp.ViewModels
                 IsBusy = false;
                 IsRefreshing = false;
                 LoadMore = false;
+                FilterChanged = false;
 
                 if (!(EventList.Count >= totalItems))
                 {
                     CanLoadMore = true;
                 }
 
-            }
-        }
-
-        [ICommand]
-        async Task DateFilterChanged()
-        {
-            if (IsBusy)
-                return;
-
-            try
-            {
-                if (connectivity.NetworkAccess != NetworkAccess.Internet)
-                {
-                    await Shell.Current.DisplayAlert("No connectivity!",
-                        $"Please check internet and try again.", "OK");
-                    return;
-                }
-
-                IsBusy = true;
-                CanLoadMore = false;
-   
-                foreach (var item in EventList)
-                {
-                    item.EventSummary = await eventService.GetEventSummaryAsync(dateRange, item.Uuid);
-
-                    if (!item.IsOngoing)
-                    {
-                        item.StartAt = FormatHelper.FormatISO8601ToDateTimeString(item.StartAt);
-                        item.EndAt = FormatHelper.FormatISO8601ToDateTimeString(item.EndAt);
-                        item.EventSummary.Content.Revenue = FormatHelper.FormatPrice(item.EventSummary.Content.Revenue);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Unable to get event details: {e}");
-                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-                IsRefreshing = false;
-                LoadMore = false;
-
-                if (!(EventList.Count >= totalItems))
-                {
-                    CanLoadMore = true;
-                }
             }
         }
 
@@ -188,49 +148,25 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         async Task FilterAll()
         {
+            FilterChanged = true;
             dateRange = FilterDateRangeType.all;
-            await DateFilterChanged();
+            await GetEventListAsync();
         }
 
         [ICommand]
         async Task FilterYesterday()
         {
+            FilterChanged = true;
             dateRange = FilterDateRangeType.yesterday;
-            await DateFilterChanged();
+            await GetEventListAsync();
         }
 
         [ICommand]
         async Task FilterToday()
         {
+            FilterChanged = true;
             dateRange = FilterDateRangeType.today;
-            await DateFilterChanged();
-        }
-
-        void PopulateEventListFilter()
-        {
-            FilterEventsList.Add(new VirtualEventFilter
-            {
-                Name = "Show upcoming events",
-                EventListType = EventListType.Upcoming
-            });
-
-            FilterEventsList.Add(new VirtualEventFilter
-            {
-                Name = "Show past events",
-                EventListType = EventListType.Past
-            });
-
-            FilterEventsList.Add(new VirtualEventFilter
-            {
-                Name = "Show deleted events",
-                EventListType = EventListType.Deleted
-            });
-
-            FilterEventsList.Add(new VirtualEventFilter
-            {
-                Name = "Show all events",
-                EventListType = EventListType.All
-            });
+            await GetEventListAsync();
         }
     }
 }

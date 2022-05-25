@@ -31,8 +31,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 
         builder.Services.AddSingleton<EventService>();
-        builder.Services.AddSingleton<EventOverviewViewModel>();
-        builder.Services.AddSingleton<EventOverviewPage>();
+        builder.Services.AddTransient<EventOverviewViewModel>();
+        builder.Services.AddTransient<EventOverviewPage>();
 
         return builder.Build();
 	}

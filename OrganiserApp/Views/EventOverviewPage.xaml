@@ -15,6 +15,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -22,30 +23,29 @@
         <RefreshView
             Grid.ColumnSpan="2"
             Command="{Binding GetEventListCommand}"
-            IsRefreshing="{Binding IsRefreshing}">
+            IsRefreshing="{Binding IsRefreshing}" >
             <CollectionView
-                ItemsSource="{Binding EventList}">
+                ItemsSource="{Binding EventList}"
+                SelectionMode="None">
 
                 <CollectionView.Header>
                     <VerticalStackLayout>
-                        <HorizontalStackLayout Margin="8">
-                            <!--<Picker
+                        <HorizontalStackLayout Margin="8" HorizontalOptions="CenterAndExpand">
+                            <Picker
+                                Grid.Column="0"
+                                ItemsSource="{Binding EventListTypes}"
+                                Title="Filter by date"
+                                SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"
                                 FontFamily="Medium"
-                                ItemsSource="{Binding FilterEventsList}"
-                                ItemDisplayBinding="{Binding FilterEventsList.Name}"
-                                SelectedItem="{Binding SelectedFilter}">
-                                <Picker.Behaviors>
-                                    <toolkit:EventToCommandBehavior
-                                        EventName="SelectedIndexChanged"
-                                        Command="{Binding GetEventListCommand}"/>
-                                </Picker.Behaviors>
-                            </Picker>-->
+                                FontSize="16">
+                            </Picker>
+
                             <Button 
-                                Grid.Column="1"
-                                Text="+ New event"
-                                HorizontalOptions="End"
-                                Style="{StaticResource ButtonPrimary}"                            
-                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                            Margin="112,0,0,0"
+                            Grid.Column="1"
+                            Text="+ New event"
+                            Style="{StaticResource ButtonPrimary}"                            
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
                         </HorizontalStackLayout>
                         <Frame CornerRadius="48"
                                Padding="0"

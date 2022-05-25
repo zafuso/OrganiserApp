@@ -11,10 +11,9 @@ namespace OrganiserApp.Services
 {
     public class EventService : BaseHttpClient
     {
-        public int take = 5;
         static readonly HttpClient client = getHttpClient();
 
-        public async Task<HttpResponseMessage> GetEventListAsync(EventListType type, int skip)
+        public async Task<HttpResponseMessage> GetEventListAsync(EventListType type, int skip, int take)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"events/list?type={type}");
             request.Headers.Add("X-TF-PAGINATION-SKIP", skip.ToString());
