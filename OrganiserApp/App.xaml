@@ -217,6 +217,10 @@
                 <Setter Property="TextColor" Value="{StaticResource Black140}"/>
             </Style>
 
+            <Style x:Key="MicroLabel" TargetType="Label" BasedOn="{StaticResource MainLabel}">
+                <Setter Property="TextColor" Value="{StaticResource Black60}"/>
+            </Style>
+
             <Style x:Key="LabelIcon" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource Black100}"/>
                 <Setter Property="FontFamily" Value="Icons"/>

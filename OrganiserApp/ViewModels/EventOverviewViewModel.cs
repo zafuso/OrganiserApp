@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
+using Newtonsoft.Json;
 using OrganiserApp.Enums;
 using OrganiserApp.Helpers;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -18,20 +20,30 @@ namespace OrganiserApp.ViewModels
     public partial class EventOverviewViewModel : BaseViewModel
     {
         public ObservableRangeCollection<Event> EventList { get; set; }
+        public List<VirtualEventFilter> FilterEventsList { get; set; }
         EventService eventService;
         IConnectivity connectivity;
-        int skip;
-        bool LoadMore = false;
 
         [ObservableProperty]
+        public int eventsCount;
+        [ObservableProperty]
+        public int totalItems;
+        [ObservableProperty]
         bool isRefreshing;
+        [ObservableProperty]
+        bool canLoadMore;
+        bool LoadMore = false;
+        int skip;
+
 
         EventListType selectedType = EventListType.Upcoming;
         FilterDateRangeType dateRange;
-        public EventListType SelectedType
+
+        VirtualEventFilter selectedFilter = null;
+        public VirtualEventFilter SelectedFilter
         {
-            get => selectedType;
-            set => SetProperty(ref selectedType, value);
+            get => selectedFilter;
+            set => SetProperty(ref selectedFilter, value);
         }
 
         public EventOverviewViewModel(EventService eventService, IConnectivity connectivity)
@@ -40,8 +52,10 @@ namespace OrganiserApp.ViewModels
             this.eventService = eventService;
             this.connectivity = connectivity;
             EventList = new ObservableRangeCollection<Event>();
-
-            skip = 0;
+            FilterEventsList = new List<VirtualEventFilter>();
+           
+            PopulateEventListFilter();
+            selectedFilter = FilterEventsList[0];
             dateRange = FilterDateRangeType.all;
 
             Task.Run(async () => await GetEventListAsync());
@@ -63,10 +77,20 @@ namespace OrganiserApp.ViewModels
                 }
 
                 IsBusy = true;
-                var eventList = await eventService.GetEventListAsync(selectedType, skip);
+                CanLoadMore = false;
+                var response = await eventService.GetEventListAsync(selectedType, skip);
+                if (response.Headers.TryGetValues("X-TF-PAGINATION-TOTAL", out IEnumerable<string> headerValues)) {
+                    totalItems = Int32.Parse(headerValues.FirstOrDefault());
+                }
 
-                if (EventList.Count != 0 && LoadMore)
+                var json = await response.Content.ReadAsStringAsync();
+                var eventList = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
+
+                if (EventList.Count != 0 && !LoadMore)
+                {
+                    skip = 0;
                     EventList.Clear();
+                }
 
                 foreach (var item in eventList)
                 {
@@ -81,6 +105,7 @@ namespace OrganiserApp.ViewModels
                 }
 
                 EventList.AddRange(eventList);
+                EventsCount = EventList.Count;
             }
             catch (Exception e)
             {
@@ -92,6 +117,15 @@ namespace OrganiserApp.ViewModels
                 IsBusy = false;
                 IsRefreshing = false;
                 LoadMore = false;
+
+                if (!(EventList.Count >= totalItems))
+                {
+                    CanLoadMore = true;
+                } 
+                else
+                {
+                    CanLoadMore = false;
+                }
             }
         }
 
@@ -123,6 +157,33 @@ namespace OrganiserApp.ViewModels
         {
             dateRange = FilterDateRangeType.today;
             await GetEventListAsync();
+        }
+
+        void PopulateEventListFilter()
+        {
+            FilterEventsList.Add(new VirtualEventFilter
+            {
+                Name = "Show upcoming events",
+                EventListType = EventListType.Upcoming
+            });
+
+            FilterEventsList.Add(new VirtualEventFilter
+            {
+                Name = "Show past events",
+                EventListType = EventListType.Past
+            });
+
+            FilterEventsList.Add(new VirtualEventFilter
+            {
+                Name = "Show deleted events",
+                EventListType = EventListType.Deleted
+            });
+
+            FilterEventsList.Add(new VirtualEventFilter
+            {
+                Name = "Show all events",
+                EventListType = EventListType.All
+            });
         }
     }
 }

@@ -14,7 +14,7 @@ namespace OrganiserApp.Services
         public int take = 5;
         static readonly HttpClient client = getHttpClient();
 
-        public async Task<IEnumerable<Event>> GetEventListAsync(EventListType type, int skip)
+        public async Task<HttpResponseMessage> GetEventListAsync(EventListType type, int skip)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, $"events/list?type={type}");
             request.Headers.Add("X-TF-PAGINATION-SKIP", skip.ToString());
@@ -23,10 +23,7 @@ namespace OrganiserApp.Services
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
-            var eventList = JsonConvert.DeserializeObject<IEnumerable<Event>>(json);
-
-            return eventList;
+            return response;
         }
 
         public async Task RemoveEvent(string eventUuid)

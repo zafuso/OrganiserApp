@@ -6,12 +6,18 @@
              xmlns:helpers="clr-namespace:OrganiserApp.Helpers"
              xmlns:fontAwesome="clr-namespace:FontAwesome"
              xmlns:cmIcons="clr-namespace:CmIcons"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
              Title="Event Overview"
              x:Class="OrganiserApp.Views.EventOverviewPage"
              x:DataType="viewmodel:EventOverviewViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid>
         <RefreshView
@@ -22,16 +28,17 @@
                 EmptyView="No Events Found">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Event">
-                        <Grid Padding="8">
+                        <Grid Padding="12">
                             <Frame HeightRequest="125" Style="{StaticResource CardView}">
                                 <VerticalStackLayout VerticalOptions="Center">
                                     <Label
                                     FontSize="Large"
                                     Text="{Binding Name}"
                                     VerticalOptions="Center" 
-                                    Style="{StaticResource LabelHeader}"/>
+                                    Style="{StaticResource LabelHeader}"
+                                    Padding="16,0"/>
 
-                                    <HorizontalStackLayout>
+                                    <HorizontalStackLayout Padding="16,0">
                                         <Label
                                         FontSize="Small"
                                         Text="{x:Static cmIcons:CmIcons.Icon193}"
@@ -42,10 +49,11 @@
                                         FontSize="Small"
                                         Text="{Binding StartAt}"
                                         VerticalOptions="Center"
-                                        Style="{StaticResource MainLabel}"/>
+                                        Style="{StaticResource MainLabel}"
+                                        Padding="4,0"/>
                                     </HorizontalStackLayout>
 
-                                    <HorizontalStackLayout>
+                                    <HorizontalStackLayout Padding="16,0">
                                         <Label
                                         FontSize="Small"
                                         Text="{x:Static cmIcons:CmIcons.Icon192}"
@@ -56,10 +64,12 @@
                                         FontSize="Small"
                                         Text="{Binding EndAt}"
                                         VerticalOptions="Center"
-                                        Style="{StaticResource MainLabel}"/>
+                                        Style="{StaticResource MainLabel}"
+                                        Padding="4,0"/>
                                     </HorizontalStackLayout>
 
-                                    <HorizontalStackLayout HorizontalOptions="Start">
+                                    <HorizontalStackLayout HorizontalOptions="Start"
+                                                           Padding="16,0">
                                         <HorizontalStackLayout>
                                             <Label
                                                 FontSize="Small"
@@ -72,7 +82,8 @@
                                             <Label
                                                 FontSize="Small"
                                                 VerticalOptions="Center"
-                                                Style="{StaticResource MainLabel}">
+                                                Style="{StaticResource MainLabel}"
+                                                Padding="4,0">
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="€"/>
@@ -82,13 +93,14 @@
                                             </Label>
                                         </HorizontalStackLayout>
 
-                                        <HorizontalStackLayout>
+                                        <HorizontalStackLayout Padding="8,0">
                                             <Label
                                                 FontSize="Small"
                                                 Text="{x:Static cmIcons:CmIcons.Icon214}"
                                                 FontFamily="Icons"
                                                 TextColor="{StaticResource Black100}"
-                                                VerticalOptions="Center"/>
+                                                VerticalOptions="Center"
+                                                Padding="4,0"/>
                                             <Label
                                                 FontSize="Small"
                                                 Text="{Binding EventSummary.Content.Sales}"
@@ -105,18 +117,17 @@
                 <CollectionView.Header>
                     <VerticalStackLayout>
                         <HorizontalStackLayout Margin="8">
-                            <Picker 
-                                HorizontalOptions="FillAndExpand"
-                                FontFamily="Medium">
-                               <!-- SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"
-                                ItemsSource="{Binding EventListTypes}"
-                                
+                            <!--<Picker
+                                FontFamily="Medium"
+                                ItemsSource="{Binding FilterEventsList}"
+                                ItemDisplayBinding="{Binding FilterEventsList.Name}"
+                                SelectedItem="{Binding SelectedFilter}">
                                 <Picker.Behaviors>
-                                    <xct:EventToCommandBehavior 
-                                    EventName="PropertyChanged"
-                                    Command="{Binding RefreshCommand}"/>
-                                </Picker.Behaviors> -->
-                            </Picker>
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="SelectedIndexChanged"
+                                        Command="{Binding GetEventListCommand}"/>
+                                </Picker.Behaviors>
+                            </Picker>-->
                             <Button 
                                 Text="+ New event"
                                 HorizontalOptions="End"
@@ -134,23 +145,37 @@
                                 <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
                             </HorizontalStackLayout>
                         </Frame>
-                        <HorizontalStackLayout HorizontalOptions="Center">
+                        <VerticalStackLayout HorizontalOptions="Center">
                             <Label
                                 Text="{Binding Title}"
                                 Style="{StaticResource LabelHeader}"
                                 FontSize="40"/>
-                        </HorizontalStackLayout>
+                            <Label Style="{StaticResource MicroLabel}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}Showing {0} out of {1} events">
+                                        <Binding Path="EventsCount"/>
+                                        <Binding Path="TotalItems"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </CollectionView.Header>
                 <CollectionView.Footer>
                     <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
                         <Button Command="{Binding LoadMoreEventsCommand}" 
-                        Text="Load More" 
+                        Text="Load More"
+                        IsEnabled="{Binding CanLoadMore}"
                         Style="{StaticResource ButtonSecondary}" />
                     </HorizontalStackLayout>
                 </CollectionView.Footer>
             </CollectionView>
         </RefreshView>
-    </Grid>
 
+        <ActivityIndicator
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
+    </Grid>
 </ContentPage>
