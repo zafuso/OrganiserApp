@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.Models
 {
-    public class Event
+    public class Event : ObservableObject
     {
         [JsonProperty(PropertyName = "uuid")]
         public string Uuid { get; set; }

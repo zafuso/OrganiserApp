@@ -9,7 +9,6 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
-             Title="Event Overview"
              x:Class="OrganiserApp.Views.EventOverviewPage"
              x:DataType="viewmodel:EventOverviewViewModel">
 
@@ -19,13 +18,66 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid ColumnDefinitions="*,*">
         <RefreshView
+            Grid.ColumnSpan="2"
             Command="{Binding GetEventListCommand}"
             IsRefreshing="{Binding IsRefreshing}">
             <CollectionView
-                ItemsSource="{Binding EventList}"
-                EmptyView="No Events Found">
+                ItemsSource="{Binding EventList}">
+
+                <CollectionView.Header>
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout Margin="8">
+                            <!--<Picker
+                                FontFamily="Medium"
+                                ItemsSource="{Binding FilterEventsList}"
+                                ItemDisplayBinding="{Binding FilterEventsList.Name}"
+                                SelectedItem="{Binding SelectedFilter}">
+                                <Picker.Behaviors>
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="SelectedIndexChanged"
+                                        Command="{Binding GetEventListCommand}"/>
+                                </Picker.Behaviors>
+                            </Picker>-->
+                            <Button 
+                                Grid.Column="1"
+                                Text="+ New event"
+                                HorizontalOptions="End"
+                                Style="{StaticResource ButtonPrimary}"                            
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        </HorizontalStackLayout>
+                        <Frame CornerRadius="48"
+                               Padding="0"
+                               BackgroundColor="{StaticResource Black10}"
+                               Margin="16,0"
+                               BorderColor="Transparent">
+                            <HorizontalStackLayout
+                                HorizontalOptions="CenterAndExpand" 
+                                Padding="4" 
+                                BackgroundColor="Transparent">
+                                <Button x:Name="ButtonAll" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
+                                <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
+                                <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
+                            </HorizontalStackLayout>
+                        </Frame>
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <Label
+                                Text="{Binding Title}"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="40"/>
+                            <Label Style="{StaticResource MicroLabel}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}Showing {0} out of {1} events">
+                                        <Binding Path="EventsCount"/>
+                                        <Binding Path="TotalItems"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </CollectionView.Header>
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Event">
                         <Grid Padding="12">
@@ -114,53 +166,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
-                <CollectionView.Header>
-                    <VerticalStackLayout>
-                        <HorizontalStackLayout Margin="8">
-                            <!--<Picker
-                                FontFamily="Medium"
-                                ItemsSource="{Binding FilterEventsList}"
-                                ItemDisplayBinding="{Binding FilterEventsList.Name}"
-                                SelectedItem="{Binding SelectedFilter}">
-                                <Picker.Behaviors>
-                                    <toolkit:EventToCommandBehavior
-                                        EventName="SelectedIndexChanged"
-                                        Command="{Binding GetEventListCommand}"/>
-                                </Picker.Behaviors>
-                            </Picker>-->
-                            <Button 
-                                Text="+ New event"
-                                HorizontalOptions="End"
-                                Style="{StaticResource ButtonPrimary}"                            
-                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
-                        </HorizontalStackLayout>
-                        <Frame CornerRadius="48"
-                               Padding="0">
-                            <HorizontalStackLayout
-                                HorizontalOptions="Center" 
-                                Padding="4" 
-                                BackgroundColor="{StaticResource Black10}">
-                                <Button x:Name="ButtonAll" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
-                                <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
-                                <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
-                            </HorizontalStackLayout>
-                        </Frame>
-                        <VerticalStackLayout HorizontalOptions="Center">
-                            <Label
-                                Text="{Binding Title}"
-                                Style="{StaticResource LabelHeader}"
-                                FontSize="40"/>
-                            <Label Style="{StaticResource MicroLabel}">
-                                <Label.Text>
-                                    <MultiBinding StringFormat="{}Showing {0} out of {1} events">
-                                        <Binding Path="EventsCount"/>
-                                        <Binding Path="TotalItems"/>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </CollectionView.Header>
+               
                 <CollectionView.Footer>
                     <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
                         <Button Command="{Binding LoadMoreEventsCommand}" 
@@ -173,6 +179,7 @@
         </RefreshView>
 
         <ActivityIndicator
+            Grid.ColumnSpan="2"
             HorizontalOptions="FillAndExpand"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"

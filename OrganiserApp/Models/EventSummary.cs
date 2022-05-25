@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.Models
 {
-    public class EventSummary
+    public class EventSummary : ObservableObject
     {
         [JsonProperty(PropertyName = "date_range")]
         public string? DateRange { get; set; }
@@ -22,7 +23,7 @@ namespace OrganiserApp.Models
         public string? UpdatedAt { get; set; }
     }
 
-    public partial class EventSummaryContent
+    public partial class EventSummaryContent : ObservableObject
     {
         [JsonProperty(PropertyName = "stock")]
         public int? Stock { get; set; }
