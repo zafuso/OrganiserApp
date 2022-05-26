@@ -7,7 +7,7 @@
              x:DataType="viewmodel:EventSettingsViewModel">
 
     <StackLayout>
-        <Label Text="{Binding EventUuid}"
+        <Label Text="{Binding SelectedEvent.EventSummary.Content.Revenue}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Label Text="{Binding SelectedEvent.Name}"

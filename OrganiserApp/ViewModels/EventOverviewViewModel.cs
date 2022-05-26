@@ -169,7 +169,7 @@ namespace OrganiserApp.ViewModels
 
             await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
             {
-                {"EventUuid", selectedEvent }
+                {"SelectedEvent", selectedEvent }
             });
         }
 
