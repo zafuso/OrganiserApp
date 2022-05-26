@@ -67,6 +67,7 @@ namespace OrganiserApp.ViewModels
                     return;
                 }
 
+                IsBusy = true;
                 CanLoadMore = false;
                 take = 5;
 
