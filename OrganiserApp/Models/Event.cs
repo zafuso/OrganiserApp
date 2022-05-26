@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.Models
 {
-    public class Event : ObservableObject
+    [ObservableObject]
+    public partial class Event
     {
         [JsonProperty(PropertyName = "uuid")]
         public string Uuid { get; set; }

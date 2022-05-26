@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.Models
 {
-    public class EventSummary : ObservableObject
+    public class EventSummary
     {
         [JsonProperty(PropertyName = "date_range")]
         public string? DateRange { get; set; }
@@ -23,7 +23,7 @@ namespace OrganiserApp.Models
         public string? UpdatedAt { get; set; }
     }
 
-    public partial class EventSummaryContent : ObservableObject
+    public partial class EventSummaryContent
     {
         [JsonProperty(PropertyName = "stock")]
         public int? Stock { get; set; }

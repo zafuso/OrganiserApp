@@ -10,12 +10,13 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
              x:Class="OrganiserApp.Views.EventOverviewPage"
-             x:DataType="viewmodel:EventOverviewViewModel">
+             x:DataType="viewmodel:EventOverviewViewModel"
+             x:Name="EventListPage">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -38,14 +39,19 @@
                                 SelectedIndex="{Binding SelectedType, Converter={StaticResource EnumToIntConverter}}"
                                 FontFamily="Medium"
                                 FontSize="16">
+                                <Picker.Behaviors>
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="SelectedIndexChanged"
+                                        Command="{Binding EventListTypeChangedCommand}"/>
+                                </Picker.Behaviors>
                             </Picker>
 
                             <Button 
-                            Margin="112,0,0,0"
-                            Grid.Column="1"
-                            Text="+ New event"
-                            Style="{StaticResource ButtonPrimary}"                            
-                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                                Margin="112,0,0,0"
+                                Grid.Column="1"
+                                Text="+ New event"
+                                Style="{StaticResource ButtonPrimary}"                            
+                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
                         </HorizontalStackLayout>
                         <Frame CornerRadius="48"
                                Padding="0"

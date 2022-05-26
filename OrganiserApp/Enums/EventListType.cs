@@ -8,9 +8,9 @@ namespace OrganiserApp.Enums
 {
     public enum EventListType
     {
-        Upcoming,
-        Past,
-        All,
-        Deleted
+        Upcoming = 0,
+        Past = 1,
+        All = 2,
+        Deleted = 3
     }
 }

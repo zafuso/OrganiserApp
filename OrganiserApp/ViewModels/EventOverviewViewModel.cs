@@ -19,6 +19,7 @@ namespace OrganiserApp.ViewModels
 
     public partial class EventOverviewViewModel : BaseViewModel
     {
+        EventListType selectedType = EventListType.Upcoming;
         public ObservableCollection<Event> EventList { get; set; } = new();
 
         private readonly EventService eventService;
@@ -38,8 +39,8 @@ namespace OrganiserApp.ViewModels
         int skip;
         int take = 5;
         FilterDateRangeType dateRange;
-        public List<string> EventListTypes { get; } = Enum.GetNames(typeof(EventListType)).ToList();
-        EventListType selectedType = EventListType.Upcoming;
+        public IReadOnlyList<string> EventListTypes { get; } = Enum.GetNames(typeof(EventListType));
+
         public EventListType SelectedType
         {
             get => selectedType;
@@ -167,6 +168,12 @@ namespace OrganiserApp.ViewModels
             FilterChanged = true;
             dateRange = FilterDateRangeType.today;
             await GetEventListAsync();
+        }
+
+        [ICommand]
+        async Task EventListTypeChanged()
+        {
+            var check = selectedType;
         }
     }
 }
