@@ -27,7 +27,7 @@
     <TabBar Route="TabBar">
         <Tab
             x:Name="EventOverview"
-            Title="Event Overview"
+            Title="Events"
             Icon="calendar.png"
             Route="EventOverviewPage">
             <ShellContent ContentTemplate="{DataTemplate local:EventOverviewPage}"/>

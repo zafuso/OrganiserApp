@@ -31,11 +31,14 @@ public static class MauiProgram
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 
         builder.Services.AddSingleton<EventService>();
-        builder.Services.AddSingleton<EventOverviewViewModel>();
-        builder.Services.AddTransient<EventSettingsViewModel>();
 
-        builder.Services.AddSingleton<EventOverviewPage>();
+        builder.Services.AddTransient<EventOverviewViewModel>();
+        builder.Services.AddTransient<EventSettingsViewModel>();
+        builder.Services.AddTransient<EventPaymentMethodsViewModel>();
+
+        builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
+        builder.Services.AddTransient<EventPaymentMethodsPage>();
 
         return builder.Build();
 	}

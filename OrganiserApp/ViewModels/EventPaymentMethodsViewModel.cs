@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.ViewModels
 {
-    [QueryProperty("EventUuid", "EventUuid")]
     public partial class EventPaymentMethodsViewModel : BaseViewModel
     {
         [ObservableProperty]
