@@ -10,5 +10,6 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(TabBar), typeof(TabBar));
         Routing.RegisterRoute(nameof(EventSettingsPage), typeof(EventSettingsPage));
+        Routing.RegisterRoute(nameof(EventPaymentMethodsPage), typeof(EventPaymentMethodsPage));
     }
 }

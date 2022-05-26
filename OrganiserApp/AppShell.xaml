@@ -13,9 +13,9 @@
                 <Setter Property="Shell.ForegroundColor" Value="White" />
                 <Setter Property="Shell.TitleColor" Value="White" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="Orange" />
+                <Setter Property="Shell.UnselectedColor" Value="{StaticResource Black20}" />
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Black10}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="Pink" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Black20}" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Black80}" />
                 <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Blue180}" />
             </Style>
@@ -32,11 +32,11 @@
             Route="EventOverviewPage">
             <ShellContent ContentTemplate="{DataTemplate local:EventOverviewPage}"/>
         </Tab>
-        <Tab Title="Settings" 
-             Icon="settings.png" 
+        <Tab Title="Settings"
              Route="EventSettingsPage"
-             x:Name="EventSettingsPage">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+             Icon="settings.png">
+            <ShellContent Title="Event Info" ContentTemplate="{DataTemplate local:EventSettingsPage}"/>
+            <ShellContent Title="Payment Methods" ContentTemplate="{DataTemplate local:EventPaymentMethodsPage}"/>
         </Tab>
         <Tab Title="Tickets" 
              Icon="ticket.png" 
