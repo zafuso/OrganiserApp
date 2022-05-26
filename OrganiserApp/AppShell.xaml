@@ -3,12 +3,41 @@
     x:Class="OrganiserApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:OrganiserApp.Views.Event"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:local="clr-namespace:OrganiserApp.Views.Event">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:EventOverviewPage}"
-        Route="EventOverviewPage" />
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Blue110}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="Orange" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Black10}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="Pink" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource Black80}" />
+                <Setter Property="Shell.TabBarTitleColor" Value="{StaticResource Blue110}" />
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar>
+        <ShellContent 
+            FlyoutItemIsVisible="False"
+            Route="EventOverviewPage"
+            Title="Event Overview"
+            Icon="calendar.png"
+        ContentTemplate="{DataTemplate local:EventOverviewPage}"/>
+        <ShellContent Title="Settings" Icon="settings.png" Route="EventSettingsPage" ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        <ShellContent Title="Tickets" Icon="ticket.png" Route="EventSettingsPage2" ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+    </TabBar>
+    
+
+
+
+
 
 </Shell>

@@ -25,17 +25,25 @@ namespace OrganiserApp.Services
             return response;
         }
 
-        public async Task RemoveEvent(string eventUuid)
+        public async Task RemoveEvent(string EventUuid)
         {
-            await client.GetStringAsync($"events/{eventUuid}/togglevisibility");
+            await client.GetStringAsync($"events/{EventUuid}/togglevisibility");
         }
 
-        public async Task<EventSummary> GetEventSummaryAsync(FilterDateRangeType type, string eventUuid)
+        public async Task<EventSummary> GetEventSummaryAsync(FilterDateRangeType type, string EventUuid)
         {
-            var json = await client.GetStringAsync($"events/{eventUuid}/analytics/summary?completed_at_range={type}");
+            var json = await client.GetStringAsync($"events/{EventUuid}/analytics/summary?completed_at_range={type}");
             var eventSummary = JsonConvert.DeserializeObject<EventSummary>(json);
 
             return eventSummary;
+        }
+
+        public async Task<Event> GetEventAsync(string EventUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}");
+            var selectedEvent = JsonConvert.DeserializeObject<Event>(json);
+
+            return selectedEvent;
         }
     }
 }

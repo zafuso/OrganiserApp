@@ -34,7 +34,7 @@
                             <Picker
                                 Grid.Column="0"
                                 ItemsSource="{Binding EventListTypes}"
-                                Title="Filter by date"
+                                Title="Filter by status"
                                 SelectedIndex="0"
                                 FontFamily="Medium"
                                 FontSize="16">
