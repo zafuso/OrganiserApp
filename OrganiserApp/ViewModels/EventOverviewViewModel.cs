@@ -6,6 +6,7 @@ using OrganiserApp.Enums;
 using OrganiserApp.Helpers;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
+using OrganiserApp.Views.Event;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,9 +34,11 @@ namespace OrganiserApp.ViewModels
         bool isRefreshing;
         [ObservableProperty]
         bool canLoadMore;
+        [ObservableProperty]
+        bool swiped;
 
         bool LoadMore = false;
-        bool FilterChanged = false;
+        bool KeepTake = false;
         int skip;
         int take = 5;
         FilterDateRangeType dateRange;
@@ -72,13 +75,12 @@ namespace OrganiserApp.ViewModels
                     return;
                 }
 
-                IsBusy = true;
                 CanLoadMore = false;
                 take = 5;
 
                 if (EventList.Count != 0)
                 {
-                    if (FilterChanged)
+                    if (KeepTake)
                     {
                         take = EventList.Count;
                         skip = 0;
@@ -124,7 +126,7 @@ namespace OrganiserApp.ViewModels
                 IsBusy = false;
                 IsRefreshing = false;
                 LoadMore = false;
-                FilterChanged = false;
+                KeepTake = false;
 
                 if (!(EventList.Count >= totalItems))
                 {
@@ -149,7 +151,7 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         async Task FilterAll()
         {
-            FilterChanged = true;
+            KeepTake = true;
             dateRange = FilterDateRangeType.all;
             await GetEventListAsync();
         }
@@ -157,7 +159,7 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         async Task FilterYesterday()
         {
-            FilterChanged = true;
+            KeepTake = true;
             dateRange = FilterDateRangeType.yesterday;
             await GetEventListAsync();
         }
@@ -165,15 +167,59 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         async Task FilterToday()
         {
-            FilterChanged = true;
+            KeepTake = true;
             dateRange = FilterDateRangeType.today;
             await GetEventListAsync();
         }
 
         [ICommand]
-        async Task EventListTypeChanged()
+        async Task GoToEventSettingsAsync(Event selectedEvent)
         {
-            var check = selectedType;
+            if (selectedEvent is null)
+                return;
+
+            await Shell.Current.GoToAsync(nameof(EventSettingsPage), true, new Dictionary<string, object>
+            {
+                {"EventUuid", selectedEvent.Uuid }
+            });
+        }
+
+        [ICommand]
+        async Task RemoveEventAsync(Event removeEvent)
+        {
+            if (removeEvent is null || IsBusy)
+                return;
+
+            try
+            {
+                var isConfirmed = await Shell.Current.DisplayAlert("Delete Event", $"Are you sure you want to delete event {removeEvent.Name}?", "Delete", "Cancel");
+
+                if (!isConfirmed)
+                    return;
+
+                IsBusy = true;
+                KeepTake = true;
+                await eventService.RemoveEvent(removeEvent.Uuid);
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to remove event: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                Swiped = false;
+            }
+
+            await GetEventListAsync();
+        }
+
+        [ICommand]
+        void OnSwiped()
+        {
+            Swiped = !Swiped;
         }
     }
 }

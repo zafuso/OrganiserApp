@@ -1,6 +1,6 @@
 using OrganiserApp.ViewModels;
 
-namespace OrganiserApp.Views;
+namespace OrganiserApp.Views.Event;
 
 public partial class EventOverviewPage : ContentPage
 {

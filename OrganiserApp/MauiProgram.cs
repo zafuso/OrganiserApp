@@ -1,6 +1,6 @@
 ﻿using OrganiserApp.Services;
 using OrganiserApp.ViewModels;
-using OrganiserApp.Views;
+using OrganiserApp.Views.Event;
 
 namespace OrganiserApp;
 
@@ -31,8 +31,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
 
         builder.Services.AddSingleton<EventService>();
-        builder.Services.AddTransient<EventOverviewViewModel>();
-        builder.Services.AddTransient<EventOverviewPage>();
+        builder.Services.AddSingleton<EventOverviewViewModel>();
+        builder.Services.AddTransient<EventSettingsViewModel>();
+
+        builder.Services.AddSingleton<EventOverviewPage>();
+        builder.Services.AddTransient<EventSettingsPage>();
 
         return builder.Build();
 	}
