@@ -42,14 +42,6 @@ namespace OrganiserApp.ViewModels
         int skip;
         int take = 5;
         FilterDateRangeType dateRange;
-        public IReadOnlyList<string> EventListTypes { get; } = Enum.GetNames(typeof(EventListType));
-
-        public EventListType SelectedType
-        {
-            get => selectedType;
-            set => SetProperty(ref selectedType, value);
-        }
-
         public EventOverviewViewModel(EventService eventService, IConnectivity connectivity)
         {
             Title = "Event Overview";

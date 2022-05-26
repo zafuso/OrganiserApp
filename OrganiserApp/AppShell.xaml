@@ -35,9 +35,4 @@
         <ShellContent Title="Tickets" Icon="ticket.png" Route="EventSettingsPage2" ContentTemplate="{DataTemplate local:EventSettingsPage}" />
     </TabBar>
     
-
-
-
-
-
 </Shell>

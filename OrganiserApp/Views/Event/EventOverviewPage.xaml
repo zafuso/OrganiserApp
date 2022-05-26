@@ -10,7 +10,8 @@
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
              x:Class="OrganiserApp.Views.Event.EventOverviewPage"
-             x:DataType="viewmodel:EventOverviewViewModel">
+             x:DataType="viewmodel:EventOverviewViewModel"
+             Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -30,43 +31,21 @@
 
                 <CollectionView.Header>
                     <VerticalStackLayout>
-                        <HorizontalStackLayout Margin="8" HorizontalOptions="CenterAndExpand">
-                            <Picker
-                                Grid.Column="0"
-                                ItemsSource="{Binding EventListTypes}"
-                                Title="Filter by status"
-                                SelectedIndex="0"
-                                FontFamily="Medium"
-                                FontSize="16">
-                                <Picker.Behaviors>
-                                    <toolkit:EventToCommandBehavior
-                                        EventName="SelectedIndexChanged"
-                                        Command="{Binding GetEventListCommand}"/>
-                                </Picker.Behaviors>
-                            </Picker>
-
-                            <Button 
-                                Margin="112,0,0,0"
-                                Grid.Column="1"
-                                Text="+ New event"
-                                Style="{StaticResource ButtonPrimary}"                            
-                                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
-                        </HorizontalStackLayout>
-                        <Frame CornerRadius="48"
+                        <Frame CornerRadius="30"
                                Padding="0"
                                BackgroundColor="{StaticResource Black10}"
-                               Margin="16,0"
+                               Margin="42,8"
                                BorderColor="Transparent">
                             <HorizontalStackLayout
                                 HorizontalOptions="CenterAndExpand" 
                                 Padding="4" 
                                 BackgroundColor="Transparent">
-                                <Button x:Name="ButtonAll" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
+                                <Button x:Name="ButtonAll" Padding="20,8" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
                                 <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
                                 <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
                             </HorizontalStackLayout>
                         </Frame>
-                        <VerticalStackLayout HorizontalOptions="Center">
+                        <VerticalStackLayout HorizontalOptions="Center" Padding="0">
                             <Label
                                 Text="{Binding Title}"
                                 Style="{StaticResource LabelHeader}"
@@ -85,7 +64,7 @@
                 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Event">
-                        <Grid Padding="12">
+                        <Grid Padding="16,8">
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems SwipeBehaviorOnInvoked="RemainOpen">
