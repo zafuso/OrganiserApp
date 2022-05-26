@@ -8,5 +8,5 @@ public partial class EventSettingsPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+    }
 }

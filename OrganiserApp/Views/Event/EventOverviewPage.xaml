@@ -11,7 +11,9 @@
              ios:Page.UseSafeArea="True"
              x:Class="OrganiserApp.Views.Event.EventOverviewPage"
              x:DataType="viewmodel:EventOverviewViewModel"
-             Shell.TabBarIsVisible="False">
+             Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
+             Title="Event Overview">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -175,7 +177,6 @@
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-
                
                 <CollectionView.Footer>
                     <HorizontalStackLayout HorizontalOptions="Center" Margin="8">

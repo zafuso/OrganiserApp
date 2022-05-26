@@ -8,6 +8,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
+        Routing.RegisterRoute(nameof(TabBar), typeof(TabBar));
         Routing.RegisterRoute(nameof(EventSettingsPage), typeof(EventSettingsPage));
     }
 }

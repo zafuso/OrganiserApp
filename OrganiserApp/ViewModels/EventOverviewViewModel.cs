@@ -34,8 +34,6 @@ namespace OrganiserApp.ViewModels
         bool isRefreshing;
         [ObservableProperty]
         bool canLoadMore;
-        [ObservableProperty]
-        bool swiped;
 
         bool LoadMore = false;
         bool KeepTake = false;
@@ -171,7 +169,7 @@ namespace OrganiserApp.ViewModels
             if (selectedEvent is null)
                 return;
 
-            await Shell.Current.GoToAsync(nameof(EventSettingsPage), true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
             {
                 {"EventUuid", selectedEvent.Uuid }
             });
@@ -203,16 +201,9 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
-                Swiped = false;
             }
 
             await GetEventListAsync();
-        }
-
-        [ICommand]
-        void OnSwiped()
-        {
-            Swiped = !Swiped;
         }
     }
 }

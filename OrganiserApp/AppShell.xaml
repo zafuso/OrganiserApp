@@ -24,15 +24,27 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <TabBar>
-        <ShellContent 
-            FlyoutItemIsVisible="False"
-            Route="EventOverviewPage"
+    <TabBar Route="TabBar">
+        <Tab
+            x:Name="EventOverview"
             Title="Event Overview"
             Icon="calendar.png"
-        ContentTemplate="{DataTemplate local:EventOverviewPage}"/>
-        <ShellContent Title="Settings" Icon="settings.png" Route="EventSettingsPage" ContentTemplate="{DataTemplate local:EventSettingsPage}" />
-        <ShellContent Title="Tickets" Icon="ticket.png" Route="EventSettingsPage2" ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            Route="EventOverviewPage">
+            <ShellContent ContentTemplate="{DataTemplate local:EventOverviewPage}"/>
+        </Tab>
+        <Tab Title="Settings" 
+             Icon="settings.png" 
+             Route="EventSettingsPage"
+             x:Name="EventSettingsPage">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        <Tab Title="Tickets" 
+             Icon="ticket.png" 
+             Route="EventSettingsPage2"
+             x:Name="Tickets">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        
     </TabBar>
     
 </Shell>
