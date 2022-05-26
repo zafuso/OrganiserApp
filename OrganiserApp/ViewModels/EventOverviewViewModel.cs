@@ -169,7 +169,7 @@ namespace OrganiserApp.ViewModels
             if (selectedEvent is null)
                 return;
 
-            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
             {
                 {"EventUuid", selectedEvent.Uuid }
             });
