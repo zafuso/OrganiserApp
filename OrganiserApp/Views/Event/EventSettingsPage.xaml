@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
              x:Class="OrganiserApp.Views.Event.EventSettingsPage"
-             Title="EventSettingsPage">
+             Title="EventSettingsPage"
+             x:DataType="viewmodel:EventSettingsViewModel">
 
     <StackLayout>
         <Label Text="{Binding EventUuid}"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+        <Label Text="{Binding SelectedEvent.Name}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
         <Label Text="Hi, this is event info (Settings) page"
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
+
+        <ActivityIndicator
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
     </StackLayout>
+    
 
 
 </ContentPage>

@@ -71,6 +71,7 @@ namespace OrganiserApp.Models
         [JsonProperty(PropertyName = "timezone_id")]
         public int TimezoneId { get; set; }
 
+        [JsonProperty(PropertyName = "summary")]
         public EventSummary EventSummary { get; set; }
 
     }

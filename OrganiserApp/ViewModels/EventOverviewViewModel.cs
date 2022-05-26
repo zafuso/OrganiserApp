@@ -93,8 +93,6 @@ namespace OrganiserApp.ViewModels
 
                 foreach (var item in eventList)
                 {
-                    item.EventSummary = await eventService.GetEventSummaryAsync(dateRange, item.Uuid);
-
                     if (!item.IsOngoing)
                     {
                         item.StartAt = FormatHelper.FormatISO8601ToDateTimeString(item.StartAt);
@@ -171,7 +169,7 @@ namespace OrganiserApp.ViewModels
 
             await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
             {
-                {"EventUuid", selectedEvent.Uuid }
+                {"EventUuid", selectedEvent }
             });
         }
 
