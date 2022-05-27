@@ -19,8 +19,8 @@ namespace OrganiserApp.ViewModels
         Event selectedEvent;
 
         public EventSettingsViewModel()
-        {       
-            
+        {
+            Title = "Event Settings";
         }
     }
 }

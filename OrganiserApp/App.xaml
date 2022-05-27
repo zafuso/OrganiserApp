@@ -185,8 +185,8 @@
             </Style>
 
             <Style x:Key="ButtonOutline" TargetType="Button" BasedOn="{StaticResource ButtonPrimary}">
-                <Setter Property="TextColor" Value="{StaticResource Blue110}"></Setter>
-                <Setter Property="FontFamily" Value="Medium"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource Blue110}"/>
+                <Setter Property="FontFamily" Value="Medium"/>
                 <Setter Property="BorderWidth" Value="2" />
                 <Setter Property="BorderColor" Value="{StaticResource Blue110}"/>
                 <Setter Property="BackgroundColor" Value="Transparent" />

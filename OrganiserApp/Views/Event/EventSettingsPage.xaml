@@ -2,29 +2,257 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:cmIcons="clr-namespace:CmIcons"
              x:Class="OrganiserApp.Views.Event.EventSettingsPage"
-             Title="EventSettingsPage"
+             Title="Settings"
              x:DataType="viewmodel:EventSettingsViewModel">
+    <ScrollView>
+        <Grid Padding="16,8"
+              ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.ColumnSpan="2">
+                <Label
+                    Grid.ColumnSpan="2"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
 
-    <StackLayout>
-        <Label Text="{Binding SelectedEvent.EventSummary.Content.Revenue}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label Text="{Binding SelectedEvent.Name}"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Label Text="Hi, this is event info (Settings) page"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
+                <Label
+                    Text="Name*"
+                    Margin="16,0,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid Grid.ColumnSpan="2">
+                    <Frame x:Name="NameFrame"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Focused="Name_Focused"
+                        Text="{Binding SelectedEvent.Name}"/>
+                    </Frame>
+                </Grid>
 
-        <ActivityIndicator
-            Grid.ColumnSpan="2"
-            HorizontalOptions="FillAndExpand"
-            IsRunning="{Binding IsBusy}"
-            IsVisible="{Binding IsBusy}"
-            VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-    
+                <Label
+                    Text="Description"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid>
+                    <Frame x:Name="DescriptionFrame"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Editor 
+                            Focused="Description_Focused"
+                            Margin="16,0"
+                            HeightRequest="150"
+                            Text="{Binding SelectedEvent.Name}"/>
+                    </Frame>
+                </Grid>
+
+
+                <Label
+                Text="Location"
+                Margin="16,16,0,0"
+                Style="{StaticResource LabelHeader}"/>
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Frame x:Name="NameFrame2"
+                        Padding="0"
+                        CornerRadius="24"
+                        BorderColor="{StaticResource Black10}"
+                        Margin="0">
+                            <Picker Title="Evenemententrerrein Biddinghuizen"
+                                    WidthRequest="276"
+                                    Margin="16,0"
+                                    Grid.Column="0">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>Nac Stadion</x:String>
+                                        <x:String>Buurmans tuin</x:String>
+                                        <x:String>Crystallaan 4</x:String>
+                                        <x:String>Evenemententerrrein Biddinghuizen</x:String>
+                                        <x:String>Nog een Plekkie</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                            </Picker>
+                        </Frame>
+
+                        <Button 
+                        Grid.Column="1" 
+                        Text="{x:Static cmIcons:CmIcons.Icon5}"
+                        FontSize="24"
+                        CornerRadius="90"
+                        Padding="8"
+                        FontFamily="Icons"
+                        Margin="16,0"
+                        Style="{StaticResource ButtonSecondary}"/>
+                    </Grid>
+                </HorizontalStackLayout>
+
+                <Label
+                    Text="Start date"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <HorizontalStackLayout Grid.ColumnSpan="2">
+                    <Grid 
+                          ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <Frame 
+                            Grid.Column="0"
+                            x:Name="StartAtDate"
+                            Padding="0"
+                            WidthRequest="252"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <DatePicker
+                                Margin="16,0"/>
+                        </Frame>
+
+                        <Frame 
+                            Grid.Column="1"
+                            x:Name="StartAtTime"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <TimePicker
+                                Margin="16,0"/>
+                        </Frame>
+                    </Grid>
+                </HorizontalStackLayout>
+
+                <Label
+                    Text="End date"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <HorizontalStackLayout Grid.ColumnSpan="2">
+                    <Grid 
+                          ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                        <Frame 
+                            Grid.Column="0"
+                            x:Name="EndAtDate"
+                            Padding="0"
+                            WidthRequest="252"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <DatePicker
+                                Margin="16,0"/>
+                        </Frame>
+
+                        <Frame 
+                            Grid.Column="1"
+                            x:Name="EndAtTime"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <TimePicker
+                                Margin="16,0"/>
+                        </Frame>
+                    </Grid>
+                </HorizontalStackLayout>
+
+                <Label
+                    Text="Download tickets"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <VerticalStackLayout>
+                    <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                        <RadioButton Content="Allow" Margin="4,0"/>
+                        <RadioButton Content="Don't Allow" Margin="4,0"/>
+                        <RadioButton Content="Allow From Date" Margin="4,0"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Grid.ColumnSpan="2">
+                        <Grid 
+                          ColumnDefinitions="*,*"
+                          ColumnSpacing="8">
+                            <Frame 
+                            Grid.Column="0"
+                            x:Name="DownloadFromDate"
+                            Padding="0"
+                            WidthRequest="252"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                                <DatePicker
+                                Margin="16,0"/>
+                            </Frame>
+
+                            <Frame 
+                            Grid.Column="1"
+                            x:Name="DownloadFromTime"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                                <TimePicker
+                                Margin="16,0"/>
+                            </Frame>
+                        </Grid>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Margin="0,16,0,0">
+                        <VerticalStackLayout>
+                            <Label
+                        Text="Purchase Order Number"
+                        Margin="16,0,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                            <Grid>
+                                <Frame x:Name="PurchaseOrderNumber"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                                    <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Focused="Name_Focused"
+                        Text="{Binding SelectedEvent.PurchaseOrderNumber}"/>
+                                </Frame>
+                            </Grid>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout>
+                            <Label
+                        Text="Minutes to order"
+                        Margin="16,0,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                            <Grid>
+                                <Frame x:Name="MinutesToOrder"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                                    <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Focused="Name_Focused"
+                        Text="{Binding SelectedEvent.MinutesToOrder}"/>
+                                </Frame>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+
+                <ActivityIndicator
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+
 
 
 </ContentPage>
