@@ -1,6 +1,7 @@
 ﻿using OrganiserApp.Services;
 using OrganiserApp.ViewModels;
 using OrganiserApp.Views.Event;
+using OrganiserApp.Views.Venue;
 
 namespace OrganiserApp;
 
@@ -37,10 +38,12 @@ public static class MauiProgram
         builder.Services.AddTransient<EventOverviewViewModel>();
         builder.Services.AddTransient<EventSettingsViewModel>();
         builder.Services.AddTransient<EventPaymentMethodsViewModel>();
+        builder.Services.AddTransient<CreateVenueViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
         builder.Services.AddTransient<EventPaymentMethodsPage>();
+        builder.Services.AddTransient<CreateVenuePage>();
 
         return builder.Build();
 	}

@@ -45,5 +45,22 @@ namespace OrganiserApp.Services
 
             return selectedEvent;
         }
+
+        public async Task PutEventAsync(Event selectedEvent)
+        {
+            var json = JsonConvert.SerializeObject(selectedEvent);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"events/{selectedEvent.Uuid}", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _ = Application.Current.MainPage.DisplayAlert("Failed", "Failed to update event.", "Cancel");
+            }
+            else
+            {
+                _ = Application.Current.MainPage.DisplayAlert("Event saved", "The event has been updated.", "OK");
+            }
+        }
     }
 }

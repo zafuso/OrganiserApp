@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:Class="OrganiserApp.Views.Venue.CreateVenuePage"
+             x:DataType="viewmodel:CreateVenueViewModel"
+             Title="Create Location"
+             Shell.PresentationMode="ModalAnimated">
+    <ScrollView>
+        <Grid Padding="16,8"
+              ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.ColumnSpan="2">
+                <Label
+                    Grid.ColumnSpan="2"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+
+                <Label
+                    Text="Name*"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid Grid.ColumnSpan="2">
+                    <Frame x:Name="Name"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="Name_Unfocused"
+                        Focused="Name_Focused"
+                        Text="{Binding NewVenue.Name}"/>
+                    </Frame>
+                </Grid>
+
+                <Label
+                    Text="Street"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid Grid.ColumnSpan="2">
+                    <Frame x:Name="Street"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="Street_Unfocused"
+                        Focused="Street_Focused"
+                        Text="{Binding NewVenue.AddressLine1}"/>
+                    </Frame>
+                </Grid>
+
+                <Label
+                    Text="Postal code"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid Grid.ColumnSpan="2">
+                    <Frame x:Name="Zipcode"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="Zipcode_Unfocused"
+                        Focused="Zipcode_Focused"
+                        Text="{Binding NewVenue.Zipcode}"/>
+                    </Frame>
+                </Grid>
+
+                <Label
+                    Text="City"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                <Grid Grid.ColumnSpan="2">
+                    <Frame x:Name="City"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                        <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="City_Unfocused"
+                        Focused="City_Focused"
+                        Text="{Binding NewVenue.City}"/>
+                    </Frame>
+                </Grid>
+
+                <Label
+                Text="Country*"
+                Margin="16,16,0,0"
+                Style="{StaticResource LabelHeader}"/>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Frame x:Name="Country"
+                        Padding="0"
+                        CornerRadius="24"
+                        BorderColor="{StaticResource Black10}"
+                        Margin="0">
+                        <Picker Title="Select a country"
+                                    WidthRequest="276"
+                                    Margin="16,0"
+                                    Grid.Column="0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding CountryList}"
+                                    ItemDisplayBinding="{Binding Name.Nl}"
+                                    SelectedItem="{Binding SelectedCountry}"/>
+                    </Frame>
+                </Grid>
+                <Button Text="Save"
+                            Margin="0,16,0,32"
+                            Padding="32,8"
+                            HorizontalOptions="End"
+                            Command="{Binding CreateVenueCommand}"
+                            Style="{StaticResource ButtonSecondary}"/>
+            </VerticalStackLayout>
+
+            <ActivityIndicator
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

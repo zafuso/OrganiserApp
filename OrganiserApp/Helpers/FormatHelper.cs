@@ -13,6 +13,27 @@ namespace OrganiserApp.Helpers
             return DateTime.Parse(IsoDate).ToString("dddd, dd MMMM yyyy HH:mm tt");
         }
 
+        public static DateTime FormatISO8601ToDateTime(string IsoDate)
+        {
+            return DateTime.Parse(IsoDate);
+        }
+
+        public static DateTime FormatISO8601ToDate(string IsoDate)
+        {
+            return DateTime.Parse(IsoDate).Date;
+        }
+
+        public static TimeSpan FormatISO8601ToTime(string IsoDate)
+        {
+            return DateTime.Parse(IsoDate).TimeOfDay;
+        }
+
+        public static string FormatDateTimeToISO8601String(DateTime Date, TimeSpan Time)
+        {
+            var DateTime = Date.Date.Add(Time);
+            return DateTime.ToString("yyyy-MM-ddTHH:mm:sszzz");
+        }
+
         public static decimal FormatPrice(decimal Price)
         {
             var roundedPrice = Math.Round(Price, 2, MidpointRounding.ToEven);
