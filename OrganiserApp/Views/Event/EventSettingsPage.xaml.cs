@@ -10,6 +10,12 @@ public partial class EventSettingsPage : ContentPage
 		BindingContext = viewModel;
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as EventSettingsViewModel).Init();
+    }
+
     private void Name_Focused(object sender, FocusEventArgs e)
     {
         Name.BorderColor = Application.Current.Resources["Blue110"] as Color;

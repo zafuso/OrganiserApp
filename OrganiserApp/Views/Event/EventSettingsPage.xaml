@@ -9,7 +9,7 @@
     <ScrollView>
         <Grid Padding="16,8"
               ColumnDefinitions="*,*">
-            <VerticalStackLayout Grid.ColumnSpan="2">
+            <VerticalStackLayout Grid.ColumnSpan="2" IsVisible="{Binding IsNotBusy}">
                 <Label
                     Grid.ColumnSpan="2"
                     Text="{Binding Title}"
@@ -67,22 +67,15 @@
                         CornerRadius="24"
                         BorderColor="{StaticResource Black10}"
                         Margin="0">
-                            <Picker Title="Evenemententrerrein Biddinghuizen"
+                            <Picker Title="Select a location"
                                     WidthRequest="276"
                                     Margin="16,0"
                                     Grid.Column="0"
                                     Unfocused="Picker_Unfocused"
-                                    Focused="Picker_Focused">
-                                <Picker.ItemsSource>
-                                    <x:Array Type="{x:Type x:String}">
-                                        <x:String>Nac Stadion</x:String>
-                                        <x:String>Buurmans tuin</x:String>
-                                        <x:String>Crystallaan 4</x:String>
-                                        <x:String>Evenemententerrrein Biddinghuizen</x:String>
-                                        <x:String>Nog een Plekkie</x:String>
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding VenueList}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedVenue}"/>
                         </Frame>
 
                         <Button 
@@ -267,15 +260,14 @@
                             HorizontalOptions="End"
                             Style="{StaticResource ButtonSecondary}"></Button>
                 </VerticalStackLayout>
+            </VerticalStackLayout>
 
-
-                <ActivityIndicator
+            <ActivityIndicator
                 Grid.ColumnSpan="2"
                 HorizontalOptions="FillAndExpand"
                 IsRunning="{Binding IsBusy}"
                 IsVisible="{Binding IsBusy}"
                 VerticalOptions="CenterAndExpand" />
-            </VerticalStackLayout>
         </Grid>
     </ScrollView>
 

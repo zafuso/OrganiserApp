@@ -20,7 +20,6 @@ namespace OrganiserApp.ViewModels
 
     public partial class EventOverviewViewModel : BaseViewModel
     {
-        EventListType selectedType = EventListType.Upcoming;
         public ObservableCollection<Event> EventList { get; set; } = new();
 
         private readonly EventService eventService;

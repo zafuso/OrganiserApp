@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace OrganiserApp.Models
 {
-    [ObservableObject]
     public partial class Venue
     {
         [JsonProperty(PropertyName = "uuid")]
