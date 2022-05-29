@@ -33,5 +33,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To prefill location fields in forms.</string>
 </dict>
 </plist>

@@ -33,7 +33,7 @@ namespace OrganiserApp.ViewModels
         private readonly IGeolocation geolocation;
 
         public CreateVenueViewModel(VenueService venueService, IConnectivity connectivity, 
-            CountryService countryService, IGeolocation geolocation) 
+            CountryService countryService, IGeolocation geolocation)
         {
             Title = "Create Location";
             this.venueService = venueService;
@@ -46,8 +46,8 @@ namespace OrganiserApp.ViewModels
 
         public async void Init()
         {
-            await GetUserLocation();
             await GetCountriesAsync();
+            await GetUserLocation();
 
         }
 
@@ -129,7 +129,7 @@ namespace OrganiserApp.ViewModels
             {
                 // Get cached location, else get real location.
                 var location = await geolocation.GetLastKnownLocationAsync();
-                if (location == null)
+                if (location is null)
                 {
                     location = await geolocation.GetLocationAsync(new GeolocationRequest
                     {
@@ -138,7 +138,17 @@ namespace OrganiserApp.ViewModels
                     });
                 }
 
-                var country = location;
+                if (location is null)
+                    return;
+
+                IEnumerable<Placemark> placemarks = await Geocoding.Default.GetPlacemarksAsync(location.Latitude, location.Longitude);
+                Placemark placemark = placemarks?.FirstOrDefault();
+
+                if (placemark != null)
+                {
+                    SelectedCountry = CountryList.Where(c => c.Id == placemark.CountryCode).FirstOrDefault();
+                }
+
             }
             catch (Exception ex)
             {
