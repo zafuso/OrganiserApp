@@ -39,13 +39,12 @@ namespace OrganiserApp.ViewModels
         bool KeepTake = false;
         int skip;
         int take = 5;
-        FilterDateRangeType dateRange;
+        FilterDateRangeType dateRange = FilterDateRangeType.all;
         public EventOverviewViewModel(EventService eventService, IConnectivity connectivity)
         {
             Title = "Event Overview";
             this.eventService = eventService;
             this.connectivity = connectivity;
-            dateRange = FilterDateRangeType.all;
 
             Task.Run(async () => await GetEventListAsync());
         }
@@ -82,7 +81,7 @@ namespace OrganiserApp.ViewModels
                         EventList.Clear();
                     }                    
                 }
-                var response = await eventService.GetEventListAsync(selectedType, skip, take);
+                var response = await eventService.GetEventListAsync(dateRange, skip, take);
                 if (response.Headers.TryGetValues("X-TF-PAGINATION-TOTAL", out IEnumerable<string> headerValues))
                 {
                     TotalItems = Int32.Parse(headerValues.FirstOrDefault());

@@ -21,7 +21,7 @@
                     Margin="16,0,0,0"
                     Style="{StaticResource LabelHeader}"/>
                 <Grid Grid.ColumnSpan="2">
-                    <Frame x:Name="NameFrame"
+                    <Frame x:Name="Name"
                            Grid.ColumnSpan="2"
                            Padding="0"
                            CornerRadius="24"
@@ -30,6 +30,7 @@
                         <Entry  
                         Grid.ColumnSpan="2"
                         Margin="16,0"
+                        Unfocused="Name_Unfocused"
                         Focused="Name_Focused"
                         Text="{Binding SelectedEvent.Name}"/>
                     </Frame>
@@ -40,13 +41,14 @@
                     Margin="16,16,0,0"
                     Style="{StaticResource LabelHeader}"/>
                 <Grid>
-                    <Frame x:Name="DescriptionFrame"
+                    <Frame x:Name="Description"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
                            Margin="0">
                         <Editor 
                             Focused="Description_Focused"
+                            Unfocused="Description_Unfocused"
                             Margin="16,0"
                             HeightRequest="150"
                             Text="{Binding SelectedEvent.Name}"/>
@@ -60,7 +62,7 @@
                 Style="{StaticResource LabelHeader}"/>
                 <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
                     <Grid ColumnDefinitions="*,Auto">
-                        <Frame x:Name="NameFrame2"
+                        <Frame x:Name="Location"
                         Padding="0"
                         CornerRadius="24"
                         BorderColor="{StaticResource Black10}"
@@ -68,7 +70,9 @@
                             <Picker Title="Evenemententrerrein Biddinghuizen"
                                     WidthRequest="276"
                                     Margin="16,0"
-                                    Grid.Column="0">
+                                    Grid.Column="0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused">
                                 <Picker.ItemsSource>
                                     <x:Array Type="{x:Type x:String}">
                                         <x:String>Nac Stadion</x:String>
@@ -110,17 +114,21 @@
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                             <DatePicker
+                                Unfocused="StartAtDatePicker_Unfocused"
+                                Focused="StartAtDatePicker_Focused"
                                 Margin="16,0"/>
                         </Frame>
 
                         <Frame 
-                            Grid.Column="1"
                             x:Name="StartAtTime"
+                            Grid.Column="1"
                             Padding="0"
                             CornerRadius="24"
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                             <TimePicker
+                                Unfocused="StartAtTimePicker_Unfocused"
+                                Focused="StartAtTimePicker_Focused"
                                 Margin="16,0"/>
                         </Frame>
                     </Grid>
@@ -143,6 +151,8 @@
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                             <DatePicker
+                                Unfocused="EndAtDatePicker_Unfocused"
+                                Focused="EndAtDatePicker_Focused"
                                 Margin="16,0"/>
                         </Frame>
 
@@ -154,6 +164,8 @@
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                             <TimePicker
+                                Unfocused="EndAtDatePicker_Unfocused"
+                                Focused="EndAtTimePicker_Focused"
                                 Margin="16,0"/>
                         </Frame>
                     </Grid>
@@ -182,7 +194,9 @@
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                                 <DatePicker
-                                Margin="16,0"/>
+                                    Focused="DownloadFromDate_Focused"
+                                    Unfocused="DownloadFromDate_Unfocused"
+                                    Margin="16,0"/>
                             </Frame>
 
                             <Frame 
@@ -193,7 +207,9 @@
                             BorderColor="{StaticResource Black10}"
                             Margin="0">
                                 <TimePicker
-                                Margin="16,0"/>
+                                    Focused="DownloadFromTime_Focused"
+                                    Unfocused="DownloadFromTime_Unfocused"
+                                    Margin="16,0"/>
                             </Frame>
                         </Grid>
                     </HorizontalStackLayout>
@@ -205,41 +221,51 @@
                         Margin="16,0,0,0"
                         Style="{StaticResource LabelHeader}"/>
                             <Grid>
-                                <Frame x:Name="PurchaseOrderNumber"
-                           Grid.ColumnSpan="2"
-                           Padding="0"
-                           CornerRadius="24"
-                           BorderColor="{StaticResource Black10}"
-                           Margin="0">
+                                <Frame WidthRequest="180"
+                                       x:Name="PurchaseOrderNumber"
+                                       Grid.ColumnSpan="2"
+                                       Padding="0"
+                                       CornerRadius="24"
+                                       BorderColor="{StaticResource Black10}"
+                                       Margin="0">
                                     <Entry  
-                        Grid.ColumnSpan="2"
-                        Margin="16,0"
-                        Focused="Name_Focused"
-                        Text="{Binding SelectedEvent.PurchaseOrderNumber}"/>
+                                        Grid.ColumnSpan="2"
+                                        Margin="16,0"
+                                        Unfocused="PurchaseOrderNumber_Unfocused"
+                                        Focused="PurchaseOrderNumber_Focused"
+                                        Text="{Binding SelectedEvent.PurchaseOrderNumber}"/>
                                 </Frame>
                             </Grid>
                         </VerticalStackLayout>
                         <VerticalStackLayout>
                             <Label
-                        Text="Minutes to order"
-                        Margin="16,0,0,0"
-                        Style="{StaticResource LabelHeader}"/>
+                                Text="Minutes to order"
+                                Margin="16,0,0,0"
+                                Style="{StaticResource LabelHeader}"/>
                             <Grid>
-                                <Frame x:Name="MinutesToOrder"
-                           Grid.ColumnSpan="2"
-                           Padding="0"
-                           CornerRadius="24"
-                           BorderColor="{StaticResource Black10}"
-                           Margin="0">
-                                    <Entry  
-                        Grid.ColumnSpan="2"
-                        Margin="16,0"
-                        Focused="Name_Focused"
+                                <Frame 
+                                    x:Name="MinutesToOrder"
+                                    Grid.ColumnSpan="2"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0"
+                                    WidthRequest="174">
+                                    <Entry 
+                                        Grid.ColumnSpan="2"
+                                        Margin="16,0"
+                                        Focused="MinutesToOrder_Focused"
+                                        Unfocused="MinutesToOrder_Unfocused"
                         Text="{Binding SelectedEvent.MinutesToOrder}"/>
                                 </Frame>
                             </Grid>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
+                    <Button Text="Save"
+                            Margin="0,16"
+                            Padding="32,8"
+                            HorizontalOptions="End"
+                            Style="{StaticResource ButtonSecondary}"></Button>
                 </VerticalStackLayout>
 
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OrganiserApp.Models;
 
 namespace OrganiserApp.ViewModels
 {
@@ -11,6 +12,9 @@ namespace OrganiserApp.ViewModels
     {
         [ObservableProperty]
         string eventUuid;
+
+        [ObservableProperty]
+        Event selectedEvent;
 
         public EventPaymentMethodsViewModel()
         {

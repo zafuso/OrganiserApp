@@ -13,9 +13,9 @@ namespace OrganiserApp.Services
     {
         static readonly HttpClient client = getHttpClient();
 
-        public async Task<HttpResponseMessage> GetEventListAsync(EventListType type, int skip, int take)
+        public async Task<HttpResponseMessage> GetEventListAsync(FilterDateRangeType dateRange, int skip, int take)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"events/list?type={type}");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"events/list?completed_at_range={dateRange}");
             request.Headers.Add("X-TF-PAGINATION-SKIP", skip.ToString());
             request.Headers.Add("X-TF-PAGINATION-TAKE", take.ToString());
 
