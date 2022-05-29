@@ -30,19 +30,25 @@ namespace OrganiserApp.ViewModels
         private readonly VenueService venueService;
         private readonly CountryService countryService;
         private readonly IConnectivity connectivity;
+        private readonly IGeolocation geolocation;
 
-        public CreateVenueViewModel(VenueService venueService, IConnectivity connectivity, CountryService countryService)
+        public CreateVenueViewModel(VenueService venueService, IConnectivity connectivity, 
+            CountryService countryService, IGeolocation geolocation) 
         {
             Title = "Create Location";
             this.venueService = venueService;
             this.countryService = countryService;
             this.connectivity = connectivity;
+            this.geolocation = geolocation;
+
             NewVenue = new Venue();
         }
 
         public async void Init()
         {
+            await GetUserLocation();
             await GetCountriesAsync();
+
         }
 
         [ICommand]
@@ -113,6 +119,31 @@ namespace OrganiserApp.ViewModels
                 {
                     {"SelectedEvent", selectedEvent }
                 });
+            }
+        }
+
+        [ICommand]
+        async Task GetUserLocation()
+        {
+            try
+            {
+                // Get cached location, else get real location.
+                var location = await geolocation.GetLastKnownLocationAsync();
+                if (location == null)
+                {
+                    location = await geolocation.GetLocationAsync(new GeolocationRequest
+                    {
+                        DesiredAccuracy = GeolocationAccuracy.Medium,
+                        Timeout = TimeSpan.FromSeconds(30)
+                    });
+                }
+
+                var country = location;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to query location: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
             }
         }
     }
