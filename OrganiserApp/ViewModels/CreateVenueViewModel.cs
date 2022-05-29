@@ -23,7 +23,7 @@ namespace OrganiserApp.ViewModels
         Country selectedCountry;
 
         [ObservableProperty]
-        Venue newVenue;
+        Venue newVenue = new();
 
         public ObservableCollection<Country> CountryList { get; set; } = new();
 
@@ -40,15 +40,12 @@ namespace OrganiserApp.ViewModels
             this.countryService = countryService;
             this.connectivity = connectivity;
             this.geolocation = geolocation;
-
-            NewVenue = new Venue();
         }
 
         public async void Init()
         {
             await GetCountriesAsync();
             await GetUserLocation();
-
         }
 
         [ICommand]
@@ -147,6 +144,9 @@ namespace OrganiserApp.ViewModels
                 if (placemark != null)
                 {
                     SelectedCountry = CountryList.Where(c => c.Id == placemark.CountryCode).FirstOrDefault();
+                    NewVenue.AddressLine1 = $"{placemark.SubThoroughfare} {placemark.Thoroughfare}";
+                    NewVenue.City = placemark.Locality;
+                    NewVenue.Zipcode = placemark.PostalCode;
                 }
 
             }
