@@ -4,7 +4,7 @@
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
              x:DataType="viewmodel:HelpViewModel"
              x:Class="OrganiserApp.Views.Help.HelpPage"
-             Title="HelpPage">
+             Title="Support">
 
     <Grid ColumnDefinitions="*,*"
           Padding="16,8">
@@ -23,15 +23,19 @@
             
             <HorizontalStackLayout Grid.ColumnSpan="2"
                                    Spacing="16"
-                                   HorizontalOptions="Center">
+                                   HorizontalOptions="CenterAndExpand">
                 <Button
                     IsEnabled="{Binding IsNotBusy}"
                     Command="{Binding GoToHelpCenterCommand}"
+                    ImageSource="help_open_white.svg"
+                    ContentLayout="Left, 4"
                     Style="{StaticResource ButtonPrimary}"
                     Text="Helpcenter"/>
                 <Button 
                     IsEnabled="{Binding IsNotBusy}"
                     Command="{Binding EmailSupportCommand}"
+                    ImageSource="email_white.svg"
+                    ContentLayout="Left, 4"
                     Style="{StaticResource ButtonPrimary}"
                     Text="E-mail Support" />
             </HorizontalStackLayout>
@@ -42,21 +46,25 @@
                 Text="Does your visitor need help? Please direct them to our ticketbuyer FAQ our start a chat with us on WhatsApp."/>
 
             <HorizontalStackLayout Grid.ColumnSpan="2"
-                                   Spacing="16"
+                                   Spacing="8"
                                    HorizontalOptions="Center">
                 <Button 
-                IsEnabled="{Binding IsNotBusy}"
-                Command="{Binding GoToVisitorFaqCommand}"
-                HorizontalOptions="Center"
-                Style="{StaticResource ButtonSecondary}"
-                Text="Visitor F.A.Q."/>
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding GoToVisitorFaqCommand}"
+                    HorizontalOptions="Center"
+                    ImageSource="help_open_blue110.svg"
+                    ContentLayout="Left, 4"
+                    Style="{StaticResource ButtonSecondary}"
+                    Text="Visitor F.A.Q."/>
                 
                 <Button 
-                IsEnabled="{Binding IsNotBusy}"
-                Command="{Binding StartWhatsAppChatCommand}"
-                HorizontalOptions="Center"
-                Style="{StaticResource ButtonSecondary}"
-                Text="Chat on WhatsApp"/>
+                    IsEnabled="{Binding IsNotBusy}"
+                    Command="{Binding StartWhatsAppChatCommand}"
+                    ImageSource="whatsapp_blue110.svg"
+                    ContentLayout="Left, 4"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource ButtonSecondary}"
+                    Text="WhatsApp Chat"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

@@ -47,6 +47,7 @@
                            BorderColor="{StaticResource Black10}"
                            Margin="0">
                         <Editor 
+                            Grid.ColumnSpan="2"
                             Focused="Description_Focused"
                             Unfocused="Description_Unfocused"
                             Margin="16,0"

@@ -73,7 +73,7 @@
             <ShellContent ContentTemplate="{DataTemplate orders:GuestListOverviewPage}" />
         </Tab>
         <Tab Title="Need help?" 
-             Icon="menu.png" 
+             Icon="help.png" 
              Route="HelpPage"
              x:Name="help">
             <ShellContent ContentTemplate="{DataTemplate help:HelpPage}" />

@@ -64,13 +64,19 @@
 	  <None Remove="Resources\Fonts\GothamRnd-Medium.otf" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\connection.png" />
+	  <None Remove="Resources\Images\email_blue110.svg" />
+	  <None Remove="Resources\Images\email_white.svg" />
 	  <None Remove="Resources\Images\file.png" />
 	  <None Remove="Resources\Images\help.png" />
+	  <None Remove="Resources\Images\help_open_blue110.svg" />
+	  <None Remove="Resources\Images\help_open_white.svg" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\shop.png" />
 	  <None Remove="Resources\Images\ticket.png" />
+	  <None Remove="Resources\Images\whatsapp.png" />
+	  <None Remove="Resources\Images\whatsapp_blue110.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
