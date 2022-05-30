@@ -44,7 +44,35 @@
              x:Name="Tickets">
             <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
         </Tab>
-        
-    </TabBar>
-    
+        <Tab Title="Shops" 
+             Icon="shop.png" 
+             Route="EventSettingsPage3"
+             x:Name="Shops">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        <Tab Title="Analytics" 
+             Icon="connection.png" 
+             Route="EventSettingsPage4"
+             x:Name="Analytics">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        <Tab Title="Orders" 
+             Icon="file.png" 
+             Route="EventSettingsPage5"
+             x:Name="Orders">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        <Tab Title="Guest List" 
+             Icon="menu.png" 
+             Route="EventSettingsPage6"
+             x:Name="Guestlist">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+        <Tab Title="Need help?" 
+             Icon="menu.png" 
+             Route="EventSettingsPage7"
+             x:Name="help">
+            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+        </Tab>
+    </TabBar>    
 </Shell>

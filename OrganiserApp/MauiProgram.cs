@@ -1,6 +1,11 @@
 ﻿using OrganiserApp.Services;
 using OrganiserApp.ViewModels;
+using OrganiserApp.Views.Analytics;
 using OrganiserApp.Views.Event;
+using OrganiserApp.Views.Help;
+using OrganiserApp.Views.Orders;
+using OrganiserApp.Views.Shop;
+using OrganiserApp.Views.Ticket;
 using OrganiserApp.Views.Venue;
 
 namespace OrganiserApp;
@@ -41,11 +46,25 @@ public static class MauiProgram
         builder.Services.AddTransient<EventSettingsViewModel>();
         builder.Services.AddTransient<EventPaymentMethodsViewModel>();
         builder.Services.AddTransient<CreateVenueViewModel>();
+        builder.Services.AddTransient<TicketOverviewViewModel>();
+        builder.Services.AddTransient<TicketDetailsViewModel>();
+        builder.Services.AddTransient<ShopOverviewViewModel>();
+        builder.Services.AddTransient<OrderOverviewViewModel>();
+        builder.Services.AddTransient<GuestListOverviewViewModel>();
+        builder.Services.AddTransient<HelpViewModel>();
+        builder.Services.AddTransient<TicketSalesAnalyticsViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
         builder.Services.AddTransient<EventPaymentMethodsPage>();
         builder.Services.AddTransient<CreateVenuePage>();
+        builder.Services.AddTransient<TicketOverviewPage>();
+        builder.Services.AddTransient<TicketDetailsPage>();
+        builder.Services.AddTransient<ShopOverviewPage>();
+        builder.Services.AddTransient<OrderOverviewPage>();
+        builder.Services.AddTransient<GuestListOverviewPage>();
+        builder.Services.AddTransient<TicketSalesAnalyticsPage>();
+        builder.Services.AddTransient<HelpPage>();
 
         return builder.Build();
 	}
