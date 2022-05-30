@@ -41,7 +41,6 @@
              Route="EventSettingsPage"
              Icon="settings.png">
             <ShellContent Title="Event Info" ContentTemplate="{DataTemplate event:EventSettingsPage}"/>
-            <ShellContent Title="Payment Methods" ContentTemplate="{DataTemplate event:EventPaymentMethodsPage}"/>
         </Tab>
         <Tab Title="Tickets" 
              Icon="ticket.png" 

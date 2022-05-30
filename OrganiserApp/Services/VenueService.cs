@@ -10,7 +10,7 @@ namespace OrganiserApp.Services
 {
     public class VenueService : BaseHttpClient
     {
-        static readonly HttpClient client = getHttpClient();
+        static readonly HttpClient client = GetHttpClient();
 
         public async Task<IEnumerable<Venue>> GetVenuesAsync()
         {

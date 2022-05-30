@@ -10,7 +10,7 @@ namespace OrganiserApp.Services
 {
     public class TicketService : BaseHttpClient
     {
-        static readonly HttpClient client = getHttpClient();
+        static readonly HttpClient client = GetHttpClient();
 
         public async Task<IEnumerable<TicketStatusType>> GetTicketstatusTypesAsync()
         {

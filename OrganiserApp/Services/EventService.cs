@@ -11,7 +11,7 @@ namespace OrganiserApp.Services
 {
     public class EventService : BaseHttpClient
     {
-        static readonly HttpClient client = getHttpClient();
+        static readonly HttpClient client = GetHttpClient();
 
         public async Task<HttpResponseMessage> GetEventListAsync(FilterDateRangeType dateRange, int skip, int take)
         {
