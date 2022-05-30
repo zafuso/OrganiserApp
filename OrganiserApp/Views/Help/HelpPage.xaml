@@ -48,7 +48,6 @@
                 IsEnabled="{Binding IsNotBusy}"
                 Command="{Binding GoToVisitorFaqCommand}"
                 HorizontalOptions="Center"
-                Margin="16,0"
                 Style="{StaticResource ButtonSecondary}"
                 Text="Visitor F.A.Q."/>
                 
@@ -56,7 +55,6 @@
                 IsEnabled="{Binding IsNotBusy}"
                 Command="{Binding StartWhatsAppChatCommand}"
                 HorizontalOptions="Center"
-                Margin="16,0"
                 Style="{StaticResource ButtonSecondary}"
                 Text="Chat on WhatsApp"/>
             </HorizontalStackLayout>
