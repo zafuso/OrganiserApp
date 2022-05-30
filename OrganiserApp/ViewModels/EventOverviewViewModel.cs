@@ -32,7 +32,7 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         bool isRefreshing;
         [ObservableProperty]
-        bool canLoadMore;
+        bool canLoadMore = false;
 
         bool LoadMore = false;
         bool KeepTake = false;

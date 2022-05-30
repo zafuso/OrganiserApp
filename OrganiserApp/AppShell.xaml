@@ -3,7 +3,12 @@
     x:Class="OrganiserApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:OrganiserApp.Views.Event">
+    xmlns:event="clr-namespace:OrganiserApp.Views.Event"
+    xmlns:ticket="clr-namespace:OrganiserApp.Views.Ticket"
+    xmlns:analytics="clr-namespace:OrganiserApp.Views.Analytics"
+    xmlns:help="clr-namespace:OrganiserApp.Views.Help"
+    xmlns:orders="clr-namespace:OrganiserApp.Views.Orders"
+    xmlns:shop="clr-namespace:OrganiserApp.Views.Shop">
 
 
     <Shell.Resources>
@@ -30,49 +35,49 @@
             Title="Events"
             Icon="calendar.png"
             Route="EventOverviewPage">
-            <ShellContent ContentTemplate="{DataTemplate local:EventOverviewPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate event:EventOverviewPage}"/>
         </Tab>
         <Tab Title="Settings"
              Route="EventSettingsPage"
              Icon="settings.png">
-            <ShellContent Title="Event Info" ContentTemplate="{DataTemplate local:EventSettingsPage}"/>
-            <ShellContent Title="Payment Methods" ContentTemplate="{DataTemplate local:EventPaymentMethodsPage}"/>
+            <ShellContent Title="Event Info" ContentTemplate="{DataTemplate event:EventSettingsPage}"/>
+            <ShellContent Title="Payment Methods" ContentTemplate="{DataTemplate event:EventPaymentMethodsPage}"/>
         </Tab>
         <Tab Title="Tickets" 
              Icon="ticket.png" 
-             Route="EventSettingsPage2"
+             Route="TicketOverviewPage"
              x:Name="Tickets">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate ticket:TicketOverviewPage}" />
         </Tab>
         <Tab Title="Shops" 
              Icon="shop.png" 
-             Route="EventSettingsPage3"
+             Route="ShopOverviewPage"
              x:Name="Shops">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate shop:ShopOverviewPage}" />
         </Tab>
         <Tab Title="Analytics" 
              Icon="connection.png" 
-             Route="EventSettingsPage4"
+             Route="TicketSalesAnalyticsPage"
              x:Name="Analytics">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate analytics:TicketSalesAnalyticsPage}" />
         </Tab>
         <Tab Title="Orders" 
              Icon="file.png" 
-             Route="EventSettingsPage5"
+             Route="OrderOverviewPage"
              x:Name="Orders">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate orders:OrderOverviewPage}" />
         </Tab>
         <Tab Title="Guest List" 
              Icon="menu.png" 
-             Route="EventSettingsPage6"
+             Route="GuestListOverviewPage"
              x:Name="Guestlist">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate orders:GuestListOverviewPage}" />
         </Tab>
         <Tab Title="Need help?" 
              Icon="menu.png" 
-             Route="EventSettingsPage7"
+             Route="HelpPage"
              x:Name="help">
-            <ShellContent ContentTemplate="{DataTemplate local:EventSettingsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate help:HelpPage}" />
         </Tab>
     </TabBar>    
 </Shell>

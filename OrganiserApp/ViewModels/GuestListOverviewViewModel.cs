@@ -8,7 +8,7 @@ namespace OrganiserApp.ViewModels
 {
     public partial class GuestListOverviewViewModel : BaseViewModel
     {
-        GuestListOverviewViewModel()
+        public GuestListOverviewViewModel()
         {
             Title = "Guest List";
         }

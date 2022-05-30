@@ -8,7 +8,7 @@ namespace OrganiserApp.ViewModels
 {
     public partial class TicketSalesAnalyticsViewModel : BaseViewModel
     {
-        TicketSalesAnalyticsViewModel()
+        public TicketSalesAnalyticsViewModel()
         {
             Title = "Ticket sales analytics";
         }

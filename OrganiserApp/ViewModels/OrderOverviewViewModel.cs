@@ -8,7 +8,7 @@ namespace OrganiserApp.ViewModels
 {
     public partial class OrderOverviewViewModel : BaseViewModel
     {
-        OrderOverviewViewModel()
+        public OrderOverviewViewModel()
         {
             Title = "Orders";
         }
