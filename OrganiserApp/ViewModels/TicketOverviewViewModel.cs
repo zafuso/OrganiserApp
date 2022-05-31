@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using MvvmHelpers;
 using OrganiserApp.Helpers;
 using OrganiserApp.Models;
+using OrganiserApp.Enums;
 using OrganiserApp.Services;
 using OrganiserApp.Views.Event;
 using System;
@@ -12,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketStatusType = OrganiserApp.Enums.TicketStatusType;
 
 namespace OrganiserApp.ViewModels
 {
@@ -145,6 +147,37 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        void CalculateTicketStatus(TicketType ticket)
+        {
+            switch (ticket.TicketStatusType)
+            {
+                case TicketStatusType.ONLINE:
+                    ticket.Status = "Online";
+                    break;
+                case TicketStatusType.NOT_IN_SALE:
+                    ticket.Status = "Currently not in sale";
+                    break;
+                case TicketStatusType.DOOR_SALE:
+                    ticket.Status = "Offline";
+                    break;
+                case TicketStatusType.IN_RESERVATION:
+                    ticket.Status = "In reservation";
+                    break;
+                case TicketStatusType.SOLD_OUT:
+                    ticket.Status = "Sold out";
+                    break;
+                default: break;
+            }
+
+            var onlineFrom = FormatHelper.FormatISO8601ToDateTime(ticket.OnlineFrom);
+            var onlineUntil = FormatHelper.FormatISO8601ToDateTime(ticket.OnlineUntil);
+
+            if (ticket.TicketStatusType == TicketStatusType.NOT_IN_SALE && onlineFrom > DateTime.Now && onlineUntil < DateTime.Now)
+            {
+                ticket.Status = "Online";
             }
         }
     }
