@@ -17,9 +17,8 @@ namespace OrganiserApp.ViewModels
     public partial class TicketBulkEditViewModel : BaseViewModel
     {
         public ObservableCollection<TicketType> TicketTypeList { get; set; } = new();
+        public ObservableCollection<TicketStatusType> TicketStatusTypeList { get; set; } = new();
 
-        [ObservableProperty]
-        List<TicketStatusType> ticketStatusTypeList;
         [ObservableProperty]
         int ticketCount;
         [ObservableProperty]
@@ -58,11 +57,13 @@ namespace OrganiserApp.ViewModels
 
             for (int i = 0; i < TicketCount; i++)
             {
-                TicketNames += $"{TicketTypeList[i].Name.Nl}, ";
-
                 if (i == (TicketCount - 1))
                 {
                     TicketNames += $"{TicketTypeList[i].Name.Nl}";
+                } 
+                else
+                {
+                    TicketNames += $"{TicketTypeList[i].Name.Nl}, ";
                 }
             }
 
