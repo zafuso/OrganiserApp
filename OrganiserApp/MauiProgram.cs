@@ -1,4 +1,5 @@
-﻿using OrganiserApp.Services;
+﻿using OrganiserApp.Helpers;
+using OrganiserApp.Services;
 using OrganiserApp.ViewModels;
 using OrganiserApp.Views.Analytics;
 using OrganiserApp.Views.Event;
@@ -42,6 +43,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<EventService>();
         builder.Services.AddSingleton<VenueService>();
         builder.Services.AddSingleton<CountryService>();
+        builder.Services.AddSingleton<TicketService>();
 
         builder.Services.AddTransient<EventOverviewViewModel>();
         builder.Services.AddTransient<EventSettingsViewModel>();

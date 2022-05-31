@@ -74,6 +74,9 @@
 	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\shop.png" />
+	  <None Remove="Resources\Images\status_error.png" />
+	  <None Remove="Resources\Images\status_success.png" />
+	  <None Remove="Resources\Images\status_warning.png" />
 	  <None Remove="Resources\Images\ticket.png" />
 	  <None Remove="Resources\Images\whatsapp.png" />
 	  <None Remove="Resources\Images\whatsapp_blue110.svg" />

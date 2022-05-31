@@ -11,6 +11,12 @@ public partial class EventOverviewPage : ContentPage
         ButtonAll.BackgroundColor = Color.FromRgb(255, 255, 255);
     }
 
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as EventOverviewViewModel).Init();
+    }
+
     private void Button_All_Clicked(object sender, EventArgs e)
     {
         ButtonAll.BackgroundColor = Color.FromRgb(255, 255, 255);

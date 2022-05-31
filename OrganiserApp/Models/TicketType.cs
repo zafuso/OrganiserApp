@@ -101,5 +101,7 @@ namespace OrganiserApp.Models
 
         [JsonProperty(PropertyName = "updated_at")]
         public string UpdatedAt { get; set; }
+
+        public string Status { get; set; }
     }
 }

@@ -15,6 +15,7 @@ public partial class AppShell : Shell
         InitializeComponent();
 
         Routing.RegisterRoute(nameof(TabBar), typeof(TabBar));
+        Routing.RegisterRoute(nameof(EventOverviewPage), typeof(EventOverviewPage));
         Routing.RegisterRoute(nameof(EventSettingsPage), typeof(EventSettingsPage));
         Routing.RegisterRoute(nameof(EventPaymentMethodsPage), typeof(EventPaymentMethodsPage));
         Routing.RegisterRoute(nameof(CreateVenuePage), typeof(CreateVenuePage));

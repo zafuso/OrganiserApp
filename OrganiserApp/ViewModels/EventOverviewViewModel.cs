@@ -48,6 +48,11 @@ namespace OrganiserApp.ViewModels
             Task.Run(async () => await GetEventListAsync());
         }
 
+        public void Init()
+        {
+            Preferences.Clear();
+        }
+
         [ICommand]
         async Task GetEventListAsync()
         {
@@ -164,6 +169,8 @@ namespace OrganiserApp.ViewModels
         {
             if (selectedEvent is null)
                 return;
+
+            Preferences.Set("EventUuid", selectedEvent.Uuid);
 
             await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventSettingsPage)}", true, new Dictionary<string, object>
             {
