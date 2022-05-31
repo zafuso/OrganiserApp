@@ -9,7 +9,7 @@
     <ScrollView>
         <Grid Padding="16,8"
               ColumnDefinitions="*,*">
-            <VerticalStackLayout Grid.ColumnSpan="2">
+            <VerticalStackLayout Grid.ColumnSpan="2" IsVisible="{Binding IsNotBusy}">
                 <Label
                     Grid.ColumnSpan="2"
                     Text="{Binding Title}"
@@ -274,7 +274,7 @@
 
             <ActivityIndicator
                 Grid.ColumnSpan="2"
-                HorizontalOptions="FillAndExpand"
+                HorizontalOptions="CenterAndExpand"
                 IsRunning="{Binding IsBusy}"
                 IsVisible="{Binding IsBusy}"
                 VerticalOptions="CenterAndExpand" />

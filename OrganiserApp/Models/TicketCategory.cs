@@ -22,7 +22,7 @@ namespace OrganiserApp.Models
         public bool IsDefault { get; set; }
 
         [JsonProperty(PropertyName = "max_order_amount")]
-        public int MaxOrderAmount { get; set; }
+        public int? MaxOrderAmount { get; set; }
 
         [JsonProperty(PropertyName = "name")]
         public VirtualTranslation Name { get; set; }

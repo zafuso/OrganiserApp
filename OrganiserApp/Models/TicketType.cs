@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using OrganiserApp.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -87,8 +88,8 @@ namespace OrganiserApp.Models
         [JsonProperty(PropertyName = "ticket_template_uuid")]
         public string TicketTemplateUuid { get; set; }
 
-        [JsonProperty(PropertyName = "ticket_status_type")]
-        public string TicketStatusType { get; set; }
+        [JsonProperty(PropertyName = "ticket_status_type_id")]
+        public Enums.TicketStatusType TicketStatusType { get; set; }
 
         [JsonProperty(PropertyName = "tags")]
         public List<string> Tags { get; set; }
@@ -103,5 +104,7 @@ namespace OrganiserApp.Models
         public string UpdatedAt { get; set; }
 
         public string Status { get; set; }
+        public string StatusIndicator { get; set; }
+        public bool IsChecked { get; set; }
     }
 }

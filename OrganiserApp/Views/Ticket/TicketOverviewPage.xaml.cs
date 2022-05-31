@@ -16,8 +16,8 @@ public partial class TicketOverviewPage : ContentPage
         (BindingContext as TicketOverviewViewModel).Init();
     }
 
-    private void Entry_Focused(object sender, FocusEventArgs e)
+    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
     {
-
+        (BindingContext as TicketOverviewViewModel).TicketTypeCheckedAsync();
     }
 }

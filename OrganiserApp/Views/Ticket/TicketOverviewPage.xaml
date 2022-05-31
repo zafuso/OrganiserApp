@@ -3,39 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:OrganiserApp.Models"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:TicketOverviewViewModel"
              x:Class="OrganiserApp.Views.Ticket.TicketOverviewPage"
-             Title="TicketOverviewPage">
+             Title="Ticket Types">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:SelectedItemEventArgsConverter x:Key="SelectedItemEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid ColumnDefinitions="*,*">
         <RefreshView
-            Grid.ColumnSpan="2">
-            <!-- Command="{Binding GetEventListCommand}"
-            IsRefreshing="{Binding IsRefreshing}" >-->
+            Grid.ColumnSpan="2"
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
 
             <CollectionView
+                IsVisible="{Binding IsNotBusy}"
                 ItemsSource="{Binding TicketList}"
-                SelectionMode="Multiple">
+                SelectionMode="None">
 
                 <CollectionView.Header>
                     <VerticalStackLayout HorizontalOptions="Center" Padding="0">
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="{Binding Title}"
+                            Style="{StaticResource LabelHeader}"
+                            FontSize="40"/>
                         <HorizontalStackLayout>
-                            <Grid Grid.ColumnSpan="2">
+                            <Grid Grid.ColumnSpan="2"
+                                  Padding="8">
                                 <Frame 
+                                    HorizontalOptions="Center"
                                     x:Name="Search"
                                     Grid.ColumnSpan="2"
                                     Padding="0"
                                     CornerRadius="24"
+                                    WidthRequest="360"
                                     BorderColor="{StaticResource Black10}"
                                     Margin="0">
-                                    <Entry  
-                                        Grid.ColumnSpan="2"
-                                        Margin="16,0"
-                                        Placeholder="Search tickets"
-                                        Text="{Binding SearchQuery}"/>
+                                    <HorizontalStackLayout 
+                                        HorizontalOptions="Start" 
+                                        Spacing="8"
+                                        Padding="8,0">
+                                    <Image 
+                                        HorizontalOptions="Start"
+                                        Source="search_grey.png"/>
+                                        <Entry  
+                                            Grid.ColumnSpan="2"
+                                            Placeholder="Search ticket types"
+                                            Text="{Binding SearchQuery}">
+                                            <Entry.Behaviors>
+                                                <toolkit:EventToCommandBehavior
+                                                    EventName="TextChanged"
+                                                    Command="{Binding SearchTicketTypesCommand}"/>
+                                            </Entry.Behaviors>
+                                        </Entry>
+                                    </HorizontalStackLayout>
                                 </Frame>
                             </Grid>
                         </HorizontalStackLayout>
+                        <Button 
+                            Grid.Column="1"
+                            IsVisible="{Binding CanBulkEdit}"
+                            IsEnabled="{Binding CanBulkEdit}"
+                            Command="{Binding GoToBulkEditCommand}"
+                            ImageSource="edit_blue110.svg"
+                            ContentLayout="Left, 4"
+                            Style="{StaticResource ButtonSecondary}"
+                            Text="Bulk Edit"
+                            HorizontalOptions="End"/>
                     </VerticalStackLayout>
                 </CollectionView.Header>
 
@@ -46,17 +85,20 @@
                                 <Grid 
                                     Padding="16"
                                     ColumnDefinitions="Auto,*,Auto">
-                                    <CheckBox Grid.Column="0"/>
+                                    <CheckBox Grid.Column="0"
+                                              IsChecked="{Binding IsChecked}"
+                                              CheckedChanged="CheckBox_CheckedChanged">
+                                    </CheckBox>
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                         <Label 
                                             FontSize="16"
                                             Style="{StaticResource LabelHeader}"
                                             Text="{Binding Name.Nl}"/>
                                         <HorizontalStackLayout HorizontalOptions="Start" Spacing="8">
-                                            <Image Source="status_success.png"/>
+                                            <Image Source="{Binding StatusIndicator}"/>
                                             <Label 
                                                 Style="{StaticResource MicroLabel}"
-                                                Text="{Binding TicketStatusType}"/>
+                                                Text="{Binding Status}"/>
                                         </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                     <Label 

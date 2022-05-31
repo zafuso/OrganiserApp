@@ -56,6 +56,7 @@ public static class MauiProgram
         builder.Services.AddTransient<GuestListOverviewViewModel>();
         builder.Services.AddTransient<HelpViewModel>();
         builder.Services.AddTransient<TicketSalesAnalyticsViewModel>();
+        builder.Services.AddTransient<TicketBulkEditViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
@@ -68,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddTransient<GuestListOverviewPage>();
         builder.Services.AddTransient<TicketSalesAnalyticsPage>();
         builder.Services.AddTransient<HelpPage>();
+        builder.Services.AddTransient<TicketBulkEditPage>();
 
         return builder.Build();
 	}

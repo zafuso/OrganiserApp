@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrganiserApp.Views.Ticket.TicketBulkEditPage"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:DataType="viewmodel:TicketOverviewViewModel"
+             Title="Bulk edit ticket types"
+             Shell.PresentationMode="ModalAnimated">
+    <ScrollView>
+        <Grid Padding="16,8"
+              ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.ColumnSpan="2">
+                <VerticalStackLayout>
+                    <Label
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="Center"
+                        Text="{Binding Title}"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="40"/>
+                    <Label Style="{StaticResource MicroLabel}" HorizontalOptions="Center">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}Editing {0} ticket types: {1}.">
+                                <Binding Path="TicketCount"/>
+                                <Binding Path="TicketNames"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </VerticalStackLayout>
+                <VerticalStackLayout  IsVisible="{Binding IsNotBusy}">
+                    
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
