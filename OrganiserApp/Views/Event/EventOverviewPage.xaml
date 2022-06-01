@@ -75,7 +75,7 @@
                                 Source="search_grey.png"/>
                             <Entry  
                                 Grid.ColumnSpan="2"
-                                Placeholder="Search ticket types"
+                                Placeholder="Search Events"
                                 Text="{Binding SearchQuery}">
                                 <Entry.Behaviors>
                                     <toolkit:EventToCommandBehavior
