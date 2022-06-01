@@ -34,6 +34,9 @@ namespace OrganiserApp.Models
         [JsonProperty(PropertyName = "is_selectable_on_guest_list")]
         public bool IsSelectableOnGuestList { get; set; }
 
+        [JsonProperty(PropertyName = "is_selectable_on_box_office")]
+        public bool IsSelectableOnBoxOffice { get; set; }
+
         [JsonProperty(PropertyName = "is_deletion_allowed")]
         public bool IsDeletionAllowed { get; set; }
 

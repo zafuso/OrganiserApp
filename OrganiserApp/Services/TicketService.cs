@@ -15,6 +15,10 @@ namespace OrganiserApp.Services
         public async Task<IEnumerable<TicketStatusType>> GetTicketstatusTypesAsync()
         {
             var json = await client.GetStringAsync("ticketstatustypes");
+
+            Preferences.Remove("TicketStatusTypesJson");
+            Preferences.Set("TicketStatusTypesJson", json);
+
             var ticketStatusTypes = JsonConvert.DeserializeObject<IEnumerable<TicketStatusType>>(json);
 
             return ticketStatusTypes;
@@ -44,7 +48,7 @@ namespace OrganiserApp.Services
             return ticketPoules;
         }
 
-        public async Task PutTicketTypeAsync(TicketType ticketType, string EventUuid, bool AlertOnSuccess = true, bool MultipleTickets = false)
+        public async Task<TicketType> PutTicketTypeAsync(TicketType ticketType, string EventUuid, bool AlertOnSuccess = true, bool MultipleTickets = false)
         {
             var json = JsonConvert.SerializeObject(ticketType);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -69,6 +73,21 @@ namespace OrganiserApp.Services
                     }
                 }
             }
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TicketType>(responseJson);
+        }
+
+        public async Task<TicketPoule> PostTicketPouleAsync(TicketPoule ticketPoule, string EventUuid)
+        {
+            var json = JsonConvert.SerializeObject(ticketPoule);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"events/{EventUuid}/ticketpoules", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TicketPoule>(responseJson);            
         }
     }
 }

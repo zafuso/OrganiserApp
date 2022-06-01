@@ -22,7 +22,6 @@ namespace OrganiserApp.ViewModels
     public partial class TicketOverviewViewModel : BaseViewModel
     {
         public ObservableCollection<TicketType> TicketList { get; set; } = new();
-        public ObservableCollection<TicketPoule> TicketPouleList { get; set; } = new();
         public ObservableCollection<TicketCategory> TicketCategoryList { get; set; } = new();
         public ObservableCollection<Grouping<string, TicketType>> TicketGroups { get; set; } = new();
 
@@ -54,7 +53,6 @@ namespace OrganiserApp.ViewModels
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
 
             await GetTicketCategoriesAsync();
-            await GetTicketPoulesAsync();
             await GetTicketTypesAsync();
         }
 
@@ -62,7 +60,6 @@ namespace OrganiserApp.ViewModels
         async Task RefreshAsync()
         {
             await GetTicketCategoriesAsync();
-            await GetTicketPoulesAsync();
             await GetTicketTypesAsync();
         }
 
@@ -91,6 +88,7 @@ namespace OrganiserApp.ViewModels
                 if (CheckedTicketsList.Count != 0)
                 {
                     CheckedTicketsList.Clear();
+                    CanBulkEdit = false;
                 }
 
                 var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
@@ -124,33 +122,6 @@ namespace OrganiserApp.ViewModels
                 IsRefreshing = false;
             }
 
-        }
-
-        [ICommand]
-        async Task GetTicketPoulesAsync()
-        {
-            if (IsBusy)
-                return;
-
-            try
-            {
-                IsBusy = true;
-
-                var ticketPoules = await ticketService.GetTicketPoulesAsync(EventUuid);
-
-                foreach (var poule in ticketPoules)
-                {
-                    TicketPouleList.Add(poule);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Unable to get poules: {e}");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
         }
 
         [ICommand]

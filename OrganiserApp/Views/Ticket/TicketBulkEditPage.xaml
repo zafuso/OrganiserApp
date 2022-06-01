@@ -253,6 +253,8 @@
                             Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
                         <Switch IsToggled="{Binding SwitchEnablePersonalization}"
+                                HorizontalOptions="Start"
+                                Margin="16,0"
                                 OnColor="{StaticResource Blue110}"
                                 ThumbColor="{StaticResource Black10}"/>
                     </VerticalStackLayout>
@@ -263,14 +265,13 @@
                             Command="{Binding UpdateTicketTypesCommand}"
                             Style="{StaticResource ButtonSecondary}"/>
                 </VerticalStackLayout>
-            </VerticalStackLayout>
-
-            <ActivityIndicator
+                <ActivityIndicator
                 Grid.ColumnSpan="2"
                 HorizontalOptions="CenterAndExpand"
                 IsRunning="{Binding IsBusy}"
                 IsVisible="{Binding IsBusy}"
                 VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>
         </Grid>
     </ScrollView>
 </ContentPage>

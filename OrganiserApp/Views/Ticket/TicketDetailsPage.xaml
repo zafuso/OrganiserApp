@@ -6,9 +6,417 @@
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
              x:DataType="viewmodel:TicketDetailsViewModel"
              Title="Tickettype settings">
-    <StackLayout>
-        <Label Text="{Binding SelectedTicket.Name.Nl}"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+    <ScrollView>
+        <Grid Padding="16,8">
+            <VerticalStackLayout>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="{Binding SelectedTicket.Name.Nl}"
+                    Style="{StaticResource MicroLabel}"/>
+                <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+                    <Label
+                    Text="Name"
+                    Margin="16,0,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Name"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="Name_Unfocused"
+                        Focused="Name_Focused"
+                        Text="{Binding SelectedTicket.Name.Nl}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Subtitle"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Subtitle"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                        Grid.ColumnSpan="2"
+                        Margin="16,0"
+                        Unfocused="Subtitle_Unfocused"
+                        Focused="Subtitle_Focused"
+                        Text="{Binding SelectedTicket.Subtitle.Nl}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Description"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid>
+                        <Frame x:Name="Description"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Editor 
+                            Grid.ColumnSpan="2"
+                            Focused="Description_Focused"
+                            Unfocused="Description_Unfocused"
+                            Margin="16,0"
+                            HeightRequest="150"
+                            Text="{Binding SelectedTicket.Description.Nl}"/>
+                        </Frame>
+                    </Grid>
+
+                    <VerticalStackLayout>
+                        <Label
+                            Text="Status"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Frame 
+                            x:Name="Status"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a status"
+                                    WidthRequest="276"
+                                    Margin="16,0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding TicketStatusTypeList}"
+                                    ItemDisplayBinding="{Binding Status.Nl}"
+                                    SelectedItem="{Binding SelectedStatus}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout>
+                        <Label
+                            Text="Ticketpool"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Frame
+                            x:Name="PoolSelector"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Grid ColumnDefinitions="*,*">
+                                <Button 
+                                    BackgroundColor="{StaticResource Blue10}"
+                                    Grid.Column="0"
+                                    TextColor="{StaticResource Blue110}"
+                                    BorderColor="{StaticResource Blue110}"
+                                    x:Name="ButtonExisting" 
+                                    Style="{StaticResource ButtonTicketPoule}" 
+                                    Clicked="Button_Existing_Clicked" 
+                                    Text="Existing" 
+                                    Command="{Binding ExistingPouleClickedCommand}"/>
+                                <Button 
+                                    Grid.Column="1"
+                                    x:Name="ButtonNew" 
+                                    Style="{StaticResource ButtonTicketPoule}" 
+                                    Clicked="Button_New_Clicked" 
+                                    Text="New" 
+                                    Command="{Binding NewPouleClickedCommand}"/>
+                            </Grid>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout IsVisible="{Binding ExistingPouleSelected}">
+                        <Label
+                            Text="Ticketpool"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Frame 
+                            x:Name="Ticketpool"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a ticketpool"
+                                    WidthRequest="276"
+                                    Margin="16,0"
+                                    Unfocused="PickerPool_Unfocused"
+                                    Focused="PickerPool_Focused"
+                                    ItemsSource="{Binding TicketPouleList}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedPoule}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding NewPouleSelected}">
+                        <Label
+                            Text="Capacity"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.ColumnSpan="2">
+                            <Frame x:Name="Capacity"
+                                   Grid.ColumnSpan="2"
+                                   Padding="0"
+                                   CornerRadius="24"
+                                   BorderColor="{StaticResource Black10}"
+                                   Margin="0">
+                                <Entry  
+                                    Keyboard="Numeric"
+                                    Grid.ColumnSpan="2"
+                                    Margin="16,0"
+                                    Unfocused="Capacity_Unfocused"
+                                    Focused="Capacity_Focused"
+                                    Text="{Binding Capacity}"/>
+                            </Frame>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <Label
+                        Text="Max Order Amount"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Label 
+                        x:Name="displayLabel"
+                        Text="{Binding Source={x:Reference Slider},
+                                       Path=Value,
+                                       StringFormat='Max tickets: {0:F0}'}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                    <Slider 
+                        x:Name="Slider"
+                        Value="{Binding SelectedTicket.MaxOrderAmount}"
+                        ThumbColor="{StaticResource Blue110}"
+                        MinimumTrackColor="{StaticResource Blue10}"
+                        MaximumTrackColor="{StaticResource Blue10}"
+                        Maximum="20"
+                        Minimum="1"/>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchSalesPeriod}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Sales period"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchSalesPeriod}">
+                        <Label
+                            Text="Tickets available from"
+                            Margin="16,0,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="OnlineFromDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding OnlineFromDate}"
+                                        Unfocused="OnlineFromDatePicker_Unfocused"
+                                        Focused="OnlineFromDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="OnlineFromTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding OnlineFromTime}"
+                                        Unfocused="OnlineFromTimePicker_Unfocused"
+                                        Focused="OnlineFromTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+
+                        <Label
+                            Text="Tickets available until"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="OnlineUntilDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding OnlineUntilDate}"
+                                        Unfocused="OnlineUntilDatePicker_Unfocused"
+                                        Focused="OnlineUntilDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="OnlineUntilTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding OnlineUntilTime}"
+                                        Unfocused="OnlineUntilTimePicker_Unfocused"
+                                        Focused="OnlineUntilTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchValidityPeriod}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Validity period"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchValidityPeriod}">
+                        <Label
+                            Text="Ticket valid from"
+                            Margin="16,0,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="ValidFromDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding ValidFromDate}"
+                                        Unfocused="ValidFromDatePicker_Unfocused"
+                                        Focused="ValidFromDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="ValidFromTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding ValidFromTime}"
+                                        Unfocused="ValidFromTimePicker_Unfocused"
+                                        Focused="ValidFromTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+
+                        <Label
+                            Text="Ticket valid until"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="ValidUntilDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding ValidUntilDate}"
+                                        Unfocused="ValidUntilDatePicker_Unfocused"
+                                        Focused="ValidUntilDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="ValidUntilTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding ValidUntilTime}"
+                                        Unfocused="ValidUntilTimePicker_Unfocused"
+                                        Focused="ValidUntilTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SelectedTicket.IsPersonalizable}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Edit Personalization"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SelectedTicket.IsSelectableOnGuestList}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Enable for guestlist"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SelectedTicket.IsSelectableOnBoxOffice}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Enable for box office"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <Button
+                        Style="{StaticResource ButtonSecondary}"
+                        Text="Save"
+                        Command="{Binding SaveTicketTypeCommand}"/>
+                </VerticalStackLayout>
+                <ActivityIndicator
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="FillAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

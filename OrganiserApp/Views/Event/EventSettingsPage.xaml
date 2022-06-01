@@ -280,7 +280,4 @@
                 VerticalOptions="CenterAndExpand" />
         </Grid>
     </ScrollView>
-
-
-
 </ContentPage>

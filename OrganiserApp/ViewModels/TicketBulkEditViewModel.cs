@@ -133,6 +133,8 @@ namespace OrganiserApp.ViewModels
 
             try
             {
+                IsBusy = true;
+
                 if (TicketStatusTypeList.Count != 0)
                 {
                     TicketStatusTypeList.Clear();
@@ -163,6 +165,8 @@ namespace OrganiserApp.ViewModels
 
             try
             {
+                IsBusy = true;
+
                 if (TicketCount < 2)
                 {
                     await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketOverviewViewModel)}");
