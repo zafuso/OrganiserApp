@@ -43,5 +43,32 @@ namespace OrganiserApp.Services
 
             return ticketPoules;
         }
+
+        public async Task PutTicketTypeAsync(TicketType ticketType, string EventUuid, bool AlertOnSuccess = true, bool MultipleTickets = false)
+        {
+            var json = JsonConvert.SerializeObject(ticketType);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"events/{EventUuid}/tickettypes/{ticketType.Uuid}", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _ = Application.Current.MainPage.DisplayAlert("Failed", "Failed to update ticket.", "Cancel");
+            }
+            else
+            {
+                if (AlertOnSuccess)
+                {
+                    if (MultipleTickets)
+                    {
+                        _ = Application.Current.MainPage.DisplayAlert("Tickets saved", "The tickets have been updated.", "OK");
+                    }
+                    else
+                    {
+                        _ = Application.Current.MainPage.DisplayAlert("Ticket saved", "The ticket has been updated.", "OK");
+                    }
+                }
+            }
+        }
     }
 }

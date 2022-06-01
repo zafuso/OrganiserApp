@@ -97,6 +97,7 @@ namespace OrganiserApp.ViewModels
 
                 foreach (var ticket in ticketTypes)
                 {
+                    ticket.Price = FormatHelper.FormatPrice(ticket.Price);
                     TicketList.Add(ticket);
                     CalculateTicketStatus(ticket);
                 }
@@ -282,6 +283,18 @@ namespace OrganiserApp.ViewModels
                     ticket.StatusIndicator = "status_success.png";
                 }
             }
+        }
+
+        [ICommand]
+        async Task GoToTicketSettingsAsync(TicketType selectedTicket)
+        {
+            if (selectedTicket is null)
+                return;
+
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketDetailsPage)}", true, new Dictionary<string, object>
+            {
+                {"SelectedTicket", selectedTicket }
+            });
         }
     }
 }

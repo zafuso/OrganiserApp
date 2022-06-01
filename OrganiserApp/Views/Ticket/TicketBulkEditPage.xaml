@@ -42,7 +42,7 @@
                     <VerticalStackLayout IsVisible="{Binding SwitchStatus}">
                         <Label
                             Text="Status"
-                            Margin="16,16,0,0"
+                            Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
                         <Frame 
                             x:Name="Status"
@@ -72,7 +72,7 @@
                     <VerticalStackLayout IsVisible="{Binding SwitchSalesPeriod}">
                         <Label
                             Text="Tickets available from"
-                            Margin="16,16,0,0"
+                            Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
                         <HorizontalStackLayout Grid.ColumnSpan="2">
                             <Grid 
@@ -126,7 +126,7 @@
                                     BorderColor="{StaticResource Black10}"
                                     Margin="0">
                                     <DatePicker
-                                        Date="{Binding OnlineFromDate}"
+                                        Date="{Binding OnlineUntilDate}"
                                         Unfocused="OnlineUntilDatePicker_Unfocused"
                                         Focused="OnlineUntilDatePicker_Focused"
                                         Margin="16,0"/>
@@ -161,7 +161,7 @@
                     <VerticalStackLayout IsVisible="{Binding SwitchValidityPeriod}">
                         <Label
                             Text="Ticket valid from"
-                            Margin="16,16,0,0"
+                            Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
                         <HorizontalStackLayout Grid.ColumnSpan="2">
                             <Grid 
@@ -199,7 +199,7 @@
                         </HorizontalStackLayout>
 
                         <Label
-                            Text="Ticket available until"
+                            Text="Ticket valid until"
                             Margin="16,16,0,0"
                             Style="{StaticResource LabelHeader}"/>
                         <HorizontalStackLayout Grid.ColumnSpan="2">
@@ -215,7 +215,7 @@
                                     BorderColor="{StaticResource Black10}"
                                     Margin="0">
                                     <DatePicker
-                                        Date="{Binding OnlineFromDate}"
+                                        Date="{Binding ValidUntilDate}"
                                         Unfocused="ValidUntilDatePicker_Unfocused"
                                         Focused="ValidUntilDatePicker_Focused"
                                         Margin="16,0"/>
@@ -250,11 +250,24 @@
                     <VerticalStackLayout IsVisible="{Binding SwitchPersonalization}">
                         <Label
                             Text="Personalization will be switched on for the ticket."
-                            Margin="16,16,0,0"
+                            Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
                     </VerticalStackLayout>
+                    <Button Text="Save"
+                            Margin="0,16,0,32"
+                            Padding="32,8"
+                            HorizontalOptions="End"
+                            Command="{Binding UpdateTicketTypesCommand}"
+                            Style="{StaticResource ButtonSecondary}"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
+
+            <ActivityIndicator
+                Grid.ColumnSpan="2"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand" />
         </Grid>
     </ScrollView>
 </ContentPage>
