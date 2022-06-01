@@ -33,23 +33,23 @@
                 </CollectionView.EmptyView>
 
                 <CollectionView.Header>
-                    <VerticalStackLayout HorizontalOptions="Center" Padding="0">
-                        <Label
-                            HorizontalOptions="Center"
-                            Text="{Binding Title}"
-                            Style="{StaticResource LabelHeader}"
-                            FontSize="40"/>                        
-                        <Button 
-                            Grid.Column="1"
-                            IsVisible="{Binding CanBulkEdit}"
-                            IsEnabled="{Binding CanBulkEdit}"
-                            Command="{Binding GoToBulkEditCommand}"
-                            ImageSource="edit_blue110.svg"
-                            ContentLayout="Left, 4"
-                            Style="{StaticResource ButtonSecondary}"
-                            Text="Bulk Edit"
-                            HorizontalOptions="End"/>
-                    </VerticalStackLayout>
+                    <StackLayout Orientation="Vertical" Padding="16,0">
+                            <Label
+                                HorizontalOptions="Center"
+                                Text="{Binding Title}"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="40"/>
+                            <Button 
+                                Grid.Column="1"
+                                IsVisible="{Binding CanBulkEdit}"
+                                IsEnabled="{Binding CanBulkEdit}"
+                                Command="{Binding GoToBulkEditCommand}"
+                                ImageSource="edit_blue110.svg"
+                                ContentLayout="Left, 4"
+                                Style="{StaticResource ButtonSecondary}"
+                                Text="Bulk Edit"
+                                HorizontalOptions="End"/>
+                        </StackLayout>
                 </CollectionView.Header>
 
                 <CollectionView.ItemTemplate>
