@@ -74,6 +74,7 @@
 	  <None Remove="Resources\Images\help_open_white.svg" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\more.png" />
+	  <None Remove="Resources\Images\no_messages.svg" />
 	  <None Remove="Resources\Images\search_grey.svg" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\shop.png" />

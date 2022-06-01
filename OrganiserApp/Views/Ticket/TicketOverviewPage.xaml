@@ -25,6 +25,18 @@
                 ItemsSource="{Binding TicketList}"
                 SelectionMode="None">
 
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="300"
+                                 HeightRequest="300">
+                        <Image Source="no_messages.svg"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Aspect="AspectFill"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                
                 <CollectionView.Header>
                     <VerticalStackLayout HorizontalOptions="Center" Padding="0">
                         <Label

@@ -31,6 +31,18 @@
                 ItemsSource="{Binding EventList}"
                 SelectionMode="None">
 
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="300"
+                                 HeightRequest="300">
+                        <Image Source="no_messages.svg"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Aspect="AspectFill"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
                 <CollectionView.Header>
                     <VerticalStackLayout>
                         <Frame CornerRadius="30"
