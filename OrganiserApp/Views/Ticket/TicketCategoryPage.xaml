@@ -35,7 +35,7 @@
                                     Margin="16,0"
                                     Unfocused="Title_Unfocused"
                                     Focused="Title_Focused"
-                                    Text="{Binding TicketCategory.Name}"/>
+                                    Text="{Binding TicketCategory.Name.Nl}"/>
                             </Frame>
                         </Grid>
 
@@ -64,7 +64,7 @@
                                 OnColor="{StaticResource Blue110}"
                                 ThumbColor="{StaticResource Black10}"/>
                         <Label
-                            Text="Enable for box office"
+                            Text="Collapsed"
                             Margin="16,16,0,0"
                             Style="{StaticResource LabelHeader}"/>
                     </HorizontalStackLayout>
@@ -92,6 +92,7 @@
                     </Grid>
 
                     <Button Text="Save"
+                            Margin="0,16"
                             Style="{StaticResource ButtonSecondary}"
                             Command="{Binding UpdateTicketCategoryCommand}"/>
                 </VerticalStackLayout>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
 using OrganiserApp.Views.Event;
+using OrganiserApp.Views.Ticket;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,6 +54,7 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
+                await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketOverviewPage)}");
             }
         }
     }

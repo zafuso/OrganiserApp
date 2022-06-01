@@ -30,10 +30,7 @@ namespace OrganiserApp.ViewModels
         bool canBulkEdit = false;
         [ObservableProperty]
         bool isRefreshing;
-        [ObservableProperty]
-        string searchQuery;
         string EventUuid;
-        List<TicketType> ticketTypeList;
         List<TicketType> CheckedTicketsList = new();
 
         private readonly IConnectivity connectivity;
@@ -81,15 +78,20 @@ namespace OrganiserApp.ViewModels
 
                 IsBusy = true;
 
-                if (TicketList.Count != 0)
+                if (TicketList.Count > 0)
                 {
                     TicketList.Clear();
                 }
 
-                if (CheckedTicketsList.Count != 0)
+                if (CheckedTicketsList.Count > 0)
                 {
                     CheckedTicketsList.Clear();
                     CanBulkEdit = false;
+                }
+
+                if (TicketGroups.Count > 0)
+                {
+                    TicketGroups.Clear();
                 }
 
                 var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
@@ -101,9 +103,8 @@ namespace OrganiserApp.ViewModels
                     CalculateTicketStatus(ticket);
                 }
 
-                ticketTypeList = TicketList.ToList();
-
                 if (TicketCategoryList.Count > 0)
+                    
                 {
                     foreach (var category in TicketCategoryList)
                     {
@@ -135,6 +136,11 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = true;
 
+                if (TicketCategoryList.Count > 0)
+                {
+                    TicketCategoryList.Clear();
+                }
+
                 var ticketCategories = await ticketService.GetTicketCategoriesAsync(EventUuid);
 
                 foreach (var category in ticketCategories)
@@ -150,32 +156,6 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = false;
             }
-        }
-
-        [ICommand]
-        Task SearchTicketTypesAsync()
-        {
-            if (string.IsNullOrWhiteSpace(SearchQuery))
-            {
-                SearchQuery = string.Empty;
-            }
-
-            SearchQuery = searchQuery.ToLowerInvariant().Trim();
-            var filteredItems = ticketTypeList.Where(ticket => ticket.Name.Nl.ToLowerInvariant().Contains(SearchQuery)).ToList();
-
-            foreach (var ticket in ticketTypeList)
-            {
-                if (!filteredItems.Contains(ticket))
-                {
-                    TicketList.Remove(ticket);
-                }
-                else if (!TicketList.Contains(ticket))
-                {
-                    TicketList.Add(ticket);
-                }
-            }
-
-            return Task.CompletedTask;
         }
 
         public void TicketTypeCheckedAsync()

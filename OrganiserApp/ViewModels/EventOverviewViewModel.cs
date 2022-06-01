@@ -33,6 +33,9 @@ namespace OrganiserApp.ViewModels
         bool isRefreshing;
         [ObservableProperty]
         bool canLoadMore = false;
+        List<Event> eventsList;
+        [ObservableProperty]
+        string searchQuery;
 
         bool LoadMore = false;
         bool KeepTake = false;
@@ -41,21 +44,23 @@ namespace OrganiserApp.ViewModels
         FilterDateRangeType dateRange = FilterDateRangeType.all;
         public EventOverviewViewModel(EventService eventService, IConnectivity connectivity)
         {
-            Title = "Event Overview";
             this.eventService = eventService;
             this.connectivity = connectivity;
-
-            Task.Run(async () => await GetEventListAsync());
         }
 
-        public void Init()
+        public async void Init()
         {
+            skip = 0;
             Preferences.Clear();
+            await GetEventListAsync();
         }
 
         [ICommand]
         async Task GetEventListAsync()
         {
+            Title = "Event Overview";
+            take = 5;
+
             if (IsBusy)
                 return;
 
@@ -70,7 +75,6 @@ namespace OrganiserApp.ViewModels
 
                 IsBusy = true;
                 CanLoadMore = false;
-                take = 5;
 
                 if (EventList.Count != 0)
                 {
@@ -106,6 +110,8 @@ namespace OrganiserApp.ViewModels
                     EventList.Add(item);
                 }
 
+                eventsList = EventList.ToList();
+
                 EventsCount = EventList.Count;
             }
             catch (Exception e)
@@ -124,7 +130,6 @@ namespace OrganiserApp.ViewModels
                 {
                     CanLoadMore = true;
                 }
-
             }
         }
 
@@ -207,6 +212,32 @@ namespace OrganiserApp.ViewModels
             }
 
             await GetEventListAsync();
+        }
+
+        [ICommand]
+        Task SearchEventsAsync()
+        {
+            if (string.IsNullOrWhiteSpace(SearchQuery))
+            {
+                SearchQuery = string.Empty;
+            }
+
+            SearchQuery = SearchQuery.ToLowerInvariant().Trim();
+            var filteredItems = eventsList.Where(e => e.Name.ToLowerInvariant().Contains(SearchQuery)).ToList();
+
+            foreach (var ticket in eventsList)
+            {
+                if (!filteredItems.Contains(ticket))
+                {
+                    EventList.Remove(ticket);
+                }
+                else if (!EventList.Contains(ticket))
+                {
+                    EventList.Add(ticket);
+                }
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

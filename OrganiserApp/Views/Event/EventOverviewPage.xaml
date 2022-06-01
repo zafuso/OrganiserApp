@@ -19,71 +19,105 @@
         <ResourceDictionary>
             <toolkit:EnumToIntConverter x:Key="EnumToIntConverter" />
             <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <toolkit:SelectedItemEventArgsConverter x:Key="SelectedItemEventArgsConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid ColumnDefinitions="*,*">
+        <VerticalStackLayout Grid.ColumnSpan="2">
+            <Frame CornerRadius="30"
+                    Padding="0"
+                    BackgroundColor="{StaticResource Black10}"
+                    Margin="42,8,42,0"
+                    BorderColor="Transparent">
+                <HorizontalStackLayout
+                    HorizontalOptions="CenterAndExpand" 
+                    Padding="4" 
+                    BackgroundColor="Transparent">
+                    <Button x:Name="ButtonAll" Padding="20,8" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
+                    <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
+                    <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <VerticalStackLayout HorizontalOptions="Center" Padding="0">
+                <Label
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+                <Label Style="{StaticResource MicroLabel}">
+                    <Label.Text>
+                        <MultiBinding StringFormat="{}Showing {0} out of {1} events">
+                            <Binding Path="EventsCount"/>
+                            <Binding Path="TotalItems"/>
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Grid 
+                    Grid.ColumnSpan="2"
+                    Padding="16,8">
+                    <Frame 
+                        HorizontalOptions="Center"
+                        x:Name="Search"
+                        Grid.ColumnSpan="2"
+                        Padding="0"
+                        CornerRadius="24"
+                        WidthRequest="360"
+                        BorderColor="{StaticResource Black10}"
+                        Margin="0">
+                        <HorizontalStackLayout 
+                            HorizontalOptions="Start" 
+                            Spacing="8"
+                            Padding="8,0">
+                            <Image 
+                                HorizontalOptions="Start"
+                                Source="search_grey.png"/>
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Placeholder="Search ticket types"
+                                Text="{Binding SearchQuery}">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="TextChanged"
+                                        Command="{Binding SearchEventsCommand}"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </Grid>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
         <RefreshView
-            Grid.ColumnSpan="2"
-            Command="{Binding GetEventListCommand}"
-            IsRefreshing="{Binding IsRefreshing}" >
-            <CollectionView
+                Grid.ColumnSpan="2"
+                Margin="0,184,0,0"
+                Command="{Binding GetEventListCommand}"
+                IsRefreshing="{Binding IsRefreshing}" >
+                <CollectionView
+                Grid.ColumnSpan="2"
                 ItemsSource="{Binding EventList}"
                 SelectionMode="None">
 
-                <CollectionView.EmptyView>
-                    <StackLayout VerticalOptions="Center"
+                    <CollectionView.EmptyView>
+                        <StackLayout VerticalOptions="Start"
                                  HorizontalOptions="Center"
                                  WidthRequest="300"
                                  HeightRequest="300">
-                        <Image Source="no_messages.svg"
+                            <Image Source="no_messages.svg"
                                HorizontalOptions="CenterAndExpand"
                                VerticalOptions="CenterAndExpand"
                                Aspect="AspectFill"/>
-                    </StackLayout>
-                </CollectionView.EmptyView>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
 
-                <CollectionView.Header>
-                    <VerticalStackLayout>
-                        <Frame CornerRadius="30"
-                               Padding="0"
-                               BackgroundColor="{StaticResource Black10}"
-                               Margin="42,8"
-                               BorderColor="Transparent">
-                            <HorizontalStackLayout
-                                HorizontalOptions="CenterAndExpand" 
-                                Padding="4" 
-                                BackgroundColor="Transparent">
-                                <Button x:Name="ButtonAll" Padding="20,8" Style="{StaticResource ButtonFilter}" Clicked="Button_All_Clicked" Text="All Time" Command="{Binding FilterAllCommand}"/>
-                                <Button x:Name="ButtonToday" Style="{StaticResource ButtonFilter}" Clicked="Button_Today_Clicked" Text="Today" Command="{Binding FilterTodayCommand}"/>
-                                <Button x:Name="ButtonYesterday" Style="{StaticResource ButtonFilter}" Clicked="Button_Yesterday_Clicked" Text="Yesterday" Command="{Binding FilterYesterdayCommand}"/>
-                            </HorizontalStackLayout>
-                        </Frame>
-                        <VerticalStackLayout HorizontalOptions="Center" Padding="0">
-                            <Label
-                                Text="{Binding Title}"
-                                Style="{StaticResource LabelHeader}"
-                                FontSize="40"/>
-                            <Label Style="{StaticResource MicroLabel}">
-                                <Label.Text>
-                                    <MultiBinding StringFormat="{}Showing {0} out of {1} events">
-                                        <Binding Path="EventsCount"/>
-                                        <Binding Path="TotalItems"/>
-                                    </MultiBinding>
-                                </Label.Text>
-                            </Label>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </CollectionView.Header>
-                
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Event">
-                        <Grid Padding="16,8">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems SwipeBehaviorOnInvoked="RemainOpen">
-                                        <SwipeItemView>
-                                            <Button
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Event">
+                            <Grid Padding="16,8">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems SwipeBehaviorOnInvoked="RemainOpen">
+                                            <SwipeItemView>
+                                                <Button
                                                 BackgroundColor="{StaticResource Blue10}"
                                                 Text="{x:Static cmIcons:CmIcons.Icon50}"
                                                 FontSize="60"
@@ -93,59 +127,59 @@
                                                 Margin="10, 24, 10, 24"
                                                 CommandParameter="{Binding .}"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventOverviewViewModel}}, Path=RemoveEventCommand}"/>
-                                        </SwipeItemView>
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Frame HeightRequest="125" Style="{StaticResource CardView}">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                            </SwipeItemView>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+                                    <Frame HeightRequest="125" Style="{StaticResource CardView}">
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding .}"
                                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:EventOverviewViewModel}}, Path=GoToEventSettingsCommand}"/>
-                                    </Frame.GestureRecognizers>
-                                    <Grid>
-                                        <VerticalStackLayout VerticalOptions="Center"
+                                        </Frame.GestureRecognizers>
+                                        <Grid>
+                                            <VerticalStackLayout VerticalOptions="Center"
                                                                     Grid.ColumnSpan="2"
                                                              ZIndex="1">
-                                            <Label
+                                                <Label
                                                 FontSize="Large"
                                                 Text="{Binding Name}"
                                                 VerticalOptions="Center" 
                                                 Style="{StaticResource LabelHeader}"
                                                 Padding="16,0"/>
 
-                                            <HorizontalStackLayout Padding="16,0">
-                                                <Label
+                                                <HorizontalStackLayout Padding="16,0">
+                                                    <Label
                                                     FontSize="Small"
                                                     Text="{x:Static cmIcons:CmIcons.Icon193}"
                                                     FontFamily="Icons"
                                                     TextColor="{StaticResource Black100}"
                                                     VerticalOptions="Center"/>
-                                                <Label
+                                                    <Label
                                                     FontSize="Small"
                                                     Text="{Binding StartAt}"
                                                     VerticalOptions="Center"
                                                     Style="{StaticResource MainLabel}"
                                                     Padding="4,0"/>
-                                            </HorizontalStackLayout>
+                                                </HorizontalStackLayout>
 
-                                            <HorizontalStackLayout Padding="16,0">
-                                                <Label
+                                                <HorizontalStackLayout Padding="16,0">
+                                                    <Label
                                                     FontSize="Small"
                                                     Text="{x:Static cmIcons:CmIcons.Icon192}"
                                                     FontFamily="Icons"
                                                     TextColor="{StaticResource Black100}"
                                                     VerticalOptions="Center"/>
-                                                <Label
+                                                    <Label
                                                     FontSize="Small"
                                                     Text="{Binding EndAt}"
                                                     VerticalOptions="Center"
                                                     Style="{StaticResource MainLabel}"
                                                     Padding="4,0"/>
-                                            </HorizontalStackLayout>
+                                                </HorizontalStackLayout>
 
-                                            <HorizontalStackLayout HorizontalOptions="Start"
+                                                <HorizontalStackLayout HorizontalOptions="Start"
                                                                     Padding="16,0">
-                                                <HorizontalStackLayout>
-                                                    <Label
+                                                    <HorizontalStackLayout>
+                                                        <Label
                                                         FontSize="Small"
                                                         Text="{x:Static fontAwesome:FontAwesomeIcons.Coins}"
                                                         FontFamily="FAS"
@@ -153,55 +187,55 @@
                                                         Grid.Row="1"
                                                         TextColor="{StaticResource Black100}"
                                                         VerticalOptions="Center"/>
-                                                    <Label
+                                                        <Label
                                                         FontSize="Small"
                                                         VerticalOptions="Center"
                                                         Style="{StaticResource MainLabel}"
                                                         Padding="4,0">
-                                                        <Label.FormattedText>
-                                                            <FormattedString>
-                                                                <Span Text="€"/>
-                                                                <Span Text="{Binding EventSummary.Content.Revenue}"/>
-                                                            </FormattedString>
-                                                        </Label.FormattedText>
-                                                    </Label>
-                                                </HorizontalStackLayout>
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="€"/>
+                                                                    <Span Text="{Binding EventSummary.Content.Revenue}"/>
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                    </HorizontalStackLayout>
 
-                                                <HorizontalStackLayout Padding="8,0">
-                                                    <Label
+                                                    <HorizontalStackLayout Padding="8,0">
+                                                        <Label
                                                             FontSize="Small"
                                                             Text="{x:Static cmIcons:CmIcons.Icon214}"
                                                             FontFamily="Icons"
                                                             TextColor="{StaticResource Black100}"
                                                             VerticalOptions="Center"
                                                             Padding="4,0"/>
-                                                    <Label
+                                                        <Label
                                                             FontSize="Small"
                                                             Text="{Binding EventSummary.Content.Sales}"
                                                             VerticalOptions="Center"
                                                             Style="{StaticResource MainLabel}"/>
+                                                    </HorizontalStackLayout>
                                                 </HorizontalStackLayout>
-                                            </HorizontalStackLayout>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Frame>
-                            </SwipeView>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-               
-                <CollectionView.Footer>
-                    <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
-                        <Button Command="{Binding LoadMoreEventsCommand}" 
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </SwipeView>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                    <CollectionView.Footer>
+                        <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
+                            <Button Command="{Binding LoadMoreEventsCommand}" 
                         Text="Load More"
                         IsEnabled="{Binding CanLoadMore}"
                         Style="{StaticResource ButtonSecondary}" />
-                    </HorizontalStackLayout>
-                </CollectionView.Footer>
-            </CollectionView>
-        </RefreshView>
+                        </HorizontalStackLayout>
+                    </CollectionView.Footer>
+                </CollectionView>
+            </RefreshView>
 
-        <ActivityIndicator
+            <ActivityIndicator
             Grid.ColumnSpan="2"
             HorizontalOptions="FillAndExpand"
             IsRunning="{Binding IsBusy}"
