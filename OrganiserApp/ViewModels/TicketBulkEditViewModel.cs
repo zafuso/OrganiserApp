@@ -24,13 +24,31 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         string ticketNames;
         [ObservableProperty]
-        bool sliderStatus = false;
+        bool switchStatus = false;
         [ObservableProperty]
-        bool sliderSalesPeriod = false;
+        bool switchSalesPeriod = false;
         [ObservableProperty]
-        bool sliderValidityPeriod = false;
+        bool switchValidityPeriod = false;
         [ObservableProperty]
-        bool sliderPersonalization = false;
+        bool switchPersonalization = false;
+        [ObservableProperty]
+        Venue selectedStatus;
+        [ObservableProperty]
+        TimeSpan onlineFromTime;
+        [ObservableProperty]
+        DateTime onlineFromDate;
+        [ObservableProperty]
+        TimeSpan onlineUntilTime;
+        [ObservableProperty]
+        DateTime onlineUntilDate;
+        [ObservableProperty]
+        TimeSpan validFromTime;
+        [ObservableProperty]
+        DateTime validFromDate;
+        [ObservableProperty]
+        TimeSpan validUntilTime;
+        [ObservableProperty]
+        DateTime validUntilDate;
 
         private readonly TicketService ticketService;
         public TicketBulkEditViewModel(TicketService ticketService)
@@ -66,6 +84,16 @@ namespace OrganiserApp.ViewModels
                     TicketNames += $"{TicketTypeList[i].Name.Nl}, ";
                 }
             }
+
+            OnlineFromDate = DateTime.Now.Date;
+            OnlineUntilDate = DateTime.Now.Date;
+            OnlineFromTime = DateTime.Now.Date.TimeOfDay;
+            OnlineUntilTime = DateTime.Now.Date.TimeOfDay;
+
+            ValidFromDate = DateTime.Now.Date;
+            ValidUntilDate = DateTime.Now.Date;
+            ValidFromTime = DateTime.Now.Date.TimeOfDay;
+            ValidUntilTime = DateTime.Now.Date.TimeOfDay;
 
             await GetTicketStatusTypesAsync();
         }

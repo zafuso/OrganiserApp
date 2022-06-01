@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OrganiserApp.Views.Ticket.TicketBulkEditPage"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
-             x:DataType="viewmodel:TicketOverviewViewModel"
+             x:DataType="viewmodel:TicketBulkEditViewModel"
              Title="Bulk edit ticket types"
              Shell.PresentationMode="ModalAnimated">
     <ScrollView>
@@ -26,8 +26,233 @@
                         </Label.Text>
                     </Label>
                 </VerticalStackLayout>
-                <VerticalStackLayout  IsVisible="{Binding IsNotBusy}">
-                    
+                <VerticalStackLayout
+                    HorizontalOptions="Start"
+                    Grid.ColumnSpan="2"
+                    IsVisible="{Binding IsNotBusy}">
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchStatus}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Status"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchStatus}">
+                        <Label
+                            Text="Status"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Frame 
+                            x:Name="Status"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a status"
+                                    WidthRequest="276"
+                                    Margin="16,0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding TicketStatusTypeList}"
+                                    ItemDisplayBinding="{Binding Status.Nl}"
+                                    SelectedItem="{Binding SelectedStatus}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchSalesPeriod}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Sales period"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchSalesPeriod}">
+                        <Label
+                            Text="Tickets available from"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="OnlineFromDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding OnlineFromDate}"
+                                        Unfocused="OnlineFromDatePicker_Unfocused"
+                                        Focused="OnlineFromDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="OnlineFromTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding OnlineFromTime}"
+                                        Unfocused="OnlineFromTimePicker_Unfocused"
+                                        Focused="OnlineFromTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+
+                        <Label
+                            Text="Tickets available until"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="OnlineUntilDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding OnlineFromDate}"
+                                        Unfocused="OnlineUntilDatePicker_Unfocused"
+                                        Focused="OnlineUntilDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="OnlineUntilTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding OnlineUntilTime}"
+                                        Unfocused="OnlineUntilTimePicker_Unfocused"
+                                        Focused="OnlineUntilTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchValidityPeriod}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Validity period"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchValidityPeriod}">
+                        <Label
+                            Text="Ticket valid from"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="ValidFromDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding ValidFromDate}"
+                                        Unfocused="ValidFromDatePicker_Unfocused"
+                                        Focused="ValidFromDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="ValidFromTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding ValidFromTime}"
+                                        Unfocused="ValidFromTimePicker_Unfocused"
+                                        Focused="ValidFromTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+
+                        <Label
+                            Text="Ticket available until"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <HorizontalStackLayout Grid.ColumnSpan="2">
+                            <Grid 
+                              ColumnDefinitions="*,*"
+                              ColumnSpacing="8">
+                                <Frame 
+                                    Grid.Column="0"
+                                    x:Name="ValidUntilDate"
+                                    Padding="0"
+                                    WidthRequest="252"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <DatePicker
+                                        Date="{Binding OnlineFromDate}"
+                                        Unfocused="ValidUntilDatePicker_Unfocused"
+                                        Focused="ValidUntilDatePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+
+                                <Frame 
+                                    x:Name="ValidUntilTime"
+                                    Grid.Column="1"
+                                    Padding="0"
+                                    CornerRadius="24"
+                                    BorderColor="{StaticResource Black10}"
+                                    Margin="0">
+                                    <TimePicker
+                                        Time="{Binding ValidUntilTime}"
+                                        Unfocused="ValidUntilTimePicker_Unfocused"
+                                        Focused="ValidUntilTimePicker_Focused"
+                                        Margin="16,0"/>
+                                </Frame>
+                            </Grid>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding SwitchPersonalization}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Edit Personalization"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+                    <VerticalStackLayout IsVisible="{Binding SwitchPersonalization}">
+                        <Label
+                            Text="Personalization will be switched on for the ticket."
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>
