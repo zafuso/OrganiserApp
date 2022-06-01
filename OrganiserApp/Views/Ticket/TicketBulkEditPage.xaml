@@ -249,9 +249,12 @@
                     </HorizontalStackLayout>
                     <VerticalStackLayout IsVisible="{Binding SwitchPersonalization}">
                         <Label
-                            Text="Personalization will be switched on for the ticket."
+                            Text="Personalization will be switched on/off for the tickets."
                             Margin="16,0,0,0"
                             Style="{StaticResource LabelHeader}"/>
+                        <Switch IsToggled="{Binding SwitchEnablePersonalization}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
                     </VerticalStackLayout>
                     <Button Text="Save"
                             Margin="0,16,0,32"

@@ -41,6 +41,9 @@ namespace OrganiserApp.ViewModels
         bool switchPersonalization = false;
 
         [ObservableProperty]
+        bool switchEnablePersonalization = false;
+
+        [ObservableProperty]
         Models.TicketStatusType selectedStatus;
 
         [ObservableProperty]
@@ -205,7 +208,7 @@ namespace OrganiserApp.ViewModels
 
                     if (SwitchPersonalization)
                     {
-                        ticket.IsPersonalizable = true;
+                        ticket.IsPersonalizable = SwitchEnablePersonalization;
                     }
 
                     if (i == TicketCount)

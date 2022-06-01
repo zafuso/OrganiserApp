@@ -15,7 +15,7 @@ namespace OrganiserApp.ViewModels
         TicketType selectedTicket;
         public TicketDetailsViewModel()
         {
-            Title = selectedTicket.Name.Nl; //"Ticket";
+            Title = "Ticket";
         }
     }
 }

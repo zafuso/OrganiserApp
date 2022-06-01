@@ -210,14 +210,17 @@ namespace OrganiserApp.ViewModels
         {
             foreach (var ticket in TicketList)
             {
-                if (ticket.IsChecked)
-                {
-                    bool TicketInList = CheckedTicketsList.Any(t => t.Uuid == ticket.Uuid);
 
-                    if (!TicketInList)
-                    {
-                        CheckedTicketsList.Add(ticket);
-                    }                  
+                bool TicketInList = CheckedTicketsList.Any(t => t.Uuid == ticket.Uuid);
+
+                if (ticket.IsChecked && !TicketInList)
+                {
+                    CheckedTicketsList.Add(ticket);
+                }
+
+                if (!ticket.IsChecked && TicketInList)
+                {
+                    CheckedTicketsList.Remove(ticket);
                 }
 
                 if (CheckedTicketsList.Count > 1)
