@@ -79,6 +79,27 @@
                         </Frame>
                     </Grid>
 
+                    <Label
+                        Text="Price"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame 
+                            x:Name="Price"
+                            Grid.ColumnSpan="2"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Entry  
+                                Keyboard="Numeric"
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Price_Unfocused"
+                                Focused="Price_Focused"
+                                Text="{Binding SelectedTicket.Price}"/>
+                        </Frame>
+                    </Grid>
                     <VerticalStackLayout>
                         <Label
                             Text="Status"

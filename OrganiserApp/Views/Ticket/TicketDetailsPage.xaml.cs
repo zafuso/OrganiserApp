@@ -176,4 +176,14 @@ public partial class TicketDetailsPage : ContentPage
     {
         ValidUntilTime.BorderColor = Application.Current.Resources["Black10"] as Color;
     }
+
+    private void Price_Focused(object sender, FocusEventArgs e)
+    {
+        Price.BorderColor = Application.Current.Resources["Blue110"] as Color;
+    }
+
+    private void Price_Unfocused(object sender, FocusEventArgs e)
+    {
+        Price.BorderColor = Application.Current.Resources["Black10"] as Color;
+    }
 }

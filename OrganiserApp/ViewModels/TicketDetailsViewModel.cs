@@ -230,6 +230,8 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = true;
 
+                SelectedTicket.Price = FormatHelper.FormatPrice(SelectedTicket.Price);
+
                 switch (SelectedStatus.Id)
                 {
                     case "ONLINE":
