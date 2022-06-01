@@ -23,7 +23,8 @@ namespace OrganiserApp.ViewModels
     {
         public ObservableCollection<TicketType> TicketList { get; set; } = new();
         public ObservableCollection<TicketCategory> TicketCategoryList { get; set; } = new();
-        public ObservableCollection<Grouping<string, TicketType>> TicketGroups { get; set; } = new();
+
+        public ObservableCollection<TicketGroup> TicketGroups { get; private set; } = new();
 
         [ObservableProperty]
         bool canBulkEdit = false;
@@ -107,7 +108,7 @@ namespace OrganiserApp.ViewModels
                     foreach (var category in TicketCategoryList)
                     {
                         var groupedTickets = TicketList.Where(t => t.TicketCategoryUuid == category.Uuid).ToList();
-                        TicketGroups.Add(new Grouping<string, TicketType>(category.Name.Nl, groupedTickets));
+                        TicketGroups.Add(new TicketGroup(category, groupedTickets));
                     }
                 }
             }
@@ -268,6 +269,18 @@ namespace OrganiserApp.ViewModels
             await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketDetailsPage)}", true, new Dictionary<string, object>
             {
                 {"SelectedTicket", selectedTicket }
+            });
+        }
+
+        [ICommand]
+        async Task GoToEditTicketCategoryAsync(TicketCategory ticketCategory)
+        {
+            if (ticketCategory is null)
+                return;
+
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketCategoryPage)}", true, new Dictionary<string, object>
+            {
+                {"TicketCategory", ticketCategory }
             });
         }
     }

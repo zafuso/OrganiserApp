@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:Class="OrganiserApp.Views.Ticket.TicketCategoryPage"
+             x:DataType="viewmodel:TicketCategoryViewModel"
+             Title="Edit Ticket Category"
+             Shell.PresentationMode="ModalAnimated">
+    <ScrollView>
+            <Grid Padding="16,8"
+              ColumnDefinitions="*,*">
+                <VerticalStackLayout Grid.ColumnSpan="2">
+                    <VerticalStackLayout>
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Text="{Binding Title}"
+                            Style="{StaticResource LabelHeader}"
+                            FontSize="40"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout  IsVisible="{Binding IsNotBusy}">
+                        <Label
+                            Text="Title"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.ColumnSpan="2">
+                            <Frame 
+                                x:Name="Title"
+                               Grid.ColumnSpan="2"
+                               Padding="0"
+                               CornerRadius="24"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
+                                <Entry  
+                                    Grid.ColumnSpan="2"
+                                    Margin="16,0"
+                                    Unfocused="Title_Unfocused"
+                                    Focused="Title_Focused"
+                                    Text="{Binding TicketCategory.Name}"/>
+                            </Frame>
+                        </Grid>
+
+                    <Label
+                    Text="Description"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid>
+                        <Frame x:Name="Description"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Editor 
+                            Grid.ColumnSpan="2"
+                            Focused="Description_Focused"
+                            Unfocused="Description_Unfocused"
+                            Margin="16,0"
+                            HeightRequest="150"
+                            Text="{Binding TicketCategory.Description.Nl}"/>
+                        </Frame>
+                    </Grid>
+
+                    <HorizontalStackLayout>
+                        <Switch IsToggled="{Binding TicketCategory.IsInitialized}"
+                                OnColor="{StaticResource Blue110}"
+                                ThumbColor="{StaticResource Black10}"/>
+                        <Label
+                            Text="Enable for box office"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    </HorizontalStackLayout>
+
+                    <Label
+                            Text="Max Order Amount"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame 
+                            x:Name="MaxOrderAmount"
+                            Grid.ColumnSpan="2"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="MaxOrderAmount_Unfocused"
+                                Focused="MaxOrderAmount_Focused"
+                                Keyboard="Numeric"
+                                Text="{Binding TicketCategory.MaxOrderAmount}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Button Text="Save"
+                            Style="{StaticResource ButtonSecondary}"
+                            Command="{Binding UpdateTicketCategoryCommand}"/>
+                </VerticalStackLayout>
+                    <ActivityIndicator
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="FillAndExpand"
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}"
+                        VerticalOptions="CenterAndExpand" />
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage>

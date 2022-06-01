@@ -89,5 +89,16 @@ namespace OrganiserApp.Services
             var responseJson = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<TicketPoule>(responseJson);            
         }
+
+        public async Task PutTicketcategoryAsync(TicketCategory category, string EventUuid)
+        {
+            var json = JsonConvert.SerializeObject(category);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"events/{EventUuid}/ticketcategories/{category.Uuid}", content);
+            response.EnsureSuccessStatusCode();
+
+            _ = Application.Current.MainPage.DisplayAlert("Ticket category saved", "The category has been updated.", "OK");
+        }
     }
 }
