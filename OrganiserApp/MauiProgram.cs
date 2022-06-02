@@ -64,6 +64,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopSettingsViewModel>();
         builder.Services.AddTransient<ShopBypassLinkViewModel>();
         builder.Services.AddTransient<ShopEditNameViewModel>();
+        builder.Services.AddTransient<ShopTicketsViewModel>();
+        builder.Services.AddTransient<ShopTicketsGroupViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();

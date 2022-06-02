@@ -65,5 +65,25 @@ namespace OrganiserApp.Services
 
             _ = Application.Current.MainPage.DisplayAlert("Shop Deleted", $"Shop {viewport.Uri} has been deleted.", "OK");
         }
+
+        public async Task<IEnumerable<ShopStep>> GetShopStepsAsync(string EventUuid, string ViewportUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/viewports/{ViewportUuid}/shopsteps");
+            var shopSteps = JsonConvert.DeserializeObject<IEnumerable<ShopStep>>(json);
+
+            return shopSteps;
+        }
+
+        public async Task<ShopStep> PutShopStepAsync(ShopStep shopStep, string EventUuid, string ViewportUuid)
+        {
+            var json = JsonConvert.SerializeObject(shopStep);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"events/{EventUuid}/viewports/{ViewportUuid}/shopsteps/{shopStep.Uuid}", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ShopStep>(responseJson);
+        }
     }
 }

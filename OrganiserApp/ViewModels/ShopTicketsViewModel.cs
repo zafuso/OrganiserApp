@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using OrganiserApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace OrganiserApp.ViewModels
     public class ShopTicketsViewModel : ObservableObject
     {
         public string Category { get; set; }
-        public string Title { get; set; }
+        public TicketType Ticket { get; set; }
 
         private bool _isBeingDragged;
         public bool IsBeingDragged

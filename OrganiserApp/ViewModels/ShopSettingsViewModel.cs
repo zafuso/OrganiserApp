@@ -20,6 +20,10 @@ namespace OrganiserApp.ViewModels
     {
         [ObservableProperty]
         Viewport viewport;
+        [ObservableProperty]
+        int ticketsInShop;
+
+        public ObservableCollection<ShopStep> ShopStepList = new();
 
         private ObservableCollection<ShopTicketsViewModel> _items = new();
         public ObservableCollection<ShopTicketsViewModel> Items
@@ -56,7 +60,8 @@ namespace OrganiserApp.ViewModels
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
 
             Title = Viewport.Uri;
-
+            await GetShopStepsAsync();
+            await GetTicketTypesAsync();
         }
 
         [ICommand]
@@ -168,11 +173,14 @@ namespace OrganiserApp.ViewModels
                 }
 
                 var viewportTicketUuids = new List<string>();
-                foreach (var ticket in Viewport.TicketTypes)
+                foreach (var shopStep in ShopStepList)
                 {
-                    viewportTicketUuids.Add(ticket.Uuid);
+                    var shopStepTickets = shopStep.TicketTypes;
+                    foreach (var uuid in shopStepTickets)
+                    {
+                        viewportTicketUuids.Add(uuid);
+                    }
                 }
-
 
                 var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
 
@@ -180,19 +188,19 @@ namespace OrganiserApp.ViewModels
                 {
                     if (viewportTicketUuids.Contains(ticket.Uuid))
                     {
-                        Items.Add(new ShopTicketsViewModel { Category = "Available Tickets", Title = ticket.Name.Nl });
+                        Items.Add(new ShopTicketsViewModel { Category = "Available Tickets", Ticket = ticket });
                     }
                     else
                     {
-                        Items.Add(new ShopTicketsViewModel { Category = "Other Tickets", Title = ticket.Name.Nl });
+                        Items.Add(new ShopTicketsViewModel { Category = "Other Tickets", Ticket = ticket });
                     }
-
-                    var groupedItems = Items
-                        .GroupBy(i => i.Category)
-                        .Select(g => new ShopTicketsGroupViewModel(g.Key, g));
-
-                    GroupedItems = new ObservableCollection<ShopTicketsGroupViewModel>(groupedItems);
                 }
+                var groupedItems = Items
+                    .GroupBy(i => i.Category)
+                    .Select(g => new ShopTicketsGroupViewModel(g.Key, g));
+
+                GroupedItems = new ObservableCollection<ShopTicketsGroupViewModel>(groupedItems);
+                PrintItemsState();
             }
             catch (Exception e)
             {
@@ -207,17 +215,18 @@ namespace OrganiserApp.ViewModels
 
         private void PrintItemsState()
         {
+            TicketsInShop = GroupedItems[0].Count();
             Debug.WriteLine($"Items {Items.Count}, state:");
             for (int i = 0; i < Items.Count; i++)
             {
-                Debug.WriteLine($"\t{i}: Group: {Items[i].Category} | Item: {Items[i].Title}");
+                Debug.WriteLine($"\t{i}: Group: {Items[i].Category} | Item: {Items[i].Ticket.Name.Nl}");
             }
         }
 
         [ICommand]
         private void OnItemDragged(ShopTicketsViewModel item)
         {
-            Debug.WriteLine($"OnItemDragged: {item?.Title}");
+            Debug.WriteLine($"OnItemDragged: {item?.Ticket.Name.Nl}");
             foreach (var i in Items)
             {
                 i.IsBeingDragged = item == i;
@@ -227,7 +236,7 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         private void OnItemDraggedOver(ShopTicketsViewModel item)
         {
-            Debug.WriteLine($"OnItemDraggedOver: {item?.Title}");
+            Debug.WriteLine($"OnItemDraggedOver: {item?.Ticket.Name.Nl}");
             var itemBeingDragged = _items.FirstOrDefault(i => i.IsBeingDragged);
             foreach (var i in Items)
             {
@@ -239,7 +248,7 @@ namespace OrganiserApp.ViewModels
         [ICommand]
         private void OnItemDragLeave(ShopTicketsViewModel item)
         {
-            Debug.WriteLine($"OnItemDragLeave: {item?.Title}");
+            Debug.WriteLine($"OnItemDragLeave: {item?.Ticket.Name.Nl}");
             foreach (var i in Items)
             {
                 i.IsBeingDraggedOver = false;
@@ -247,7 +256,7 @@ namespace OrganiserApp.ViewModels
         }
 
         [ICommand]
-        private async Task OnItemDropped(ShopTicketsViewModel item)
+        private void OnItemDropped(ShopTicketsViewModel item)
         {
             var itemToMove = _items.First(i => i.IsBeingDragged);
             var itemToInsertBefore = item;
@@ -258,19 +267,83 @@ namespace OrganiserApp.ViewModels
             var categoryToMoveFrom = GroupedItems.First(g => g.Contains(itemToMove));
             categoryToMoveFrom.Remove(itemToMove);
 
-            // Wait for remove animation to be completed
-            // https://github.com/xamarin/Xamarin.Forms/issues/13791
-            await Task.Delay(1000);
-
             var categoryToMoveTo = GroupedItems.First(g => g.Contains(itemToInsertBefore));
             var insertAtIndex = categoryToMoveTo.IndexOf(itemToInsertBefore);
             itemToMove.Category = categoryToMoveFrom.Name;
             categoryToMoveTo.Insert(insertAtIndex, itemToMove);
             itemToMove.IsBeingDragged = false;
             itemToInsertBefore.IsBeingDraggedOver = false;
-            Debug.WriteLine($"OnItemDropped: [{itemToMove?.Title}] => [{itemToInsertBefore?.Title}], target index = [{insertAtIndex}]");
+            Debug.WriteLine($"OnItemDropped: [{itemToMove?.Ticket.Name.Nl}] => [{itemToInsertBefore?.Ticket.Name.Nl}], target index = [{insertAtIndex}]");
 
             PrintItemsState();
+        }
+
+        [ICommand]
+        async Task GetShopStepsAsync()
+        {
+            if (IsBusy || Viewport is null)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                if (ShopStepList.Count > 0)
+                {
+                    ShopStepList.Clear();
+                }
+
+                var shopSteps = await shopService.GetShopStepsAsync(EventUuid, Viewport.Uuid);
+
+                foreach (var step in shopSteps)
+                {
+                    ShopStepList.Add(step);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to get shop steps: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [ICommand]
+        async Task UpdateTicketShopAsync()
+        {
+            if (IsBusy || Viewport is null || ShopStepList.Count == 0)
+                return;
+
+            var ticketShopStep = ShopStepList.First();
+            if (ticketShopStep is null)
+                return;
+
+            try
+            {
+                var ticketTypeUuidList = new List<string>();
+
+                foreach (var shopTicket in GroupedItems[0])
+                {
+                    ticketTypeUuidList.Add(shopTicket.Ticket.Uuid);
+                }
+                ticketShopStep.TicketTypes = ticketTypeUuidList;
+
+
+                await shopService.PutShopStepAsync(ticketShopStep, EventUuid, Viewport.Uuid);
+            } 
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to update shop steps: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                Init();
+            }
         }
     }
 }
