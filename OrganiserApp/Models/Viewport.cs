@@ -30,7 +30,7 @@ namespace OrganiserApp.Models
         [JsonProperty(PropertyName = "online_from")]
         public string OnlineFrom { get; set; }
 
-        [JsonProperty(PropertyName = "online_until")]
+        [JsonProperty(PropertyName = "online_till")]
         public string OnlineUntil { get; set; }
 
         [JsonProperty(PropertyName = "created_at")]

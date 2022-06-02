@@ -17,6 +17,8 @@ namespace OrganiserApp.ViewModels
     public partial class CreateShopViewModel : BaseViewModel
     {
         [ObservableProperty]
+        string uri;
+        [ObservableProperty]
         Viewport viewport;
         private readonly ShopService shopService;
         string EventUuid;
@@ -43,6 +45,8 @@ namespace OrganiserApp.ViewModels
                 TicketTypes = new List<TicketType>(),
                 Uri = FormatHelper.RandomString(16),
             };
+
+            Uri = Viewport.Uri;
 
             IsBusy = false;
         }
@@ -75,6 +79,13 @@ namespace OrganiserApp.ViewModels
                 IsBusy = false;
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(ShopOverviewPage)}");
             }
+        }
+
+        [ICommand]
+        Task TextChangedAsync()
+        {
+            Uri = Viewport.Uri;
+            return Task.CompletedTask;
         }
     }
 }

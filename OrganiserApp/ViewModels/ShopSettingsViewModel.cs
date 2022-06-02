@@ -108,5 +108,17 @@ namespace OrganiserApp.ViewModels
                 {"Viewport", Viewport }
             });
         }
+
+        [ICommand]
+        async Task GoToEditShopPageAsync()
+        {
+            if (IsBusy || Viewport is null)
+                return;
+
+            await Shell.Current.GoToAsync($"/{nameof(ShopEditNamePage)}", true, new Dictionary<string, object>
+            {
+                {"Viewport", Viewport }
+            });
+        }
     }
 }

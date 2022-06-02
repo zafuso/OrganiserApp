@@ -17,6 +17,8 @@ namespace OrganiserApp.ViewModels
     public partial class ShopEditNameViewModel: BaseViewModel
     {
         [ObservableProperty]
+        string uri;
+        [ObservableProperty]
         Viewport viewport;
         private readonly ShopService shopService;
         string EventUuid;
@@ -32,6 +34,8 @@ namespace OrganiserApp.ViewModels
 
             if (EventUuid is null)
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
+
+            Uri = Viewport.Uri;
         }
 
         [ICommand]
@@ -62,6 +66,13 @@ namespace OrganiserApp.ViewModels
                 IsBusy = false;
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(ShopOverviewPage)}");
             }
+        }
+
+        [ICommand]
+        Task TextChangedAsync()
+        {
+            Uri = Viewport.Uri;
+            return Task.CompletedTask;
         }
     }
 }

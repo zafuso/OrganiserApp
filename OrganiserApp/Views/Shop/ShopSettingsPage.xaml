@@ -16,6 +16,7 @@
                         Style="{StaticResource LabelHeader}"
                         FontSize="30"/>
                     <Button 
+                        Command="{Binding GoToEditShopPageCommand}"
                         Style="{StaticResource ButtonTertiary}"
                         ImageSource="edit_blue110.svg"/>
                 </HorizontalStackLayout>

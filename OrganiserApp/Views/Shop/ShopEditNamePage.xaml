@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="OrganiserApp.Views.Shop.ShopEditNamePage"
              x:DataType="viewmodel:ShopEditNameViewModel"
              Title="Edit Shop Name"
@@ -49,11 +50,17 @@
                                 Margin="16,0"
                                 Unfocused="Shoplink_Unfocused"
                                 Focused="Shoplink_Focused"
-                                Text="{Binding Viewport.Uri}"/>
+                                Text="{Binding Viewport.Uri}">
+                                <Entry.Behaviors>
+                                    <toolkit:EventToCommandBehavior
+                                        EventName="TextChanged"
+                                        Command="{Binding TextChangedCommand}"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
                     </Grid>
                     <Label
-                        Text="{Binding Viewport.Uri, StringFormat='{}Your shoplink is: https://store.ticketing.cm.com/{0}'}"
+                        Text="{Binding Uri, StringFormat='{}Your shoplink is: https://store.ticketing.cm.com/{0}'}"
                         Margin="16,0,0,16"
                         Style="{StaticResource MicroLabel}"/>
 
