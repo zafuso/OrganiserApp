@@ -4,75 +4,189 @@
              x:Class="OrganiserApp.Views.Shop.ShopSettingsPage"
              xmlns:model="clr-namespace:OrganiserApp.Models"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:converters="clr-namespace:OrganiserApp.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:ShopSettingsViewModel"
              Title="Shop Settings">
-    <ScrollView>
-        <Grid Padding="16,8">
-            <VerticalStackLayout>
-                <HorizontalStackLayout>
-                    <Label
-                        HorizontalOptions="Center"
-                        Text="{Binding Title, StringFormat='{}Shop: {0}'}"
-                        Style="{StaticResource LabelHeader}"
-                        FontSize="30"/>
-                    <Button 
-                        Command="{Binding GoToEditShopPageCommand}"
-                        Style="{StaticResource ButtonTertiary}"
-                        ImageSource="edit_blue110.svg"/>
-                </HorizontalStackLayout>
-                <Label 
-                    HorizontalOptions="Center"
-                    Text="Contains 5 ticket types."
-                    Style="{StaticResource MicroLabel}"/>
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,16,0,0">
-                <Button 
-                    Grid.Column="0" 
-                    Style="{StaticResource ButtonSecondary}" 
-                    Text="View shop"
-                    ImageSource="show_blue110.svg"
-                    Command="{Binding GoToTicketShopCommand}"
-                    ContentLayout="Left,0"/>
-                <Button 
-                    Grid.Column="1" 
-                    Style="{StaticResource ButtonSecondary}" 
-                    Text="Bypass link"
-                    ImageSource="key_blue110.svg"
-                    Command="{Binding GoToBypassLinkPageCommand}"
-                    ContentLayout="Left, 0"/>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DragColorConverter x:Key="DragColorConverter" />
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid
+            Margin="10"
+            ColumnSpacing="5"
+            IsVisible="false"
+            RowSpacing="5">
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Label
+                    Padding="10"
+                    BackgroundColor="Beige"
+                    HorizontalTextAlignment="Center"
+                    Text="Control 1">
+                    <Label.GestureRecognizers>
+                        <DragGestureRecognizer
+                            CanDrag="True"
+                            DragStarting="DragGestureRecognizer_DragStarting"
+                            DragStartingCommand="{Binding OnItemDraggedCommand}"
+                            DragStartingCommandParameter="Control 1" />
+                        <DropGestureRecognizer
+                            AllowDrop="True"
+                            Drop="DropGestureRecognizer_Drop"
+                            DropCommand="{Binding OnItemDroppedCommand}"
+                            DropCommandParameter="Control 1" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
-
-            <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Black10}"/>
-            <Label
-                HorizontalOptions="Center"
-                Text="Available Tickets"
-                Style="{StaticResource LabelHeader}"
-                FontSize="30"/>
-
-            <Label
-                HorizontalOptions="Center"
-                Text="Other Tickets"
-                Style="{StaticResource LabelHeader}"
-                FontSize="30"/>
-                <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Black10}"/>
-
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                    <Button 
-                        HorizontalOptions="End"
-                        Grid.Column="1" 
-                        Style="{StaticResource ButtonTertiary}" 
-                        Text="Delete"
-                        Command="{Binding RemoveViewportCommand}"
-                        ImageSource="delete_blue110.svg"
-                        ContentLayout="Left, 4"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Label
+                    Padding="10"
+                    BackgroundColor="BlanchedAlmond"
+                    HorizontalTextAlignment="Center"
+                    Text="Control 2">
+                    <Label.GestureRecognizers>
+                        <DragGestureRecognizer
+                            CanDrag="True"
+                            DragStarting="DragGestureRecognizer_DragStarting"
+                            DragStartingCommand="{Binding OnItemDraggedCommand}"
+                            DragStartingCommandParameter="Control 2" />
+                        <DropGestureRecognizer
+                            AllowDrop="True"
+                            Drop="DropGestureRecognizer_Drop"
+                            DropCommand="{Binding OnItemDroppedCommand}"
+                            DropCommandParameter="Control 2" />
+                    </Label.GestureRecognizers>
+                </Label>
             </Grid>
-            </VerticalStackLayout>
+        </Grid>
+        <CollectionView
+            x:Name="MyItems"
+            IsGrouped="True"
+            IsVisible="{Binding IsNotBusy}"
+            ItemsSource="{Binding GroupedItems}">
 
-            <ActivityIndicator
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="16,8">
+                    <HorizontalStackLayout>
+                        <Label
+                                HorizontalOptions="Center"
+                                Text="{Binding Title, StringFormat='{}Shop: {0}'}"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="30"/>
+                        <Button 
+                                Command="{Binding GoToEditShopPageCommand}"
+                                Style="{StaticResource ButtonTertiary}"
+                                ImageSource="edit_blue110.svg"/>
+                    </HorizontalStackLayout>
+                    <Label 
+                            HorizontalOptions="Center"
+                            Text="{Binding TicketsInShop, StringFormat='{}Contains {0} ticket types'}"
+                            Style="{StaticResource MicroLabel}"/>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,16,0,0">
+                        <Button 
+                                Grid.Column="0" 
+                                Style="{StaticResource ButtonSecondary}" 
+                                Text="View shop"
+                                ImageSource="show_blue110.svg"
+                                Command="{Binding GoToTicketShopCommand}"
+                                ContentLayout="Left,0"/>
+                        <Button 
+                                Grid.Column="1" 
+                                Style="{StaticResource ButtonSecondary}" 
+                                Text="Bypass link"
+                                ImageSource="key_blue110.svg"
+                                Command="{Binding GoToBypassLinkPageCommand}"
+                                ContentLayout="Left, 0"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Grid
+                        Padding="16,8"
+                        x:DataType="viewmodel:ShopTicketsGroupViewModel">
+                        <Frame CornerRadius="10" BackgroundColor="{StaticResource Blue10}" BorderColor="Transparent" Padding="16">
+                            <Label 
+                                HorizontalOptions="Center"
+                                Grid.Column="0"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="24"                                    
+                                Text="{Binding Name}"/>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout
+                        Padding="16,8"
+                        x:DataType="viewmodel:ShopTicketsViewModel">
+                        <StackLayout.GestureRecognizers>
+                            <DropGestureRecognizer
+                                AllowDrop="True"
+                                DragLeaveCommand="{Binding BindingContext.OnItemDragLeaveCommand, Source={x:Reference MyItems}}"
+                                DragLeaveCommandParameter="{Binding}"
+                                DragOverCommand="{Binding BindingContext.OnItemDraggedOverCommand, Source={x:Reference MyItems}}"
+                                DragOverCommandParameter="{Binding}"
+                                Drop="DropGestureRecognizer_Drop_Collection"
+                                DropCommand="{Binding BindingContext.OnItemDroppedCommand, Source={x:Reference MyItems}}"
+                                DropCommandParameter="{Binding}" />
+                        </StackLayout.GestureRecognizers>
+                        <Grid
+                            BackgroundColor="{StaticResource Orange10}"
+                            HeightRequest="50"
+                            IsVisible="{Binding IsBeingDraggedOver}" />
+                        <Frame Style="{StaticResource CardView}">
+                            <Label
+                                BackgroundColor="{Binding IsBeingDragged, Converter={StaticResource DragColorConverter}}"
+                                FontSize="Large"
+                                HeightRequest="50"
+                                Style="{StaticResource MicroLabel}"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Ticket.Name.Nl}"
+                                VerticalTextAlignment="Center">
+                                <Label.GestureRecognizers>
+                                    <DragGestureRecognizer
+                                        CanDrag="True"
+                                        DragStarting="DragGestureRecognizer_DragStarting_Collection"
+                                        DragStartingCommand="{Binding BindingContext.OnItemDraggedCommand, Source={x:Reference MyItems}}"
+                                        DragStartingCommandParameter="{Binding}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Padding="16,8">
+                        <Button 
+                            Grid.Column="0" 
+                            Style="{StaticResource ButtonSecondary}" 
+                            Text="Save"
+                            Command="{Binding UpdateTicketShopCommand}"/>
+                        <Button 
+                            HorizontalOptions="End"
+                            Grid.Column="1" 
+                            Style="{StaticResource ButtonTertiary}" 
+                            Text="Delete"
+                            Command="{Binding RemoveViewportCommand}"
+                            ImageSource="delete_blue110.svg"
+                            ContentLayout="Left, 4"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+        <ActivityIndicator
             Grid.ColumnSpan="2"
             HorizontalOptions="FillAndExpand"
             IsRunning="{Binding IsBusy}"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="CenterAndExpand" />
-        </Grid>
-    </ScrollView>
+    </Grid>
 </ContentPage>

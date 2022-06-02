@@ -2,6 +2,8 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:OrganiserApp"
+             xmlns:converters="clr-namespace:OrganiserApp.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="OrganiserApp.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,7 +11,7 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+           
             <x:String x:Key="IconTimeOpen">&#xe9bd;</x:String>
             <x:String x:Key="IconTimeFill">&#xe9bc;</x:String>
 

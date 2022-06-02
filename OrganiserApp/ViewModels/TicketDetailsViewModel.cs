@@ -189,6 +189,16 @@ namespace OrganiserApp.ViewModels
             NewPouleSelected = false;
             ExistingPouleSelected = true;
 
+            OnlineFromDate = DateTime.Now.Date;
+            OnlineUntilDate = DateTime.Now.Date;
+            OnlineFromTime = DateTime.Now.Date.TimeOfDay;
+            OnlineUntilTime = DateTime.Now.Date.TimeOfDay;
+
+            ValidFromDate = DateTime.Now.Date;
+            ValidUntilDate = DateTime.Now.Date;
+            ValidFromTime = DateTime.Now.Date.TimeOfDay;
+            ValidUntilTime = DateTime.Now.Date.TimeOfDay;
+
             if (SelectedTicket.OnlineFrom is null)
             {
                 SwitchSalesPeriod = false;
