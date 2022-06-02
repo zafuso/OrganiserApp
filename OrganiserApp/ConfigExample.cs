@@ -15,6 +15,7 @@ namespace OrganiserApp
         public const string HelpcenterUrl = "https://www.cm.com/en-gb/customer-service/#38-184/Ticketing/";
         public const string VisitorUrl = "https://support.ticketing.cm.com/en";
         public const string WhatsAppUrl = "https://api.whatsapp.com/send";
+        public const string BaseUrlTicketShop = "https://store.ticketing.cm.com";
         public const string WhatsAppPhoneNumber = "+31761234567";
     }
 }

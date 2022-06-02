@@ -9,18 +9,15 @@
     <ScrollView>
         <Grid Padding="16,8">
             <VerticalStackLayout>
-                <HorizontalStackLayout Spacing="8">
+                <HorizontalStackLayout>
                     <Label
                         HorizontalOptions="Center"
-                        Text="Lowlands2022"
+                        Text="{Binding Title}"
                         Style="{StaticResource LabelHeader}"
                         FontSize="40"/>
                     <Button 
-                        Grid.Column="0" 
-                        Padding="16,0"
                         Style="{StaticResource ButtonTertiary}"
-                        ImageSource="edit_blue110.svg"
-                        ContentLayout="Left, 0"/>
+                        ImageSource="edit_blue110.svg"/>
                 </HorizontalStackLayout>
                 <Label 
                     HorizontalOptions="Center"
@@ -32,6 +29,7 @@
                     Style="{StaticResource ButtonSecondary}" 
                     Text="View shop"
                     ImageSource="show_blue110.svg"
+                    Command="{Binding GoToTicketShopCommand}"
                     ContentLayout="Left,0"/>
                 <Button 
                     Grid.Column="1" 
