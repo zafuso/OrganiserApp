@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using OrganiserApp.Helpers;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
 using OrganiserApp.Views.Event;
 using OrganiserApp.Views.Shop;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,10 @@ namespace OrganiserApp.ViewModels
     [QueryProperty("Viewport", "Viewport")]
     public partial class ShopSettingsViewModel : BaseViewModel
     {
+        public ObservableCollection<TicketType> TicketList { get; set; } = new();
+        public ObservableCollection<TicketType> AvailableTickets { get; set; } = new();
+        public ObservableCollection<TicketType> UnAvailableTickets { get; set; } = new();
+
         [ObservableProperty]
         Viewport viewport;
         string EventUuid;
@@ -148,34 +154,26 @@ namespace OrganiserApp.ViewModels
                     TicketList.Clear();
                 }
 
-                if (CheckedTicketsList.Count > 0)
-                {
-                    CheckedTicketsList.Clear();
-                    CanBulkEdit = false;
-                }
-
-                if (TicketGroups.Count > 0)
-                {
-                    TicketGroups.Clear();
-                }
-
                 var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
 
                 foreach (var ticket in ticketTypes)
                 {
-                    ticket.Price = FormatHelper.FormatPrice(ticket.Price);
                     TicketList.Add(ticket);
-                    CalculateTicketStatus(ticket);
                 }
 
-                if (TicketCategoryList.Count > 0)
-
+                if (TicketList.Count > 0)
                 {
-                    foreach (var category in TicketCategoryList)
+                    var viewportTickets = new List<string>();
+                    foreach (var ticket in Viewport.TicketTypes)
                     {
-                        var groupedTickets = TicketList.Where(t => t.TicketCategoryUuid == category.Uuid).ToList();
-                        TicketGroups.Add(new TicketGroup(category, groupedTickets));
+                        viewportTickets.Add(ticket.Uuid);
                     }
+
+                    var _availableTickets = TicketList.Where(t => viewportTickets.Contains(t.Uuid));
+                    AvailableTickets = new ObservableCollection<TicketType>(_availableTickets);
+
+                    var _unavailableTickets = TicketList.Where(t => !viewportTickets.Contains(t.Uuid));
+                    UnAvailableTickets = new ObservableCollection<TicketType>(_unavailableTickets);
                 }
             }
             catch (Exception e)
@@ -186,7 +184,6 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
-                IsRefreshing = false;
             }
 
         }

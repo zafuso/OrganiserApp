@@ -47,7 +47,10 @@
                 Text="Available Tickets"
                 Style="{StaticResource LabelHeader}"
                 FontSize="30"/>
-
+            <CollectionView
+                x:Name>
+                    
+            </CollectionView>
             <Label
                 HorizontalOptions="Center"
                 Text="Other Tickets"
