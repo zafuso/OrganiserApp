@@ -20,7 +20,7 @@ namespace OrganiserApp.ViewModels
         private readonly ShopService shopService;
         public ShopSettingsViewModel(ShopService shopService)
         {
-            Title = "Shop";
+            Title = "Shop Settings";
             this.shopService = shopService;
         }
 
@@ -30,6 +30,8 @@ namespace OrganiserApp.ViewModels
 
             if (EventUuid is null)
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
+
+            Title = Viewport.Uri;
         }
     }
 }

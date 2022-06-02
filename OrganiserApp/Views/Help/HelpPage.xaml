@@ -15,7 +15,17 @@
                 Style="{StaticResource LabelHeader}"
                 FontSize="40"
                 HorizontalOptions="Center"/>
-            
+
+            <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="300"
+                                 HeightRequest="280">
+                <Image Source="welcome.svg"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Aspect="AspectFill"/>
+            </StackLayout>
+
             <Label 
                 Style="{StaticResource MainLabel}" 
                 Margin="0,32"

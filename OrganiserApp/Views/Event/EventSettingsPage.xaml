@@ -110,6 +110,7 @@
                             Margin="0">
                             <DatePicker
                                 Date="{Binding StartAtDate}"
+                                Format="dd-MM-yyyy"
                                 Unfocused="StartAtDatePicker_Unfocused"
                                 Focused="StartAtDatePicker_Focused"
                                 Margin="16,0"/>
@@ -149,6 +150,7 @@
                             Margin="0">
                             <DatePicker
                                 Date="{Binding EndAtDate}"
+                                Format="dd-MM-yyyy"
                                 Unfocused="EndAtDatePicker_Unfocused"
                                 Focused="EndAtDatePicker_Focused"
                                 Margin="16,0"/>
@@ -194,6 +196,7 @@
                             Margin="0">
                                 <DatePicker
                                     Date="{Binding DownloadFromDate}"
+                                    Format="dd-MM-yyyy"
                                     Focused="DownloadFromDate_Focused"
                                     Unfocused="DownloadFromDate_Unfocused"
                                     Margin="16,0"/>

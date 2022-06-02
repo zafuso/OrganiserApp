@@ -65,6 +65,7 @@
 	  <None Remove="Resources\Images\add_white.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\connection.png" />
+	  <None Remove="Resources\Images\delete_blue110.svg" />
 	  <None Remove="Resources\Images\edit_blue110.svg" />
 	  <None Remove="Resources\Images\edit_white.svg" />
 	  <None Remove="Resources\Images\email_blue110.svg" />
@@ -73,16 +74,19 @@
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\help_open_blue110.svg" />
 	  <None Remove="Resources\Images\help_open_white.svg" />
+	  <None Remove="Resources\Images\key_blue110.svg" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\no_messages.svg" />
 	  <None Remove="Resources\Images\search_grey.svg" />
 	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\shop.png" />
+	  <None Remove="Resources\Images\show_blue110.svg" />
 	  <None Remove="Resources\Images\status_error.png" />
 	  <None Remove="Resources\Images\status_success.png" />
 	  <None Remove="Resources\Images\status_warning.png" />
 	  <None Remove="Resources\Images\ticket.png" />
+	  <None Remove="Resources\Images\welcome.svg" />
 	  <None Remove="Resources\Images\whatsapp.png" />
 	  <None Remove="Resources\Images\whatsapp_blue110.svg" />
 	</ItemGroup>

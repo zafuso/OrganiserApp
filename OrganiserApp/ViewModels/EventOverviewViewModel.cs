@@ -126,7 +126,7 @@ namespace OrganiserApp.ViewModels
                 LoadMore = false;
                 KeepTake = false;
 
-                if (!(EventList.Count >= totalItems))
+                if (EventList.Count < totalItems)
                 {
                     CanLoadMore = true;
                 }

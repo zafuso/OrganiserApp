@@ -88,6 +88,7 @@
                                     Margin="0">
                                     <DatePicker
                                         Date="{Binding OnlineFromDate}"
+                                        Format="dd-MM-yyyy"
                                         Unfocused="OnlineFromDatePicker_Unfocused"
                                         Focused="OnlineFromDatePicker_Focused"
                                         Margin="16,0"/>
@@ -127,6 +128,7 @@
                                     Margin="0">
                                     <DatePicker
                                         Date="{Binding OnlineUntilDate}"
+                                        Format="dd-MM-yyyy"
                                         Unfocused="OnlineUntilDatePicker_Unfocused"
                                         Focused="OnlineUntilDatePicker_Focused"
                                         Margin="16,0"/>
@@ -177,6 +179,7 @@
                                     Margin="0">
                                     <DatePicker
                                         Date="{Binding ValidFromDate}"
+                                        Format="dd-MM-yyyy"
                                         Unfocused="ValidFromDatePicker_Unfocused"
                                         Focused="ValidFromDatePicker_Focused"
                                         Margin="16,0"/>
@@ -216,6 +219,7 @@
                                     Margin="0">
                                     <DatePicker
                                         Date="{Binding ValidUntilDate}"
+                                        Format="dd-MM-yyyy"
                                         Unfocused="ValidUntilDatePicker_Unfocused"
                                         Focused="ValidUntilDatePicker_Focused"
                                         Margin="16,0"/>

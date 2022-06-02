@@ -2,10 +2,69 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OrganiserApp.Views.Shop.ShopSettingsPage"
-             Title="ShopSettingsPage">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+             xmlns:model="clr-namespace:OrganiserApp.Models"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:DataType="viewmodel:ShopSettingsViewModel"
+             Title="Shop Settings">
+    <ScrollView>
+        <Grid Padding="16,8">
+            <VerticalStackLayout>
+                <HorizontalStackLayout Spacing="8">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="Lowlands2022"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="40"/>
+                    <Button 
+                        Grid.Column="0" 
+                        Padding="16,0"
+                        Style="{StaticResource ButtonTertiary}"
+                        ImageSource="edit_blue110.svg"
+                        ContentLayout="Left, 0"/>
+                </HorizontalStackLayout>
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="Contains 5 ticket types."
+                    Style="{StaticResource MicroLabel}"/>
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="0,16,0,0">
+                <Button 
+                    Grid.Column="0" 
+                    Style="{StaticResource ButtonSecondary}" 
+                    Text="View shop"
+                    ImageSource="show_blue110.svg"
+                    ContentLayout="Left,0"/>
+                <Button 
+                    Grid.Column="1" 
+                    Style="{StaticResource ButtonSecondary}" 
+                    Text="Bypass link"
+                    ImageSource="key_blue110.svg"
+                    ContentLayout="Left, 0"/>
+            </Grid>
+
+            <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Black10}"/>
+            <Label
+                HorizontalOptions="Center"
+                Text="Available Tickets"
+                Style="{StaticResource LabelHeader}"
+                FontSize="30"/>
+
+            <Label
+                HorizontalOptions="Center"
+                Text="Other Tickets"
+                Style="{StaticResource LabelHeader}"
+                FontSize="30"/>
+                <BoxView Margin="0,16" HeightRequest="1" Color="{StaticResource Black10}"/>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                    <Button 
+                        HorizontalOptions="End"
+                        Grid.Column="1" 
+                        Style="{StaticResource ButtonTertiary}" 
+                        Text="Delete"
+                        ImageSource="delete_blue110.svg"
+                        ContentLayout="Left, 4"/>
+            </Grid>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>
