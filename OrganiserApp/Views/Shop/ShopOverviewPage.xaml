@@ -1,11 +1,73 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:OrganiserApp.Models"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:ShopOverviewViewModel"
              x:Class="OrganiserApp.Views.Shop.ShopOverviewPage"
-             Title="ShopOverviewPage">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+             Title="Shops">
+
+    <Grid>
+        <RefreshView
+            Command="{Binding GetViewportsCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView
+                IsVisible="{Binding IsNotBusy}"
+                ItemsSource="{Binding ViewportList}"
+                SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="300"
+                                 HeightRequest="300">
+                        <Image Source="no_messages.svg"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Aspect="AspectFill"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.Header>
+                    <StackLayout Orientation="Vertical" Padding="16">
+                        <Label
+                                HorizontalOptions="Center"
+                                Text="{Binding Title}"
+                                Style="{StaticResource LabelHeader}"
+                                FontSize="40"/>
+                        <Button
+                            Margin="0,16,0,0"
+                            IsEnabled="{Binding IsNotBusy}"
+                            Command="{Binding GoToCreateShopCommand}"
+                            ImageSource="add_white.svg"
+                            ContentLayout="Left, 4"
+                            HorizontalOptions="End"
+                            Style="{StaticResource ButtonPrimary}"
+                            Text="Create new shop"/>
+                    </StackLayout>
+                </CollectionView.Header>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Viewport">
+                        <Grid Padding="16,8">
+                            <Frame Style="{StaticResource CardView}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        CommandParameter="{Binding .}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ShopOverviewViewModel}}, Path=GoToShopSettingsCommand}"/>
+                                </Frame.GestureRecognizers>
+                                <Label 
+                                    VerticalOptions="Center"
+                                    Padding="16"
+                                    FontSize="16"
+                                    Style="{StaticResource LabelHeader}"
+                                    Text="{Binding Uri}"/>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+    </Grid>
 </ContentPage>

@@ -8,6 +8,7 @@ namespace OrganiserApp.Helpers
 {
     public static class FormatHelper
     {
+        private static Random random = new Random();
         public static string FormatISO8601ToDateTimeString(string IsoDate)
         {
             return DateTime.Parse(IsoDate).ToString("dddd, dd MMMM yyyy HH:mm tt");
@@ -43,6 +44,13 @@ namespace OrganiserApp.Helpers
         {
             var roundedPrice = Math.Round(Price, 2, MidpointRounding.ToEven);
             return Convert.ToDecimal(String.Format("{0:0.00}", roundedPrice));
+        }
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

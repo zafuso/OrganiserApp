@@ -99,7 +99,7 @@
                 SelectionMode="None">
 
                     <CollectionView.EmptyView>
-                        <StackLayout VerticalOptions="Start"
+                        <StackLayout VerticalOptions="Center"
                                  HorizontalOptions="Center"
                                  WidthRequest="300"
                                  HeightRequest="300">

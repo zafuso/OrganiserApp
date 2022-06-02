@@ -1,0 +1,61 @@
+﻿using Newtonsoft.Json;
+using OrganiserApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OrganiserApp.Services
+{
+    public class ShopService : BaseHttpClient
+    {
+        static readonly HttpClient client = GetHttpClient();
+
+        public async Task<IEnumerable<Viewport>> GetViewportsAsync(string EventUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/viewports");
+            var viewports = JsonConvert.DeserializeObject<IEnumerable<Viewport>>(json);
+
+            return viewports;
+        }
+
+        public async Task<Viewport> PostViewportAsync(Viewport viewport, string EventUuid)
+        {
+            var json = JsonConvert.SerializeObject(viewport);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"events/{EventUuid}/viewports", content);
+            response.EnsureSuccessStatusCode();
+
+            _ = Application.Current.MainPage.DisplayAlert("New shop created", "Your shop has been created.", "OK");
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Viewport>(responseJson);
+        }
+
+        public async Task<Viewport> PutViewportAsync(Viewport viewport, string EventUuid)
+        {
+            var json = JsonConvert.SerializeObject(viewport);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"events/{EventUuid}/viewports/{viewport.Uuid}", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Viewport>(responseJson);
+        }
+
+        public async Task<ViewportBypassUrl> PostGenerateBypassUrlAsync(Viewport viewport, string EventUuid)
+        {
+            var json = "{}";
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"events/{EventUuid}/queue/viewports/{viewport.Uuid}/queuetoken/generate", content);
+            response.EnsureSuccessStatusCode();
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ViewportBypassUrl>(responseJson);
+        }
+    }
+}

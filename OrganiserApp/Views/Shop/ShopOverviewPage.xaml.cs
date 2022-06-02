@@ -9,4 +9,10 @@ public partial class ShopOverviewPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as ShopOverviewViewModel).Init();
+    }
 }

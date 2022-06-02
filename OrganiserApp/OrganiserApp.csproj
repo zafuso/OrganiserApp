@@ -32,10 +32,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.png" ForegroundFile="Resources\AppIcon\appicon.png" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash4.png" Color="#101E1E" BaseSize="256,256" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -62,6 +62,7 @@
 	  <None Remove="Resources\Fonts\GothamRnd-LightIta.otf" />
 	  <None Remove="Resources\Fonts\GothamRnd-MedIta.otf" />
 	  <None Remove="Resources\Fonts\GothamRnd-Medium.otf" />
+	  <None Remove="Resources\Images\add_white.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\connection.png" />
 	  <None Remove="Resources\Images\edit_blue110.svg" />
@@ -122,7 +123,13 @@
 	  <MauiXaml Update="Views\Orders\OrderOverviewPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Shop\CreateShopPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Shop\ShopOverviewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Shop\ShopSettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Ticket\TicketBulkEditPage.xaml">
