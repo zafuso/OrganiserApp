@@ -18,9 +18,19 @@ namespace OrganiserApp.ViewModels
     [QueryProperty("Viewport", "Viewport")]
     public partial class ShopSettingsViewModel : BaseViewModel
     {
-        public ObservableCollection<TicketType> TicketList { get; set; } = new();
-        public ObservableCollection<TicketType> AvailableTickets { get; set; } = new();
-        public ObservableCollection<TicketType> UnAvailableTickets { get; set; } = new();
+        private ObservableCollection<ShopTicketsViewModel> _items = new ObservableCollection<ShopTicketsViewModel>();
+        public ObservableCollection<ShopTicketsViewModel> Items
+        {
+            get { return _items; }
+            set { SetProperty(ref _items, value); }
+        }
+
+        private ObservableCollection<ShopTicketsGroupViewModel> _groupedItems = new ObservableCollection<ShopTicketsGroupViewModel>();
+        public ObservableCollection<ShopTicketsGroupViewModel> GroupedItems
+        {
+            get { return _groupedItems; }
+            set { SetProperty(ref _groupedItems, value); }
+        }
 
         [ObservableProperty]
         Viewport viewport;
@@ -149,31 +159,37 @@ namespace OrganiserApp.ViewModels
 
                 IsBusy = true;
 
-                if (TicketList.Count > 0)
+                if (Items.Count > 0)
                 {
-                    TicketList.Clear();
+                    Items.Clear();
+                    GroupedItems.Clear();
                 }
+
+                var viewportTicketUuids = new List<string>();
+                foreach (var ticket in Viewport.TicketTypes)
+                {
+                    viewportTicketUuids.Add(ticket.Uuid);
+                }
+
 
                 var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
 
                 foreach (var ticket in ticketTypes)
                 {
-                    TicketList.Add(ticket);
-                }
-
-                if (TicketList.Count > 0)
-                {
-                    var viewportTickets = new List<string>();
-                    foreach (var ticket in Viewport.TicketTypes)
+                    if (viewportTicketUuids.Contains(ticket.Uuid))
                     {
-                        viewportTickets.Add(ticket.Uuid);
+                        Items.Add(new ShopTicketsViewModel { Category = "Available Tickets", Title = ticket.Name.Nl });
+                    }
+                    else
+                    {
+                        Items.Add(new ShopTicketsViewModel { Category = "Other Tickets", Title = ticket.Name.Nl });
                     }
 
-                    var _availableTickets = TicketList.Where(t => viewportTickets.Contains(t.Uuid));
-                    AvailableTickets = new ObservableCollection<TicketType>(_availableTickets);
+                    var groupedItems = Items
+                        .GroupBy(i => i.Category)
+                        .Select(g => new ShopTicketsGroupViewModel(g.Key, g));
 
-                    var _unavailableTickets = TicketList.Where(t => !viewportTickets.Contains(t.Uuid));
-                    UnAvailableTickets = new ObservableCollection<TicketType>(_unavailableTickets);
+                    GroupedItems = new ObservableCollection<ShopTicketsGroupViewModel>(groupedItems);
                 }
             }
             catch (Exception e)
@@ -185,7 +201,90 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = false;
             }
+        }
 
+        [ICommand]
+        private void OnStateRefresh()
+        {
+            Debug.WriteLine($"OnStateRefresh");
+            OnPropertyChanged(nameof(Items));
+            PrintItemsState();
+        }
+
+        [ICommand]
+        private async void OnStateReset()
+        {
+            Debug.WriteLine($"OnStateReset");
+            await GetTicketTypesAsync();
+            PrintItemsState();
+        }
+
+        private void PrintItemsState()
+        {
+            Debug.WriteLine($"Items {Items.Count}, state:");
+            for (int i = 0; i < Items.Count; i++)
+            {
+                Debug.WriteLine($"\t{i}: Group: {Items[i].Category} | Item: {Items[i].Title}");
+            }
+        }
+
+        [ICommand]
+        private void OnItemDragged(ShopTicketsViewModel item)
+        {
+            Debug.WriteLine($"OnItemDragged: {item?.Title}");
+            foreach (var i in Items)
+            {
+                i.IsBeingDragged = item == i;
+            }
+        }
+
+        [ICommand]
+        private void OnItemDraggedOver(ShopTicketsViewModel item)
+        {
+            Debug.WriteLine($"OnItemDraggedOver: {item?.Title}");
+            var itemBeingDragged = _items.FirstOrDefault(i => i.IsBeingDragged);
+            foreach (var i in Items)
+            {
+                i.IsBeingDraggedOver = item == i && item != itemBeingDragged);
+            }
+        }
+
+
+        [ICommand]
+        private void OnItemDragLeave(ShopTicketsViewModel item)
+        {
+            Debug.WriteLine($"OnItemDragLeave: {item?.Title}");
+            foreach (var i in Items)
+            {
+                i.IsBeingDraggedOver = false;
+            }
+        }
+
+        [ICommand]
+        private async Task OnItemDropped(ShopTicketsViewModel item)
+        {
+            var itemToMove = _items.First(i => i.IsBeingDragged);
+            var itemToInsertBefore = item;
+
+            if (itemToMove == null || itemToInsertBefore == null || itemToMove == itemToInsertBefore)
+                return;
+
+            var categoryToMoveFrom = GroupedItems.First(g => g.Contains(itemToMove));
+            categoryToMoveFrom.Remove(itemToMove);
+
+            // Wait for remove animation to be completed
+            // https://github.com/xamarin/Xamarin.Forms/issues/13791
+            await Task.Delay(1000);
+
+            var categoryToMoveTo = GroupedItems.First(g => g.Contains(itemToInsertBefore));
+            var insertAtIndex = categoryToMoveTo.IndexOf(itemToInsertBefore);
+            itemToMove.Category = categoryToMoveFrom.Name;
+            categoryToMoveTo.Insert(insertAtIndex, itemToMove);
+            itemToMove.IsBeingDragged = false;
+            itemToInsertBefore.IsBeingDraggedOver = false;
+            Debug.WriteLine($"OnItemDropped: [{itemToMove?.Title}] => [{itemToInsertBefore?.Title}], target index = [{insertAtIndex}]");
+
+            PrintItemsState();
         }
     }
 }
