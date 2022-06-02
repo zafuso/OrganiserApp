@@ -21,9 +21,13 @@ namespace OrganiserApp.ViewModels
         string EventUuid;
 
         private readonly ShopService shopService;
-        public ShopSettingsViewModel(ShopService shopService)
+        private readonly TicketService ticketService;
+        private readonly IConnectivity connectivity;
+        public ShopSettingsViewModel(ShopService shopService, TicketService ticketService, IConnectivity connectivity)
         {
             this.shopService = shopService;
+            this.ticketService = ticketService;
+            this.connectivity = connectivity;
         }
 
         public async void Init()
@@ -34,6 +38,7 @@ namespace OrganiserApp.ViewModels
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
 
             Title = Viewport.Uri;
+
         }
 
         [ICommand]
@@ -119,6 +124,71 @@ namespace OrganiserApp.ViewModels
             {
                 {"Viewport", Viewport }
             });
+        }
+
+        [ICommand]
+        async Task GetTicketTypesAsync()
+        {
+            if (IsBusy)
+                return;
+
+            try
+            {
+                if (connectivity.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("No connectivity!",
+                        $"Please check internet and try again.", "OK");
+                    return;
+                }
+
+                IsBusy = true;
+
+                if (TicketList.Count > 0)
+                {
+                    TicketList.Clear();
+                }
+
+                if (CheckedTicketsList.Count > 0)
+                {
+                    CheckedTicketsList.Clear();
+                    CanBulkEdit = false;
+                }
+
+                if (TicketGroups.Count > 0)
+                {
+                    TicketGroups.Clear();
+                }
+
+                var ticketTypes = await ticketService.GetTicketTypesAsync(EventUuid);
+
+                foreach (var ticket in ticketTypes)
+                {
+                    ticket.Price = FormatHelper.FormatPrice(ticket.Price);
+                    TicketList.Add(ticket);
+                    CalculateTicketStatus(ticket);
+                }
+
+                if (TicketCategoryList.Count > 0)
+
+                {
+                    foreach (var category in TicketCategoryList)
+                    {
+                        var groupedTickets = TicketList.Where(t => t.TicketCategoryUuid == category.Uuid).ToList();
+                        TicketGroups.Add(new TicketGroup(category, groupedTickets));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to get tickets: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                IsRefreshing = false;
+            }
+
         }
     }
 }

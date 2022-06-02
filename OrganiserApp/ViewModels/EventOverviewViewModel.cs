@@ -225,15 +225,15 @@ namespace OrganiserApp.ViewModels
             SearchQuery = SearchQuery.ToLowerInvariant().Trim();
             var filteredItems = eventsList.Where(e => e.Name.ToLowerInvariant().Contains(SearchQuery)).ToList();
 
-            foreach (var ticket in eventsList)
+            foreach (var item in eventsList)
             {
-                if (!filteredItems.Contains(ticket))
+                if (!filteredItems.Contains(item))
                 {
-                    EventList.Remove(ticket);
+                    EventList.Remove(item);
                 }
-                else if (!EventList.Contains(ticket))
+                else if (!EventList.Contains(item))
                 {
-                    EventList.Add(ticket);
+                    EventList.Add(item);
                 }
             }
 
