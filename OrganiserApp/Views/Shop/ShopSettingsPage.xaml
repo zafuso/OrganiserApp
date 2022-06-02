@@ -66,6 +66,7 @@
         <CollectionView
             x:Name="MyItems"
             IsGrouped="True"
+            IsVisible="{Binding IsNotBusy}"
             ItemsSource="{Binding GroupedItems}">
 
             <CollectionView.Header>
