@@ -18,27 +18,29 @@ namespace OrganiserApp.ViewModels
     [QueryProperty("Viewport", "Viewport")]
     public partial class ShopSettingsViewModel : BaseViewModel
     {
-        private ObservableCollection<ShopTicketsViewModel> _items = new ObservableCollection<ShopTicketsViewModel>();
+        [ObservableProperty]
+        Viewport viewport;
+
+        private ObservableCollection<ShopTicketsViewModel> _items = new();
         public ObservableCollection<ShopTicketsViewModel> Items
         {
             get { return _items; }
             set { SetProperty(ref _items, value); }
         }
 
-        private ObservableCollection<ShopTicketsGroupViewModel> _groupedItems = new ObservableCollection<ShopTicketsGroupViewModel>();
+        private ObservableCollection<ShopTicketsGroupViewModel> _groupedItems = new();
         public ObservableCollection<ShopTicketsGroupViewModel> GroupedItems
         {
             get { return _groupedItems; }
             set { SetProperty(ref _groupedItems, value); }
         }
 
-        [ObservableProperty]
-        Viewport viewport;
         string EventUuid;
 
         private readonly ShopService shopService;
         private readonly TicketService ticketService;
         private readonly IConnectivity connectivity;
+
         public ShopSettingsViewModel(ShopService shopService, TicketService ticketService, IConnectivity connectivity)
         {
             this.shopService = shopService;
@@ -203,22 +205,6 @@ namespace OrganiserApp.ViewModels
             }
         }
 
-        [ICommand]
-        private void OnStateRefresh()
-        {
-            Debug.WriteLine($"OnStateRefresh");
-            OnPropertyChanged(nameof(Items));
-            PrintItemsState();
-        }
-
-        [ICommand]
-        private async void OnStateReset()
-        {
-            Debug.WriteLine($"OnStateReset");
-            await GetTicketTypesAsync();
-            PrintItemsState();
-        }
-
         private void PrintItemsState()
         {
             Debug.WriteLine($"Items {Items.Count}, state:");
@@ -245,7 +231,7 @@ namespace OrganiserApp.ViewModels
             var itemBeingDragged = _items.FirstOrDefault(i => i.IsBeingDragged);
             foreach (var i in Items)
             {
-                i.IsBeingDraggedOver = item == i && item != itemBeingDragged);
+                i.IsBeingDraggedOver = item == i && item != itemBeingDragged;
             }
         }
 
