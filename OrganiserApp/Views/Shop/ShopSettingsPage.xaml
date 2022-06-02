@@ -12,9 +12,9 @@
                 <HorizontalStackLayout>
                     <Label
                         HorizontalOptions="Center"
-                        Text="{Binding Title}"
+                        Text="{Binding Title, StringFormat='{}Shop: {0}'}"
                         Style="{StaticResource LabelHeader}"
-                        FontSize="40"/>
+                        FontSize="30"/>
                     <Button 
                         Style="{StaticResource ButtonTertiary}"
                         ImageSource="edit_blue110.svg"/>
@@ -36,6 +36,7 @@
                     Style="{StaticResource ButtonSecondary}" 
                     Text="Bypass link"
                     ImageSource="key_blue110.svg"
+                    Command="{Binding GoToBypassLinkPageCommand}"
                     ContentLayout="Left, 0"/>
             </Grid>
 
@@ -59,10 +60,18 @@
                         Grid.Column="1" 
                         Style="{StaticResource ButtonTertiary}" 
                         Text="Delete"
+                        Command="{Binding RemoveViewportCommand}"
                         ImageSource="delete_blue110.svg"
                         ContentLayout="Left, 4"/>
             </Grid>
             </VerticalStackLayout>
+
+            <ActivityIndicator
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
         </Grid>
     </ScrollView>
 </ContentPage>

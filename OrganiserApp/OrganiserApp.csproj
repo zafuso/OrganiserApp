@@ -75,6 +75,7 @@
 	  <None Remove="Resources\Images\help_open_blue110.svg" />
 	  <None Remove="Resources\Images\help_open_white.svg" />
 	  <None Remove="Resources\Images\key_blue110.svg" />
+	  <None Remove="Resources\Images\link_blue110.svg" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\more.png" />
 	  <None Remove="Resources\Images\no_messages.svg" />
@@ -86,6 +87,7 @@
 	  <None Remove="Resources\Images\status_success.png" />
 	  <None Remove="Resources\Images\status_warning.png" />
 	  <None Remove="Resources\Images\ticket.png" />
+	  <None Remove="Resources\Images\ticketing_girl.svg" />
 	  <None Remove="Resources\Images\welcome.svg" />
 	  <None Remove="Resources\Images\whatsapp.png" />
 	  <None Remove="Resources\Images\whatsapp_blue110.svg" />
@@ -128,6 +130,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Shop\CreateShopPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Shop\ShopBypassLinkPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Shop\ShopEditNamePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Shop\ShopOverviewPage.xaml">

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
 using OrganiserApp.Views.Event;
+using OrganiserApp.Views.Shop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,7 +46,7 @@ namespace OrganiserApp.ViewModels
             {
                 Uri uri = new($"{Config.BaseUrlTicketShop}/{Viewport.Uri}");
 
-                var isConfirmed = await Shell.Current.DisplayAlert("Demo Ticketshop", $"Your ticketshop url is: {uri}. As this application is not running on production we'll send you to a demo shop instead.", "Okay! Go to shop", "No, take me back.");
+                var isConfirmed = await Shell.Current.DisplayAlert("Demo Ticketshop", $"Your ticketshop url is: {uri}. As this application is not running on production we'll send you to a demo shop instead.", "Okay! Go to shop", "Cancel");
 
                 if (!isConfirmed)
                     return;
@@ -53,7 +54,7 @@ namespace OrganiserApp.ViewModels
                 IsBusy = true;
 
                 Uri demoUri = new($"{Config.BaseUrlTicketShop}/cmcomtestfestival");
-                await Browser.Default.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+                await Browser.Default.OpenAsync(demoUri, BrowserLaunchMode.SystemPreferred);
             }
             catch (Exception e)
             {
@@ -64,6 +65,48 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        [ICommand]
+        async Task RemoveViewportAsync()
+        {
+            if (Viewport is null || IsBusy)
+                return;
+
+            try
+            {
+                var isConfirmed = await Shell.Current.DisplayAlert("Delete Event", $"Are you sure you want to delete shop {Viewport.Uri}?", "Delete", "Cancel");
+
+                if (!isConfirmed)
+                    return;
+
+                IsBusy = true;
+                await shopService.RemoveViewport(Viewport, EventUuid);
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to delete shop: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(ShopOverviewPage)}");
+        }
+
+        [ICommand]
+        async Task GoToBypassLinkPageAsync()
+        {
+            if (IsBusy || Viewport is null)
+                return;
+
+            await Shell.Current.GoToAsync($"/{nameof(ShopBypassLinkPage)}", true, new Dictionary<string, object>
+            {
+                {"Viewport", Viewport }
+            });
         }
     }
 }

@@ -39,6 +39,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
         builder.Services.AddSingleton<IMap>(Map.Default);
         builder.Services.AddSingleton<IEmail>(Email.Default);
+        builder.Services.AddSingleton<IClipboard>(Clipboard.Default);
 
         builder.Services.AddSingleton<EventService>();
         builder.Services.AddSingleton<VenueService>();
@@ -61,6 +62,8 @@ public static class MauiProgram
         builder.Services.AddTransient<TicketCategoryViewModel>();
         builder.Services.AddTransient<CreateShopViewModel>();
         builder.Services.AddTransient<ShopSettingsViewModel>();
+        builder.Services.AddTransient<ShopBypassLinkViewModel>();
+        builder.Services.AddTransient<ShopEditNameViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
@@ -77,6 +80,8 @@ public static class MauiProgram
         builder.Services.AddTransient<TicketCategoryPage>();
         builder.Services.AddTransient<CreateShopPage>();
         builder.Services.AddTransient<ShopSettingsPage>();
+        builder.Services.AddTransient<ShopBypassLinkPage>();
+        builder.Services.AddTransient<ShopEditNamePage>();
 
         return builder.Build();
 	}

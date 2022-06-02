@@ -25,14 +25,13 @@ namespace OrganiserApp.ViewModels
         private readonly ShopService shopService;
 
         public ShopOverviewViewModel(ShopService shopService)
-        {
-            Title = "Shops";
-
+        {            
             this.shopService = shopService;
         }
 
         public async void Init()
         {
+            Title = "Shops";
             EventUuid = Preferences.Get("EventUuid", null);
 
             if (EventUuid is null)

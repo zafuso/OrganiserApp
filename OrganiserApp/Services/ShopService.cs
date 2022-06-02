@@ -48,14 +48,22 @@ namespace OrganiserApp.Services
 
         public async Task<ViewportBypassUrl> PostGenerateBypassUrlAsync(Viewport viewport, string EventUuid)
         {
-            var json = "{}";
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"events/{EventUuid}/queue/viewports/{viewport.Uuid}/queuetoken/generate");
+            request.Headers.Add("X-CM-SSO-EMPLOYEE", 1.ToString());
 
-            var response = await client.PostAsync($"events/{EventUuid}/queue/viewports/{viewport.Uuid}/queuetoken/generate", content);
+            var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             var responseJson = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<ViewportBypassUrl>(responseJson);
+        }
+
+        public async Task RemoveViewport(Viewport viewport, string EventUuid)
+        {
+            var response = await client.DeleteAsync($"events/{EventUuid}/viewports/{viewport.Uuid}");
+            response.EnsureSuccessStatusCode();
+
+            _ = Application.Current.MainPage.DisplayAlert("Shop Deleted", $"Shop {viewport.Uri} has been deleted.", "OK");
         }
     }
 }

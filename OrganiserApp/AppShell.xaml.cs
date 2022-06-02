@@ -30,5 +30,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(TicketCategoryPage), typeof(TicketCategoryPage));
         Routing.RegisterRoute(nameof(CreateShopPage), typeof(CreateShopPage));
         Routing.RegisterRoute(nameof(ShopSettingsPage), typeof(ShopSettingsPage));
+        Routing.RegisterRoute(nameof(ShopBypassLinkPage), typeof(ShopBypassLinkPage));
+        Routing.RegisterRoute(nameof(ShopEditNamePage), typeof(ShopEditNamePage));
     }
 }

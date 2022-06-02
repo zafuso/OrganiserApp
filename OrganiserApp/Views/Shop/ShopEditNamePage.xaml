@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:Class="OrganiserApp.Views.Shop.ShopEditNamePage"
+             x:DataType="viewmodel:ShopEditNameViewModel"
+             Title="Edit Shop Name"
+             Shell.PresentationMode="ModalAnimated">
+    <ScrollView>
+        <Grid Padding="16,8"
+              ColumnDefinitions="*,*">
+            <VerticalStackLayout Grid.ColumnSpan="2">
+                <VerticalStackLayout>
+                    <Label
+                            Grid.ColumnSpan="2"
+                            Text="{Binding Title}"
+                            Style="{StaticResource LabelHeader}"
+                            FontSize="40"/>
+                    <Label
+                            Grid.ColumnSpan="2"
+                            Text="You can customise your shop link. This is the url you'll share with your audience so they can buy your tickets."
+                            Style="{StaticResource MainLabel}"/>
+                    <Frame BackgroundColor="{StaticResource Orange40}"
+                           Margin=" 0,16,0,0"
+                           CornerRadius="10"
+                           BorderColor="Transparent"
+                           Padding="16">
+                        <Label
+                            Grid.ColumnSpan="2"
+                            Text="Your shop link needs to be unique so think of a creative and appealing name."
+                            Style="{StaticResource MainLabel}"/>
+                    </Frame>
+                </VerticalStackLayout>
+                <VerticalStackLayout  IsVisible="{Binding IsNotBusy}">
+                    <Label
+                        Text="Shoplink"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame 
+                            x:Name="Shoplink"
+                            Grid.ColumnSpan="2"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Green100}"
+                            Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Shoplink_Unfocused"
+                                Focused="Shoplink_Focused"
+                                Text="{Binding Viewport.Uri}"/>
+                        </Frame>
+                    </Grid>
+                    <Label
+                        Text="{Binding Viewport.Uri, StringFormat='{}Your shoplink is: https://store.ticketing.cm.com/{0}'}"
+                        Margin="16,0,0,16"
+                        Style="{StaticResource MicroLabel}"/>
+
+                    <Grid>
+                        <Button Text="Cancel"
+                                Command="{Binding GoBackToShopOverviewCommand}"
+                                Style="{StaticResource ButtonTertiary}"/>
+                        <Button Text="Update Shop"
+                                Command="{Binding UpdateShopCommand}"
+                                Style="{StaticResource ButtonPrimary}"/>
+                    </Grid>
+                </VerticalStackLayout>
+                <ActivityIndicator
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="FillAndExpand"
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}"
+                        VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
