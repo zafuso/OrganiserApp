@@ -16,6 +16,12 @@
                     Text="{Binding Title}"
                     Style="{StaticResource LabelHeader}"
                     FontSize="40"/>
+                <ActivityIndicator
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="FillAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="CenterAndExpand" />
                 <Grid RowDefinitions="Auto,500">
                     <Label
                         Grid.Row="0"
@@ -36,8 +42,9 @@
                 <Grid RowDefinitions="Auto,500">
                     <Label
                         Grid.Row="0"
+                        Margin="0,16,0,8"
                         HorizontalOptions="Center"
-                        Text="Percentage sold per ticket"
+                        Text="Percentage sold"
                         Style="{StaticResource LabelHeader}"
                         FontSize="30"/>
                     <lvc:CartesianChart
@@ -45,35 +52,29 @@
                         Series="{Binding TickeTypePercentageSeries}"
                         XAxes="{Binding XAxesPercentage}"
                         YAxes="{Binding YAxesPercentage}"
-                        LegendPosition="Bottom"
+                        LegendPosition="Hidden"
                         LegendFontFamily="Bold"
                         LegendTextBrush="{StaticResource Black140}">
                     </lvc:CartesianChart>
                 </Grid>
-                <Grid RowDefinitions="Auto,500">
+                <Grid RowDefinitions="Auto,200">
                     <Label
                         Grid.Row="0"
+                        Margin="0,16,0,8"
+                        Text="Gender"
                         HorizontalOptions="Center"
                         Style="{StaticResource LabelHeader}"
                         FontSize="30"/>
-                    <lvc:CartesianChart
+                    <lvc:PieChart
                         Grid.Row="1"
-                        x:Name="TicketTypeSales"
-                        Series="{Binding TicketTypeStatsSeries}"
-                        XAxes="{Binding XAxes}"
-                        YAxes="{Binding YAxes}"
+                        Series="{Binding GenderSeries}"
                         LegendPosition="Bottom"
                         LegendFontFamily="Bold"
+                        LegendBackground="Transparent"
                         LegendTextBrush="{StaticResource Black140}">
-                    </lvc:CartesianChart>
+                    </lvc:PieChart>
                 </Grid>
             </VerticalStackLayout>
-            <ActivityIndicator
-                Grid.ColumnSpan="2"
-                HorizontalOptions="FillAndExpand"
-                IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}"
-                VerticalOptions="CenterAndExpand" />
         </Grid>
     </ScrollView>
 </ContentPage>

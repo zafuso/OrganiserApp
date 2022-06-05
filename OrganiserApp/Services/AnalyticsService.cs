@@ -19,5 +19,30 @@ namespace OrganiserApp.Services
 
             return analytics;
         }
+
+        public async Task<GenderAnalytics> GetGenderAnalytics(string EventUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/analytics/promoter/sales/genders");
+            var analytics = JsonConvert.DeserializeObject<GenderAnalytics>(json);
+
+            return analytics;
+        }
+
+
+        public async Task<AgesAnalytics> GetAgesAnalytics(string EventUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/analytics/promoter/sales/ages");
+            var analytics = JsonConvert.DeserializeObject<AgesAnalytics>(json);
+
+            return analytics;
+        }
+
+        public async Task<CitiesAnalytics> GetCitiesAnalytics(string EventUuid)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/analytics/promoter/sales/cities");
+            var analytics = JsonConvert.DeserializeObject<CitiesAnalytics>(json);
+
+            return analytics;
+        }
     }
 }

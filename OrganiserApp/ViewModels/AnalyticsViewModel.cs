@@ -22,6 +22,7 @@ namespace OrganiserApp.ViewModels
     {
         public ObservableCollection<ISeries> TicketTypeStatsSeries { get; set; } = new();
         public ObservableCollection<ISeries> TickeTypePercentageSeries { get; set; } = new();
+        public ObservableCollection<ISeries> GenderSeries { get; set; } = new();
         public ObservableCollection<Axis> XAxes { get; set; } = new();
         public ObservableCollection<Axis> YAxes { get; set; } = new();
         public ObservableCollection<Axis> XAxesPercentage { get; set; } = new();
@@ -56,7 +57,9 @@ namespace OrganiserApp.ViewModels
             if (EventUuid is null)
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
 
+            ClearData();
             await GetTicketTypeSalesAnalyticsAsync();
+            await GetGenderAnalyticsAsync();
         }
 
         [ICommand]
@@ -82,13 +85,13 @@ namespace OrganiserApp.ViewModels
                 foreach (var item in TicketTypeStatistics.Content)
                 {
                     var unavailable = item.Amount + item.Reserved;
-                    double percentage = unavailable / item.Capacity * 100.0;
+                    double percentage = ((double)unavailable / item.Capacity) * 100;
                     Canceled.Add(item.Canceled);
                     Sales.Add(item.Amount);
                     Reserved.Add(item.Reserved);
                     Capacity.Add(item.Capacity);
                     Unavailable.Add(unavailable);
-                    PercentageSold.Add((double)((item.Amount + item.Reserved) / item.Capacity * 100));
+                    PercentageSold.Add(percentage);
 
                     item.Name = item.Name.Length > 10 ? $"{item.Name.Substring(0, 10)}..." : item.Name;
                     AxisLabels.Add(item.Name);
@@ -96,6 +99,38 @@ namespace OrganiserApp.ViewModels
 
                 InitTicketSalesGraph();
                 InitTicketPercentageGraph();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to get statistics: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [ICommand]
+        async Task GetGenderAnalyticsAsync()
+        {
+            if (IsBusy || EventUuid is null)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                var GenderAnalytics = await analyticsService.GetGenderAnalytics(EventUuid);
+
+                foreach (var item in GenderAnalytics.Content)
+                {
+                    GenderSeries.Add(new PieSeries<int>
+                    {
+                        Values = new List<int> { item.Amount }, InnerRadius = 100,
+                        Name = item.Gender == "M" ? "Male" : "Female"
+                    });;
+                }
             }
             catch (Exception e)
             {
