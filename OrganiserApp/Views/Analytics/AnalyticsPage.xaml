@@ -8,8 +8,8 @@
              x:DataType="viewmodel:AnalyticsViewModel"
              Title="Analytics">
     <ScrollView>
-        <Grid>
-            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+        <Grid Padding="8">
+            <VerticalStackLayout>
                 <Label
                     Grid.Row="0"
                     HorizontalOptions="Center"
@@ -20,6 +20,7 @@
                     <Label
                         Grid.Row="0"
                         HorizontalOptions="Center"
+                        Text="Ticketsales"
                         Style="{StaticResource LabelHeader}"
                         FontSize="30"/>
                     <lvc:CartesianChart

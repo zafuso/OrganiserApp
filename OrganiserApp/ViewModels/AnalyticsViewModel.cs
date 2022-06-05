@@ -81,13 +81,14 @@ namespace OrganiserApp.ViewModels
 
                 foreach (var item in TicketTypeStatistics.Content)
                 {
-                    var unavailable = item.Amount + item.Reserved + item.Canceled;
+                    var unavailable = item.Amount + item.Reserved;
+                    double percentage = unavailable / item.Capacity * 100.0;
                     Canceled.Add(item.Canceled);
                     Sales.Add(item.Amount);
                     Reserved.Add(item.Reserved);
                     Capacity.Add(item.Capacity);
                     Unavailable.Add(unavailable);
-                    PercentageSold.Add((unavailable / item.Capacity) * 100);
+                    PercentageSold.Add((double)((item.Amount + item.Reserved) / item.Capacity * 100));
 
                     item.Name = item.Name.Length > 10 ? $"{item.Name.Substring(0, 10)}..." : item.Name;
                     AxisLabels.Add(item.Name);
@@ -179,7 +180,7 @@ namespace OrganiserApp.ViewModels
                 IsHoverable = false,
                 Values = MaxValues,
                 Stroke = null,
-                Fill = new SolidColorPaint(new SKColor(61, 220, 151)),
+                Fill = new SolidColorPaint(new SKColor(234, 235, 238)),
                 IgnoresBarPosition = true
             });
 
@@ -192,13 +193,13 @@ namespace OrganiserApp.ViewModels
                 IgnoresBarPosition = true
             });
 
-            XAxes.Add(new Axis
+            XAxesPercentage.Add(new Axis
             {
                 Labels = AxisLabels,
                 TextSize = 25,
             });
 
-            YAxes.Add(new Axis
+            YAxesPercentage.Add(new Axis
             {
                 TextSize = 25,
                 MinLimit = 0,
