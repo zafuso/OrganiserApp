@@ -56,9 +56,9 @@
         </Tab>
         <Tab Title="Analytics" 
              Icon="connection.png" 
-             Route="TicketSalesAnalyticsPage"
+             Route="AnalyticsPage"
              x:Name="Analytics">
-            <ShellContent ContentTemplate="{DataTemplate analytics:TicketSalesAnalyticsPage}" />
+            <ShellContent ContentTemplate="{DataTemplate analytics:AnalyticsPage}" />
         </Tab>
         <Tab Title="Orders" 
              Icon="file.png" 

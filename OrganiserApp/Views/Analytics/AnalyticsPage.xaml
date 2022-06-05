@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:local="clr-namespace:MauiSample;assembly=MauiSample"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="OrganiserApp.Views.Analytics.AnalyticsPage"
+             x:DataType="viewmodel:AnalyticsViewModel"
+             Title="Analytics">
+    <ScrollView>
+        <Grid>
+            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+                <Label
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+                <Grid RowDefinitions="Auto,500">
+                    <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="30"/>
+                    <lvc:CartesianChart
+                        Grid.Row="1"
+                        Series="{Binding TicketTypeStatsSeries}"
+                        XAxes="{Binding XAxes}"
+                        YAxes="{Binding YAxes}"
+                        LegendPosition="Bottom"
+                        LegendFontFamily="Bold"
+                        LegendTextBrush="{StaticResource Black140}">
+                    </lvc:CartesianChart>
+                </Grid>
+                <Grid RowDefinitions="Auto,500">
+                    <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        Text="Percentage sold per ticket"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="30"/>
+                    <lvc:CartesianChart
+                        Grid.Row="1"
+                        Series="{Binding TickeTypePercentageSeries}"
+                        XAxes="{Binding XAxesPercentage}"
+                        YAxes="{Binding YAxesPercentage}"
+                        LegendPosition="Bottom"
+                        LegendFontFamily="Bold"
+                        LegendTextBrush="{StaticResource Black140}">
+                    </lvc:CartesianChart>
+                </Grid>
+                <Grid RowDefinitions="Auto,500">
+                    <Label
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="30"/>
+                    <lvc:CartesianChart
+                        Grid.Row="1"
+                        x:Name="TicketTypeSales"
+                        Series="{Binding TicketTypeStatsSeries}"
+                        XAxes="{Binding XAxes}"
+                        YAxes="{Binding YAxes}"
+                        LegendPosition="Bottom"
+                        LegendFontFamily="Bold"
+                        LegendTextBrush="{StaticResource Black140}">
+                    </lvc:CartesianChart>
+                </Grid>
+            </VerticalStackLayout>
+            <ActivityIndicator
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="CenterAndExpand" />
+        </Grid>
+    </ScrollView>
+</ContentPage>

@@ -8,6 +8,7 @@ using OrganiserApp.Views.Orders;
 using OrganiserApp.Views.Shop;
 using OrganiserApp.Views.Ticket;
 using OrganiserApp.Views.Venue;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace OrganiserApp;
 
@@ -17,6 +18,7 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
+            .UseSkiaSharp(true)
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
@@ -46,6 +48,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<CountryService>();
         builder.Services.AddSingleton<TicketService>();
         builder.Services.AddSingleton<ShopService>();
+        builder.Services.AddSingleton<AnalyticsService>();
 
         builder.Services.AddTransient<EventOverviewViewModel>();
         builder.Services.AddTransient<EventSettingsViewModel>();
@@ -57,7 +60,7 @@ public static class MauiProgram
         builder.Services.AddTransient<OrderOverviewViewModel>();
         builder.Services.AddTransient<GuestListOverviewViewModel>();
         builder.Services.AddTransient<HelpViewModel>();
-        builder.Services.AddTransient<TicketSalesAnalyticsViewModel>();
+        builder.Services.AddTransient<AnalyticsViewModel>();
         builder.Services.AddTransient<TicketBulkEditViewModel>();
         builder.Services.AddTransient<TicketCategoryViewModel>();
         builder.Services.AddTransient<CreateShopViewModel>();
@@ -76,7 +79,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopOverviewPage>();
         builder.Services.AddTransient<OrderOverviewPage>();
         builder.Services.AddTransient<GuestListOverviewPage>();
-        builder.Services.AddTransient<TicketSalesAnalyticsPage>();
+        builder.Services.AddTransient<AnalyticsPage>();
         builder.Services.AddTransient<HelpPage>();
         builder.Services.AddTransient<TicketBulkEditPage>();
         builder.Services.AddTransient<TicketCategoryPage>();

@@ -66,6 +66,7 @@
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\connection.png" />
 	  <None Remove="Resources\Images\delete_blue110.svg" />
+	  <None Remove="Resources\Images\download_blue110.svg" />
 	  <None Remove="Resources\Images\edit_blue110.svg" />
 	  <None Remove="Resources\Images\edit_white.svg" />
 	  <None Remove="Resources\Images\email_blue110.svg" />
@@ -102,13 +103,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\Analytics\AnalyticsPage.xaml.cs">
+	    <DependentUpon>AnalyticsPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\Event\EventSettingsPage.xaml.cs">
 	    <DependentUpon>EventSettingsPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\Analytics\TicketSalesAnalyticsPage.xaml">
+	  <MauiXaml Update="Views\Analytics\AnalyticsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Event\EventOverviewPage.xaml">
