@@ -74,6 +74,23 @@
                         LegendTextBrush="{StaticResource Black140}">
                     </lvc:PieChart>
                 </Grid>
+                <Grid RowDefinitions="Auto,500">
+                    <Label
+                        Grid.Row="0"
+                        Margin="0,16,0,8"
+                        HorizontalOptions="Center"
+                        Text="Ages"
+                        Style="{StaticResource LabelHeader}"
+                        FontSize="30"/>
+                    <lvc:CartesianChart
+                        Grid.Row="1"
+                        Series="{Binding AgesSeries}"
+                        YAxes="{Binding YAxesAges}"
+                        LegendPosition="Bottom"
+                        LegendFontFamily="Bold"
+                        LegendTextBrush="{StaticResource Black140}">
+                    </lvc:CartesianChart>
+                </Grid>
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

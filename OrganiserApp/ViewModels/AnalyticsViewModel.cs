@@ -23,10 +23,14 @@ namespace OrganiserApp.ViewModels
         public ObservableCollection<ISeries> TicketTypeStatsSeries { get; set; } = new();
         public ObservableCollection<ISeries> TickeTypePercentageSeries { get; set; } = new();
         public ObservableCollection<ISeries> GenderSeries { get; set; } = new();
+        public ObservableCollection<ISeries> AgesSeries { get; set; } = new();
+        public ObservableCollection<ISeries> CitiesSeries { get; set; } = new();
         public ObservableCollection<Axis> XAxes { get; set; } = new();
         public ObservableCollection<Axis> YAxes { get; set; } = new();
         public ObservableCollection<Axis> XAxesPercentage { get; set; } = new();
         public ObservableCollection<Axis> YAxesPercentage { get; set; } = new();
+        public ObservableCollection<Axis> XAxesAges { get; set; } = new();
+        public ObservableCollection<Axis> YAxesAges { get; set; } = new();
         public List<int> Sales = new();
         public List<int> Reserved = new();
         public List<int> Canceled = new();
@@ -60,6 +64,7 @@ namespace OrganiserApp.ViewModels
             ClearData();
             await GetTicketTypeSalesAnalyticsAsync();
             await GetGenderAnalyticsAsync();
+            await GetAgesAnalyticsAsync();
         }
 
         [ICommand]
@@ -143,6 +148,81 @@ namespace OrganiserApp.ViewModels
             }
         }
 
+        [ICommand]
+        async Task GetAgesAnalyticsAsync()
+        {
+            if (IsBusy || EventUuid is null)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                var AgesAnalytics = await analyticsService.GetAgesAnalytics(EventUuid);
+                var XAxesList = new List<string>();
+
+                foreach (var item in AgesAnalytics.Content)
+                {
+                    AgesSeries.Add(new ColumnSeries<int>
+                    {
+                        Values = new List<int> { item.Amount },
+                        Name = item.Age
+                    });
+
+                    XAxesList.Add(item.Age);
+                }
+
+                XAxesAges.Add(new Axis
+                {
+                    Labels = XAxesList,
+                    TextSize = 25,
+                });
+
+                YAxesAges.Add(new Axis
+                {
+                    TextSize = 25,
+                    MinLimit = 0
+                });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to get statistics: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [ICommand]
+        async Task GetCitiesAnalyticsAsync()
+        {
+            if (IsBusy || EventUuid is null)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                var CitiesAnalytics = await analyticsService.GetCitiesAnalytics(EventUuid);
+
+                foreach (var item in CitiesAnalytics.Content)
+                {
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to get statistics: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         void ClearData()
         {
             Canceled.Clear();
@@ -153,6 +233,9 @@ namespace OrganiserApp.ViewModels
             AxisLabels.Clear();
 
             TicketTypeStatsSeries.Clear();
+            GenderSeries.Clear();
+            AgesSeries.Clear();
+            CitiesSeries.Clear();
         }
 
         void InitTicketSalesGraph()

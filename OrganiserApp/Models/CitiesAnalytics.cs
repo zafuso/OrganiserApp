@@ -28,7 +28,7 @@ namespace OrganiserApp.Models
         public string Name { get; set; }
 
         [JsonProperty(PropertyName = "amount")]
-        public int Age { get; set; }
+        public int Amount { get; set; }
 
         [JsonProperty(PropertyName = "percentage")]
         public double Percentage { get; set; }
