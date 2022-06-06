@@ -9,7 +9,7 @@
     <ScrollView>
         <Grid Padding="16,8">
             <Grid ColumnDefinitions="*,*"
-                  RowDefinitions="Auto,Auto,*"
+                  RowDefinitions="Auto,Auto,Auto,*"
                   ColumnSpacing="16">
                 <VerticalStackLayout
                     Margin="0,0,0,16"
@@ -123,7 +123,8 @@
                 <Frame 
                     Margin="0,16"
                     Grid.ColumnSpan="2"
-                    Grid.Row="2"
+                    Grid.Row="3"
+                    Padding="16,8,0,0"
                     Style="{StaticResource CardView}">
                     <CollectionView
                         ItemsSource="{Binding BarcodeList}"
@@ -143,16 +144,78 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Barcode">
-                                <Grid ColumnDefinitions="Auto,Auto,*,*"
-                                      RowDefinitions="*,*">
-                                    <Image Grid.RowSpan="2"
-                                           Grid.Column="0"
-                                           Source="{Binding StatusIcon}"/>
+                                <VerticalStackLayout>
+                                    <Grid ColumnDefinitions="Auto,Auto,*"
+                                          RowDefinitions="*,*">
+                                        <Image Grid.RowSpan="2"
+                                               Grid.Column="0"
+                                               Margin="16,8,8,8"
+                                               Source="{Binding StatusIcon}"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                        <Label
+                                            Style="{StaticResource MainLabel}"
+                                            FontFamily="Medium"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            Text="{Binding TicketType.Name.Nl}"
+                                            TextColor="{StaticResource Black100}"/>
+                                        <Label
+                                            Style="{StaticResource MainLabel}"
+                                            FontFamily="Medium"
+                                            Grid.Column="1"
+                                            Grid.Row="1"
+                                            TextColor="{StaticResource Black100}">
+                                            <Label.Text>
+                                                <MultiBinding StringFormat="{}{0} - {1}">
+                                                    <Binding Path="BarcodeId"/>
+                                                    <Binding Path="CustomerTicket.CustomerData.FirstName"/>
+                                                </MultiBinding>
+                                            </Label.Text>
+                                        </Label>
 
-                                </Grid>
+                                        <Label
+                                            Style="{StaticResource MainLabel}"
+                                            FontFamily="Medium"
+                                            Grid.Column="2"
+                                            Grid.RowSpan="2"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"
+                                            Padding="8,0"
+                                            TextColor="{StaticResource Black100}"
+                                            Text="{Binding CustomerTicket.TicketTypePriceInclVat, StringFormat='{}€{0}'}"/>
+                                    </Grid>
+                                    <BoxView 
+                                        Margin="8,16"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="3"
+                                        HeightRequest="1"
+                                        Color="{StaticResource Black10}"/>
+                                </VerticalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                        
+
+                        <CollectionView.Footer>
+                            <Grid ColumnDefinitions="*,Auto" 
+                                  ColumnSpacing="8"
+                                  Margin="8,8,8,16">
+                                <Label
+                                    Style="{StaticResource MainLabel}"
+                                    TextColor="{StaticResource Black100}"
+                                    FontFamily="Medium"
+                                    HorizontalOptions="End"
+                                    Grid.Column="0"
+                                    Text="Total:"/>
+                                <Label
+                                    Style="{StaticResource MainLabel}"
+                                    TextColor="{StaticResource Black100}"
+                                    FontFamily="Bold"
+                                    HorizontalOptions="End"
+                                    Grid.Column="1"
+                                    Text="{Binding SelectedOrder.TotalBalanceInclVat, StringFormat='{}€{0}'}"/>
+                            </Grid>
+                        </CollectionView.Footer>
+
                     </CollectionView>
                 </Frame>
             </Grid>
