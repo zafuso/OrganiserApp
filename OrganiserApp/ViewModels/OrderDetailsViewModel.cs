@@ -25,6 +25,8 @@ namespace OrganiserApp.ViewModels
         Order selectedOrder;
         [ObservableProperty]
         bool isValidOrder;
+        [ObservableProperty]
+        int ticketCount;
 
         private readonly OrderService orderService;
 
@@ -139,6 +141,8 @@ namespace OrganiserApp.ViewModels
 
                     BarcodeList.Add(formattedBarcode);
                 }
+
+                TicketCount = BarcodeList.Count;
             }
             catch (Exception e)
             {
@@ -149,6 +153,18 @@ namespace OrganiserApp.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        [ICommand]
+        async Task GoToEditCustomerDataAsync()
+        {
+            if (SelectedOrder is null)
+                return;
+
+            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(OrderEditCustomerDataPage)}", true, new Dictionary<string, object>
+            {
+                {"SelectedOrder", SelectedOrder }
+            });
         }
     }
 }

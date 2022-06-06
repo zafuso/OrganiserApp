@@ -34,5 +34,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(ShopEditNamePage), typeof(ShopEditNamePage));
         Routing.RegisterRoute(nameof(OrderDetailsPage), typeof(OrderDetailsPage));
         Routing.RegisterRoute(nameof(GuestListInvitationPage), typeof(GuestListInvitationPage));
+        Routing.RegisterRoute(nameof(OrderEditCustomerDataPage), typeof(OrderEditCustomerDataPage));
     }
 }

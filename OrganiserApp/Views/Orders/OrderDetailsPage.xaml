@@ -64,6 +64,7 @@
                             Margin="16,0"
                             HorizontalOptions="End"
                             Text="more"
+                            Command="{Binding GoToEditCustomerDataCommand}"
                             Style="{StaticResource ButtonTertiary}"/>
                         <VerticalStackLayout Grid.Column="0"
                                              Grid.Row="1"

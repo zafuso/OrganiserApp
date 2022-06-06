@@ -126,6 +126,9 @@
 	  <Compile Update="Views\Event\EventSettingsPage.xaml.cs">
 	    <DependentUpon>EventSettingsPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Orders\OrderEditCustomerDataPage.xaml.cs">
+	    <DependentUpon>OrderEditCustomerDataPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -151,6 +154,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Orders\OrderDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Orders\OrderEditCustomerDataPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Orders\OrderOverviewPage.xaml">
