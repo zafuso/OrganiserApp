@@ -1,4 +1,5 @@
-﻿using OrganiserApp.Helpers;
+﻿using CommunityToolkit.Maui.Alerts;
+using OrganiserApp.Helpers;
 using OrganiserApp.Services;
 using OrganiserApp.ViewModels;
 using OrganiserApp.Views.Analytics;
@@ -16,6 +17,9 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
+        // Temp workaround for a bug in community toolkit: https://github.com/CommunityToolkit/Maui/issues/427
+        _ = new Snackbar();
+
 		var builder = MauiApp.CreateBuilder();
 		builder
             .UseSkiaSharp(true)
