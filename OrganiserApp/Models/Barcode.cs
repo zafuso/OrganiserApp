@@ -29,6 +29,9 @@ namespace OrganiserApp.Models
 
         [JsonProperty(PropertyName = "ticket_type")]
         public BarcodeTicketType TicketType { get; set; }
+
+        public string Status { get; set; }
+        public string StatusIcon { get; set; }
     }
 
     public class BarcodeTicketType

@@ -57,5 +57,13 @@ namespace OrganiserApp.Services
 
             _ = Application.Current.MainPage.DisplayAlert("Order Cancelled", $"Order {order.BatchId} has been cancelled.", "OK");
         }
+
+        public async Task<IEnumerable<Barcode>> GetBarcodeDetailsAsync(string EventUuid, string OrderId)
+        {
+            var json = await client.GetStringAsync($"events/{EventUuid}/orders/{OrderId}/barcodes");
+            var barcodes = JsonConvert.DeserializeObject<IEnumerable<Barcode>>(json);
+
+            return barcodes;
+        }
     }
 }

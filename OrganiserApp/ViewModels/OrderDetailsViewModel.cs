@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using OrganiserApp.Helpers;
 using OrganiserApp.Models;
 using OrganiserApp.Services;
 using OrganiserApp.Views.Event;
 using OrganiserApp.Views.Orders;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,8 @@ namespace OrganiserApp.ViewModels
     [QueryProperty("SelectedOrder", "SelectedOrder")]
     public partial class OrderDetailsViewModel : BaseViewModel
     {
+        public ObservableCollection<Barcode> BarcodeList { get; set; } = new();
+
         string EventUuid;
         [ObservableProperty]
         Order selectedOrder;
@@ -49,6 +53,8 @@ namespace OrganiserApp.ViewModels
             {
                 IsValidOrder = true;
             }
+
+            await GetBarcodeDetailsAsync();
         }
 
         [ICommand]
@@ -101,6 +107,42 @@ namespace OrganiserApp.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine($"Unable to cancel order: {e}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [ICommand]
+        async Task GetBarcodeDetailsAsync()
+        {
+            if (IsBusy || SelectedOrder is null)
+                return;
+
+            try
+            {
+                IsBusy = true;
+
+                if (BarcodeList.Count > 0)
+                {
+                    BarcodeList.Clear();
+                }
+
+                var barcodes = await orderService.GetBarcodeDetailsAsync(EventUuid, SelectedOrder.BatchId);
+
+                foreach (var barcode in barcodes)
+                {
+                    barcode.CustomerTicket.TicketTypePriceInclVat = FormatHelper.FormatPrice(barcode.CustomerTicket.TicketTypePriceInclVat);
+                    var formattedBarcode = OrderHelper.CalculateCustomerTicketStatus(barcode);
+
+                    BarcodeList.Add(formattedBarcode);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Unable to retrieve barcode details: {e}");
                 await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
             }
             finally

@@ -53,5 +53,42 @@ namespace OrganiserApp.Helpers
             }
             return order;
         }
+
+        public static Barcode CalculateCustomerTicketStatus(Barcode barcode)
+        {
+            switch (barcode.CustomerTicket.CustomerTicketStatusType)
+            {
+                case CustomerTicketStatusType.IN_TRANSFER:
+                    barcode.Status = "In Transfer";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.IN_UPGRADE:
+                    barcode.Status = "In Upgrade";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.REFUNDED:
+                    barcode.Status = "Refunded";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.UPGRADED:
+                    barcode.Status = "Upgraded";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.TRANSFERRED:
+                    barcode.Status = "Transferred";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.RESERVED:
+                    barcode.Status = "Reserved";
+                    barcode.StatusIcon = "ticket_block.png";
+                    break;
+                case CustomerTicketStatusType.ISSUED:
+                    barcode.Status = "Issued";
+                    barcode.StatusIcon = "ticket.png";
+                    break;
+                default: break;
+            }
+            return barcode;
+        }
     }
 }

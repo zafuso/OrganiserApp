@@ -96,7 +96,7 @@
                                              Margin="16,0">
                             <Label 
                                 Style="{StaticResource LabelHeader}"
-                                Text="Mobile Number"
+                                Text="Mobile number"
                                 FontFamily="Bold"/>
                             <Label 
                                 Style="{StaticResource LabelHeader}"
@@ -118,6 +118,41 @@
                                 FontFamily="Medium"/>
                         </VerticalStackLayout>
                     </Grid>
+                </Frame>
+                <Frame 
+                    Margin="0,16"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="2"
+                    Style="{StaticResource CardView}">
+                    <CollectionView
+                        ItemsSource="{Binding BarcodeList}"
+                        SelectionMode="None">
+
+                        <CollectionView.Header>
+                            <Label
+                            FontFamily="Bold"
+                            Margin="16"
+                            HorizontalOptions="Start"
+                            FontSize="20"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Style="{StaticResource MainLabel}"
+                            Text="{Binding TicketCount, StringFormat='{}Order of {0} tickets'}"/>
+                        </CollectionView.Header>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Barcode">
+                                <Grid ColumnDefinitions="Auto,Auto,*,*"
+                                      RowDefinitions="*,*">
+                                    <Image Grid.RowSpan="2"
+                                           Grid.Column="0"
+                                           Source="{Binding StatusIcon}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        
+                    </CollectionView>
                 </Frame>
             </Grid>
             <ActivityIndicator

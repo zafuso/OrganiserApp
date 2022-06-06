@@ -103,6 +103,7 @@
 	  <None Remove="Resources\Images\status_warning.png" />
 	  <None Remove="Resources\Images\ticket.png" />
 	  <None Remove="Resources\Images\ticketing_girl.svg" />
+	  <None Remove="Resources\Images\ticket_block.png" />
 	  <None Remove="Resources\Images\warning_open.svg" />
 	  <None Remove="Resources\Images\warning_open_orange.svg" />
 	  <None Remove="Resources\Images\welcome.svg" />
