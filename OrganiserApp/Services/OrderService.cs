@@ -49,5 +49,13 @@ namespace OrganiserApp.Services
 
             _ = Application.Current.MainPage.DisplayAlert("Invitation sent", "Your guest has been invited.", "OK");
         }
+
+        public async Task CancelOrderAsync(string EventUuid, Order order)
+        {
+            var response = await client.GetAsync($"events/{EventUuid}/orders/{order.BatchId}/cancel");
+            response.EnsureSuccessStatusCode();
+
+            _ = Application.Current.MainPage.DisplayAlert("Order Cancelled", $"Order {order.BatchId} has been cancelled.", "OK");
+        }
     }
 }

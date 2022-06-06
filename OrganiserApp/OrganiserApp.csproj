@@ -49,6 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="NewFolder\**" />
+	  <Compile Remove="NewFolder\**" />
+	  <EmbeddedResource Remove="NewFolder\**" />
+	  <MauiCss Remove="NewFolder\**" />
+	  <MauiXaml Remove="NewFolder\**" />
+	  <None Remove="NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Platforms\Android\Resources\xml\network_security_config.xml" />
 	  <None Remove="Resources\Fonts\cm-icons.ttf" />
 	  <None Remove="Resources\Fonts\fa-brand-400.ttf" />
@@ -63,6 +72,7 @@
 	  <None Remove="Resources\Fonts\GothamRnd-MedIta.otf" />
 	  <None Remove="Resources\Fonts\GothamRnd-Medium.otf" />
 	  <None Remove="Resources\Images\add_white.svg" />
+	  <None Remove="Resources\Images\block_blue110.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\check.svg" />
 	  <None Remove="Resources\Images\check_green.svg" />
@@ -175,10 +185,6 @@
 	  <MauiXaml Update="Views\Venue\CreateVenuePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="NewFolder\" />
 	</ItemGroup>
 
 </Project>
