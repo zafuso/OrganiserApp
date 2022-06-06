@@ -1,11 +1,268 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:DataType="viewmodel:OrderEditCustomerDataViewModel"
              x:Class="OrganiserApp.Views.Orders.OrderEditCustomerDataPage"
-             Title="Edit customer details">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+             Title="Edit customer details"
+             Shell.PresentationMode="ModalAnimated">
+    <ScrollView>
+        <Grid Padding="16,8">
+            <VerticalStackLayout>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+                <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+                    <Label
+                    Text="First name"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="FirstName"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="FirstName_Unfocused"
+                                Focused="FirstName_Focused"
+                        Text="{Binding SelectedOrder.CustomerData.FirstName}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Last name"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="LastName"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="LastName_Unfocused"
+                                Focused="LastName_Focused"
+                        Text="{Binding SelectedOrder.CustomerData.LastName}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Email"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Email"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Email_Unfocused"
+                                Focused="Email_Focused"
+                        Text="{Binding SelectedOrder.CustomerData.Email}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Mobile number"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Mobile"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Mobile_Unfocused"
+                                Focused="Mobile_Focused"
+                        Text="{Binding SelectedOrder.CustomerData.Mobile}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                    Text="Gender"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Frame x:Name="Gender"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a gender"
+                                    WidthRequest="276"
+                                    Margin="0,0,0,0"
+                                    Grid.Column="0"
+                                    Unfocused="Gender_Unfocused"
+                                    Focused="Gender_Focused"
+                                    ItemsSource="{Binding GenderList}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedGender}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Grid 
+                        ColumnDefinitions="*,Auto" 
+                        ColumnSpacing="8"
+                        RowDefinitions="Auto,Auto">
+                        <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Street"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.Column="0"
+                              Grid.Row="1">
+                            <Frame x:Name="Street"
+                               Padding="0"
+                               CornerRadius="24"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
+                                <Entry  
+                                    Margin="16,0"
+                                    Unfocused="Street_Unfocused"
+                                    Focused="Street_Focused"
+                            Text="{Binding SelectedOrder.CustomerData.AddressLine1}"/>
+                            </Frame>
+                        </Grid>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Text="House number"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.Column="1"
+                              Grid.Row="1"
+                              HorizontalOptions="End">
+                            <Frame x:Name="HouseNumber"
+                               Padding="0"
+                               CornerRadius="24"
+                                WidthRequest="112"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
+                                <Entry  
+                                    Margin="16,0"
+                                    Unfocused="HouseNumber_Unfocused"
+                                    Focused="HouseNumber_Focused"
+                            Text="{Binding SelectedOrder.CustomerData.AddressLine1BuildingNumber}"/>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+
+                    <Grid 
+                        ColumnDefinitions="*,*" 
+                        ColumnSpacing="8"
+                        RowDefinitions="Auto,Auto">
+                        <Label
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Postal code"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.Column="0"
+                              Grid.Row="1">
+                            <Frame x:Name="Zipcode"
+                               Padding="0"
+                               CornerRadius="24"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
+                                <Entry  
+                                    Margin="16,0"
+                                    Unfocused="Zipcode_Unfocused"
+                                    Focused="Zipcode_Focused"
+                            Text="{Binding SelectedOrder.CustomerData.Zipcode}"/>
+                            </Frame>
+                        </Grid>
+                        <Label
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Text="City"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                        <Grid Grid.Column="1"
+                              Grid.Row="1"
+                              HorizontalOptions="End">
+                            <Frame x:Name="City"
+                               Padding="0"
+                               CornerRadius="24"
+                               WidthRequest="172"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
+                                <Entry  
+                                    Margin="16,0"
+                                    Unfocused="City_Unfocused"
+                                    Focused="City_Focused"
+                            Text="{Binding SelectedOrder.CustomerData.City}"/>
+                            </Frame>
+                        </Grid>
+                    </Grid>
+
+                    <Label
+                    Text="Country"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource LabelHeader}"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Frame x:Name="Country"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a country"
+                                    WidthRequest="276"
+                                    Margin="0,0,0,0"
+                                    Grid.Column="0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding CountryList}"
+                                    ItemDisplayBinding="{Binding Name.Nl}"
+                                    SelectedItem="{Binding SelectedCountry}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="16">
+                        <Button Text="Save"
+                            Grid.Column="1"
+                            Margin="0,16"
+                            Padding="32,8"
+                            HorizontalOptions="End"
+                            Command="{Binding UpdateCustomerDataCommand}"
+                            Style="{StaticResource ButtonSecondary}"/>
+                        <Button 
+                        Text="Back"
+                        Margin="0,16"
+                        Grid.Column="0"
+                        Padding="32,8"
+                        HorizontalOptions="Start"
+                        Command="{Binding BackToOrderDetailsCommand}"
+                        Style="{StaticResource ButtonSecondary}"/>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <ActivityIndicator
+                    Grid.ColumnSpan="2"
+                    Margin="0,150,0,0"
+                    HorizontalOptions="FillAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -19,7 +19,6 @@ namespace OrganiserApp.Services
             request.Headers.Add("X-TF-PAGINATION-TAKE", take.ToString());
 
             var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
 
             return response;
         }
@@ -31,7 +30,6 @@ namespace OrganiserApp.Services
             request.Headers.Add("X-TF-PAGINATION-TAKE", take.ToString());
 
             var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
 
             return response;
         }

@@ -54,6 +54,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<ShopService>();
         builder.Services.AddSingleton<AnalyticsService>();
         builder.Services.AddSingleton<OrderService>();
+        builder.Services.AddSingleton<CustomerDataService>();
 
         builder.Services.AddTransient<EventOverviewViewModel>();
         builder.Services.AddTransient<EventSettingsViewModel>();

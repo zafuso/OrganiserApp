@@ -118,7 +118,6 @@ namespace OrganiserApp.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine($"Unable to get orders: {e}");
-                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
             }
             finally
             {

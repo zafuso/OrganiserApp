@@ -42,19 +42,23 @@ namespace OrganiserApp.ViewModels
             if (EventUuid is null)
                 await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(EventOverviewPage)}");
 
-            Title = $"Order {SelectedOrder.BatchId}";
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Title = $"Order {SelectedOrder.BatchId}";
 
-            if (SelectedOrder.Status == Enums.OrderStatusType.CANCELED || 
-                SelectedOrder.Status == Enums.OrderStatusType.RELEASED ||
-                SelectedOrder.Status == Enums.OrderStatusType.PENDING ||
-                SelectedOrder.Status == Enums.OrderStatusType.REFUNDED)
-            {
-                IsValidOrder = false;
-            } 
-            else
-            {
-                IsValidOrder = true;
-            }
+                if (SelectedOrder.Status == Enums.OrderStatusType.CANCELED ||
+                    SelectedOrder.Status == Enums.OrderStatusType.RELEASED ||
+                    SelectedOrder.Status == Enums.OrderStatusType.PENDING ||
+                    SelectedOrder.Status == Enums.OrderStatusType.REFUNDED)
+                {
+                    IsValidOrder = false;
+                }
+                else
+                {
+                    IsValidOrder = true;
+                }
+
+            });
 
             await GetBarcodeDetailsAsync();
         }
@@ -165,6 +169,12 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedOrder", SelectedOrder }
             });
+        }
+
+        [ICommand]
+        async Task BackToOrderDetails()
+        {
+            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(OrderOverviewPage)}");
         }
     }
 }

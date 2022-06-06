@@ -35,7 +35,7 @@ namespace OrganiserApp.Helpers
                     order.StatusTextColor = Color.FromArgb("#3DDC97");
                     break;
                 case OrderStatusType.PARTIALLY_CANCELED:
-                    order.OrderStatus = "Partially Cancelled";
+                    order.OrderStatus = "Partially Canceled";
                     order.StatusIcon = "warning_open_orange.svg";
                     order.StatusTextColor = Color.FromArgb("#3DDC97");
                     break;
@@ -45,7 +45,7 @@ namespace OrganiserApp.Helpers
                     order.StatusTextColor = Color.FromArgb("#FF495C");
                     break;
                 case OrderStatusType.CANCELED:
-                    order.OrderStatus = "Cancelled";
+                    order.OrderStatus = "Canceled";
                     order.StatusIcon = "error_open_red.svg";
                     order.StatusTextColor = Color.FromArgb("#FF495C");
                     break;
@@ -88,6 +88,13 @@ namespace OrganiserApp.Helpers
                     break;
                 default: break;
             }
+
+            if (barcode.CustomerTicket.IsCanceled)
+            {
+                barcode.Status = "Canceled";
+                barcode.StatusIcon = "ticket_block.png";
+            }
+
             return barcode;
         }
     }

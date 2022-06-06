@@ -126,7 +126,8 @@
                     </VerticalStackLayout>
                     <CollectionView
                         ItemsSource="{Binding Invitation.TicketTypes}"
-                        SelectionMode="None">
+                        SelectionMode="None"
+                        EmptyView="No tickets enabled for guestlist.">
                         <CollectionView.Header>
                             <Grid ColumnDefinitions="*,*,Auto"
                                   Margin="0,16,0,0"
