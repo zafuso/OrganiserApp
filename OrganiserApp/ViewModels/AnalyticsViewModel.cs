@@ -163,15 +163,17 @@ namespace OrganiserApp.ViewModels
 
                 foreach (var item in AgesAnalytics.Content)
                 {
-                    AgesSeries.Add(new ColumnSeries<int>
+                    if (item.Amount > 0)
                     {
-                        Values = new List<int> { item.Amount },
-                        Name = item.Age
-                    });
-
-                    XAxesList.Add(item.Age);
+                        AgesSeries.Add(new ColumnSeries<int>
+                        {
+                            Values = new List<int> { item.Amount },
+                            Name = item.Age
+                        });
+                    }
                 }
 
+                XAxesList.Add("Ages");
                 XAxesAges.Add(new Axis
                 {
                     Labels = XAxesList,

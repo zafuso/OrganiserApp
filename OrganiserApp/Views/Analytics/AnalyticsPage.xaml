@@ -39,7 +39,7 @@
                         LegendTextBrush="{StaticResource Black140}">
                     </lvc:CartesianChart>
                 </Grid>
-                <Grid RowDefinitions="Auto,500">
+                <Grid RowDefinitions="Auto,300">
                     <Label
                         Grid.Row="0"
                         Margin="0,16,0,8"
@@ -74,7 +74,7 @@
                         LegendTextBrush="{StaticResource Black140}">
                     </lvc:PieChart>
                 </Grid>
-                <Grid RowDefinitions="Auto,500">
+                <Grid RowDefinitions="Auto,300">
                     <Label
                         Grid.Row="0"
                         Margin="0,16,0,8"
@@ -85,6 +85,7 @@
                     <lvc:CartesianChart
                         Grid.Row="1"
                         Series="{Binding AgesSeries}"
+                        XAxes="{Binding XAxesAges}"
                         YAxes="{Binding YAxesAges}"
                         LegendPosition="Bottom"
                         LegendFontFamily="Bold"
