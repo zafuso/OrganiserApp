@@ -87,11 +87,13 @@ namespace OrganiserApp.ViewModels
                 var json = await response.Content.ReadAsStringAsync();
                 var orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(json);
 
+                var orderList = new List<Order>();
                 foreach (var order in orders)
                 {
                     var fullName = $"{order.CustomerData.FirstName} {order.CustomerData.LastName}";
                     order.FullName = fullName.Length > 15 ? $"{fullName.Substring(0, 15)}..." : fullName;
                     order.TotalBalanceInclVat = FormatHelper.FormatPrice(order.TotalBalanceInclVat);
+                    order.Completed = FormatHelper.FormatISO8601ToDateTime(order.CompletedAt);
                     order.CompletedAt = FormatHelper.FormatISO8601ToDateOnlyString(order.CompletedAt);
 
                     var products = 0;
@@ -102,7 +104,13 @@ namespace OrganiserApp.ViewModels
                     order.Products = products;
 
                     var formattedOrder = OrderHelper.CalculateOrderStatus(order);
-                    OrderList.Add(formattedOrder);
+                    orderList.Add(formattedOrder);                    
+                }
+
+                var sortedList = orderList.OrderByDescending(order => order.Completed);
+                foreach (var order in sortedList)
+                {
+                    OrderList.Add(order);
                 }
 
                 OrdersCount = OrderList.Count;
@@ -153,6 +161,12 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedOrder", selectedOrder }
             });
+        }
+
+        [ICommand]
+        async Task InviteGuestAsync()
+        {
+            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(GuestListInvitationPage)}");
         }
     }
 }

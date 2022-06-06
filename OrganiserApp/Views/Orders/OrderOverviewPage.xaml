@@ -60,7 +60,7 @@
                                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderOverviewViewModel}}, Path=GoToOrderDetailsCommand}"/>
                             </Frame.GestureRecognizers>
                             <Grid 
-                                Padding="12,8"
+                                Padding="10,8"
                                 ColumnDefinitions="*,*,*"
                                 ColumnSpacing="8"
                                 RowDefinitions="*,Auto">

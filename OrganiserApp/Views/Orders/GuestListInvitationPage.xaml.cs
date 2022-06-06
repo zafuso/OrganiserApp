@@ -45,4 +45,24 @@ public partial class GuestListInvitationPage : ContentPage
     {
         Note.BorderColor = Application.Current.Resources["Black10"] as Color;
     }
+
+    private void Picker_Focused(object sender, FocusEventArgs e)
+    {
+        Language.BorderColor = Application.Current.Resources["Blue110"] as Color;
+    }
+
+    private void Picker_Unfocused(object sender, FocusEventArgs e)
+    {
+        Language.BorderColor = Application.Current.Resources["Black10"] as Color;
+    }
+
+    private void Email_Focused(object sender, FocusEventArgs e)
+    {
+        Email.BorderColor = Application.Current.Resources["Blue110"] as Color;
+    }
+
+    private void Email_Unfocused(object sender, FocusEventArgs e)
+    {
+        Email.BorderColor = Application.Current.Resources["Black10"] as Color;
+    }
 }

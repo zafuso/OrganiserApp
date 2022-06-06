@@ -35,5 +35,19 @@ namespace OrganiserApp.Services
 
             return response;
         }
+
+        public async Task SendGuestListInvitationAsync(string EventUuid, GuestListInvitation Invitation, Language Language)
+        {
+            var json = JsonConvert.SerializeObject(Invitation);
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"events/{EventUuid}/guestlistorders");
+            request.Headers.Add("X-TF-PREFERREDLANGUAGEID", Language.Id);
+            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            _ = Application.Current.MainPage.DisplayAlert("Invitation sent", "Your guest has been invited.", "OK");
+        }
     }
 }

@@ -259,6 +259,7 @@
                                     <Entry 
                                         Grid.ColumnSpan="2"
                                         Margin="16,0"
+                                        Keyboard="Numeric"
                                         Focused="MinutesToOrder_Focused"
                                         Unfocused="MinutesToOrder_Unfocused"
                                         Text="{Binding SelectedEvent.MinutesToOrder}"/>

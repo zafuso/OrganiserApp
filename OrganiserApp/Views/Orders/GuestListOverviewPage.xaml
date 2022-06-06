@@ -45,7 +45,7 @@
                                 </MultiBinding>
                             </Label.Text>
                         </Label>
-                        <Button 
+                        <Button Margin="0,8,0,8"
                                 Command="{Binding InviteGuestCommand}"
                                 ImageSource="email_blue110.svg"
                                 ContentLayout="Left, 4"

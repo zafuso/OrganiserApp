@@ -19,5 +19,13 @@ namespace OrganiserApp.Services
 
             return countryList;
         }
+
+        public async Task<IEnumerable<Language>> GetLanguagesAsync()
+        {
+            var json = await client.GetStringAsync("languages/available");
+            var languages = JsonConvert.DeserializeObject<IEnumerable<Language>>(json);
+
+            return languages;
+        }
     }
 }

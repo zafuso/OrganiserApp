@@ -1,11 +1,221 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:OrganiserApp.Models"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             x:DataType="viewmodel:GuestListInvitationViewModel"
              x:Class="OrganiserApp.Views.Orders.GuestListInvitationPage"
-             Title="GuestListInvitationPage">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+             Title="Send Invitation">
+    <ScrollView>
+        <Grid Padding="16,8">
+            <VerticalStackLayout>
+                <Label
+                    HorizontalOptions="Center"
+                    Text="{Binding Title}"
+                    Style="{StaticResource LabelHeader}"
+                    FontSize="40"/>
+                <Label 
+                    HorizontalOptions="Center"
+                    Text="Invite guests to your event"
+                    Style="{StaticResource MicroLabel}"/>
+                
+                <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+                    <Label
+                        Text="First Name"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="FirstName"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="FirstName_Unfocused"
+                                Focused="FirstName_Focused"
+                                Placeholder="John"
+                                Text="{Binding Invitation.CustomerData.FirstName}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                        Text="Last Name"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="LastName"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="LastName_Unfocused"
+                                Focused="LastName_Focused"
+                                Placeholder="Smith"
+                                Text="{Binding Invitation.CustomerData.LastName}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                        Text="Email"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Email"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Email_Unfocused"
+                                Focused="Email_Focused"
+                                Placeholder="john.smith@cm.com"
+                                Text="{Binding Invitation.CustomerData.Email}"/>
+                        </Frame>
+                    </Grid>
+
+                    <Label
+                        Text="Note"
+                        Margin="16,16,0,0"
+                        Style="{StaticResource LabelHeader}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Frame x:Name="Note"
+                           Grid.ColumnSpan="2"
+                           Padding="0"
+                           CornerRadius="24"
+                           BorderColor="{StaticResource Black10}"
+                           Margin="0">
+                            <Entry  
+                                Grid.ColumnSpan="2"
+                                Margin="16,0"
+                                Unfocused="Note_Unfocused"
+                                Focused="Note_Focused"
+                                Placeholder="Write a custom note (not visible to invitee)"
+                                Text="{Binding Invitation.CustomerData.CustomField3}"/>
+                        </Frame>
+                    </Grid>
+
+                    <VerticalStackLayout>
+                        <Label
+                            Text="Language email"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
+                        <Frame 
+                            x:Name="Language"
+                            Padding="0"
+                            CornerRadius="24"
+                            BorderColor="{StaticResource Black10}"
+                            Margin="0">
+                            <Picker Title="Select a language"
+                                    Margin="16,0"
+                                    Unfocused="Picker_Unfocused"
+                                    Focused="Picker_Focused"
+                                    ItemsSource="{Binding AvailableLanguages}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedLanguage}"/>
+                        </Frame>
+                    </VerticalStackLayout>
+                    <CollectionView
+                        ItemsSource="{Binding Invitation.TicketTypes}"
+                        SelectionMode="None">
+                        <CollectionView.Header>
+                            <Grid ColumnDefinitions="*,*,Auto"
+                                  Margin="0,16,0,0"
+                                  RowDefinitions="*,Auto">
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Style="{StaticResource MainLabel}"
+                                    TextColor="{StaticResource Blue110}"
+                                    Text="Ticket"/>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Style="{StaticResource MainLabel}"
+                                    TextColor="{StaticResource Blue110}"
+                                    Text="Original Price"/>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Style="{StaticResource MainLabel}"
+                                    TextColor="{StaticResource Blue110}"
+                                    Text="Amount"/>
+                                <BoxView 
+                                    Margin="0,8"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    HeightRequest="1"
+                                    Color="{StaticResource Black10}"/>
+                            </Grid>
+                        </CollectionView.Header>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="model:InvitationTicketType">
+                                <Grid ColumnDefinitions="Auto,*,Auto"
+                                      RowDefinitions="*,Auto">
+                                    <VerticalStackLayout Grid.Row="0">
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource MainLabel}"
+                                            TextColor="{StaticResource Black100}"
+                                            Text="{Binding Name}"/>
+                                        <Label
+                                            Grid.Column="0"
+                                            Style="{StaticResource MainLabel}"
+                                            TextColor="{StaticResource Black100}"
+                                            Text="{Binding Subtitle}"/>
+                                    </VerticalStackLayout>
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Style="{StaticResource MainLabel}"
+                                        TextColor="{StaticResource Black100}"
+                                        Text="{Binding Price, StringFormat='{}€{0}'}"/>
+                                    <Frame 
+                                        Grid.Row="0"
+                                        Grid.Column="2"
+                                        Padding="0"
+                                        CornerRadius="24"
+                                        WidthRequest="80"
+                                        BorderColor="{StaticResource Black10}"
+                                        Margin="0">
+                                        <Entry 
+                                            Margin="16,0"
+                                            Keyboard="Numeric"
+                                            Text="{Binding Amount}"/>
+                                    </Frame>
+                                    <BoxView 
+                                    Margin="0,8"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    HeightRequest="1"
+                                    Color="{StaticResource Black10}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>                        
+                    </CollectionView>
+                    <Button
+                        HorizontalOptions="End"
+                        Style="{StaticResource ButtonSecondary}"
+                        Text="Send Invitation"
+                        Command="{Binding SendGuestListInvitationCommand}"/>
+                </VerticalStackLayout>
+                <ActivityIndicator
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="FillAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="CenterAndExpand" />
+            </VerticalStackLayout>           
+        </Grid>
+    </ScrollView>
 </ContentPage>

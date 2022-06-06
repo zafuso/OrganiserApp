@@ -116,6 +116,7 @@ namespace OrganiserApp.Models
         public string OrderStatus { get; set; }
         public string StatusIcon { get; set; }
         public Color StatusTextColor { get; set; }
+        public DateTime Completed { get; set; }
     }
 
     public partial class OrderTicket
