@@ -64,6 +64,8 @@
 	  <None Remove="Resources\Fonts\GothamRnd-Medium.otf" />
 	  <None Remove="Resources\Images\add_white.svg" />
 	  <None Remove="Resources\Images\calendar.png" />
+	  <None Remove="Resources\Images\check.svg" />
+	  <None Remove="Resources\Images\check_green.svg" />
 	  <None Remove="Resources\Images\connection.png" />
 	  <None Remove="Resources\Images\delete_blue110.svg" />
 	  <None Remove="Resources\Images\download_blue110.svg" />
@@ -71,6 +73,8 @@
 	  <None Remove="Resources\Images\edit_white.svg" />
 	  <None Remove="Resources\Images\email_blue110.svg" />
 	  <None Remove="Resources\Images\email_white.svg" />
+	  <None Remove="Resources\Images\error_open.svg" />
+	  <None Remove="Resources\Images\error_open_red.svg" />
 	  <None Remove="Resources\Images\file.png" />
 	  <None Remove="Resources\Images\help.png" />
 	  <None Remove="Resources\Images\help_open_blue110.svg" />
@@ -89,6 +93,8 @@
 	  <None Remove="Resources\Images\status_warning.png" />
 	  <None Remove="Resources\Images\ticket.png" />
 	  <None Remove="Resources\Images\ticketing_girl.svg" />
+	  <None Remove="Resources\Images\warning_open.svg" />
+	  <None Remove="Resources\Images\warning_open_orange.svg" />
 	  <None Remove="Resources\Images\welcome.svg" />
 	  <None Remove="Resources\Images\whatsapp.png" />
 	  <None Remove="Resources\Images\whatsapp_blue110.svg" />
@@ -128,6 +134,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Orders\GuestListOverviewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Orders\OrderDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Orders\OrderOverviewPage.xaml">

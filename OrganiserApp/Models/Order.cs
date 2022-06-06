@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OrganiserApp.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace OrganiserApp.Models
         public string BatchId { get; set; }
 
         [JsonProperty(PropertyName = "status")]
-        public string Status { get; set; }
+        public OrderStatusType Status { get; set; }
 
         [JsonProperty(PropertyName = "total_balance_incl_vat")]
         public decimal TotalBalanceInclVat { get; set; }
@@ -76,7 +77,7 @@ namespace OrganiserApp.Models
         public string DownloadUrl { get; set; }
 
         [JsonProperty(PropertyName = "ticket_types")]
-        public OrderTicket TicketTypes { get; set; }
+        public List<OrderTicket> TicketTypes { get; set; }
 
         [JsonProperty(PropertyName = "service_fee")]
         public decimal ServiceFee { get; set; }
@@ -103,13 +104,18 @@ namespace OrganiserApp.Models
         public string TimeSlot { get; set; }
 
         [JsonProperty(PropertyName = "consents")]
-        public Consent Consent { get; set; }
+        public List<Consent> Consent { get; set; }
 
         [JsonProperty(PropertyName = "is_refund_allowed")]
         public RefundAllowed IsRefundAllowed { get; set; }
 
         [JsonProperty(PropertyName = "is_refundable")]
         public bool IsRefundable { get; set; }
+        public int Products { get; set; }
+        public string FullName { get; set; }
+        public string OrderStatus { get; set; }
+        public string StatusIcon { get; set; }
+        public Color StatusTextColor { get; set; }
     }
 
     public partial class OrderTicket

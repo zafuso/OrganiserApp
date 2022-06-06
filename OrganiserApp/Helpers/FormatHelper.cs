@@ -29,6 +29,11 @@ namespace OrganiserApp.Helpers
             return DateTime.Parse(IsoDate).Date.ToString("dd-MM-yyyy HH:mm");
         }
 
+        public static string FormatISO8601ToDateOnlyString(string IsoDate)
+        {
+            return DateTime.Parse(IsoDate).Date.ToString("dd-MM-yyyy");
+        }
+
         public static TimeSpan FormatISO8601ToTime(string IsoDate)
         {
             return DateTime.Parse(IsoDate).TimeOfDay;

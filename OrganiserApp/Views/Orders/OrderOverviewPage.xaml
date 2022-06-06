@@ -1,11 +1,177 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:OrganiserApp.Models"
+             xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:OrderOverviewViewModel"
              x:Class="OrganiserApp.Views.Orders.OrderOverviewPage"
-             Title="OrderOverviewPage">
-    <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-    </StackLayout>
+             xmlns:helpers="clr-namespace:OrganiserApp.Helpers"
+             xmlns:fontAwesome="clr-namespace:FontAwesome"
+             xmlns:cmIcons="clr-namespace:CmIcons"
+             Title="Orders">
+    
+    <Grid>
+        <RefreshView
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView
+                IsVisible="{Binding IsNotBusy}"
+                ItemsSource="{Binding OrderList}"
+                SelectionMode="None">
+                
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="300"
+                                 HeightRequest="300">
+                        <Image Source="no_messages.svg"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               Aspect="AspectFill"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.Header>
+                    <VerticalStackLayout HorizontalOptions="Center" Padding="0">
+                        <Label
+                            Text="{Binding Title}"
+                            Style="{StaticResource LabelHeader}"
+                            FontSize="40"/>
+                        <Label Style="{StaticResource MicroLabel}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}Showing {0} out of {1} orders">
+                                    <Binding Path="OrdersCount"/>
+                                    <Binding Path="TotalItems"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                    </VerticalStackLayout>
+                </CollectionView.Header>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Order">
+                        <Frame 
+                            BorderColor="Transparent"
+                            BackgroundColor="Transparent"
+                            Padding="0">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:OrderOverviewViewModel}}, Path=GoToOrderDetailsCommand}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid 
+                                Padding="12,8"
+                                ColumnDefinitions="*,*,*"
+                                ColumnSpacing="8"
+                                RowDefinitions="*,Auto">
+                                <VerticalStackLayout
+                                    Grid.Column="0"
+                                    Grid.Row="0">
+                                    <Label 
+                                        FontFamily="Bold"
+                                        Text="{Binding BatchId}"
+                                        Style="{StaticResource LabelHeader}"/>
+                                    <HorizontalStackLayout>
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{x:Static cmIcons:CmIcons.Icon193}"
+                                            FontFamily="Icons"
+                                            TextColor="{StaticResource Black100}"
+                                            VerticalOptions="Center"/>
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{Binding CompletedAt}"
+                                            TextColor="{StaticResource Black100}"
+                                            VerticalOptions="Center"
+                                            Style="{StaticResource MainLabel}"
+                                            Padding="4,0"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout
+                                    Grid.Column="1">
+                                    <HorizontalStackLayout>
+                                        <Image 
+                                            Margin="4,0"
+                                            Source="{Binding StatusIcon}" 
+                                            WidthRequest="16"
+                                            HeightRequest="16"/>
+                                        <Label
+                                            FontSize="Small"
+                                            VerticalOptions="Center"
+                                            Style="{StaticResource MainLabel}"
+                                            TextColor="{Binding StatusTextColor}"
+                                            Text="{Binding OrderStatus}"/>
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{x:Static cmIcons:CmIcons.Icon203}"
+                                            FontFamily="Icons"
+                                            TextColor="{StaticResource Black100}"
+                                            VerticalOptions="Center"
+                                            Padding="4,0"/>
+                                        <Label
+                                            FontSize="Small"
+                                            VerticalOptions="Center"
+                                            Style="{StaticResource MainLabel}"
+                                            TextColor="{StaticResource Black100}"
+                                            Text="{Binding FullName}"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout
+                                    Grid.Column="2">
+                                    <Label 
+                                        HorizontalOptions="End"
+                                        Style="{StaticResource LabelHeader}"
+                                        Text="{Binding TotalBalanceInclVat, StringFormat='{}€{0}'}"
+                                        TextColor="{StaticResource Black100}"/>
+                                    <HorizontalStackLayout Padding="8,0" HorizontalOptions="End">
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{x:Static cmIcons:CmIcons.Icon214}"
+                                            FontFamily="Icons"
+                                            TextColor="{StaticResource Black100}"
+                                            VerticalOptions="Center"
+                                            Padding="4,0"/>
+                                        <Label
+                                            FontSize="Small"
+                                            Text="{Binding Products}"
+                                            VerticalOptions="Center"
+                                            TextColor="{StaticResource Black100}"
+                                            Style="{StaticResource MainLabel}"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                                <BoxView 
+                                    Margin="0,8,0,0"
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="3"
+                                    HeightRequest="1"
+                                    Color="{StaticResource Black10}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.Footer>
+                    <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
+                        <Button Command="{Binding LoadMoreCommand}" 
+                        Text="Load More"
+                        IsEnabled="{Binding CanLoadMore}"
+                        Style="{StaticResource ButtonSecondary}" />
+                    </HorizontalStackLayout>
+                </CollectionView.Footer>
+
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator
+            Grid.ColumnSpan="2"
+            HorizontalOptions="FillAndExpand"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand" />
+        
+    </Grid>
 </ContentPage>

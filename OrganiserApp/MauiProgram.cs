@@ -49,6 +49,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<TicketService>();
         builder.Services.AddSingleton<ShopService>();
         builder.Services.AddSingleton<AnalyticsService>();
+        builder.Services.AddSingleton<OrderService>();
 
         builder.Services.AddTransient<EventOverviewViewModel>();
         builder.Services.AddTransient<EventSettingsViewModel>();
@@ -69,6 +70,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopEditNameViewModel>();
         builder.Services.AddTransient<ShopTicketsViewModel>();
         builder.Services.AddTransient<ShopTicketsGroupViewModel>();
+        builder.Services.AddTransient<OrderDetailsViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
@@ -87,6 +89,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopSettingsPage>();
         builder.Services.AddTransient<ShopBypassLinkPage>();
         builder.Services.AddTransient<ShopEditNamePage>();
+        builder.Services.AddTransient<OrderDetailsPage>();
 
         return builder.Build();
 	}

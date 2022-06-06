@@ -12,12 +12,16 @@ namespace OrganiserApp.Services
     {
         static readonly HttpClient client = GetHttpClient();
 
-        public async Task<IEnumerable<Order>> GetOrders(string EventUuid)
+        public async Task<HttpResponseMessage> GetOrders(string EventUuid, int skip, int take)
         {
-            var json = await client.GetStringAsync($"events/{EventUuid}/orders");
-            var orders = JsonConvert.DeserializeObject<IEnumerable<Order>>(json);
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"events/{EventUuid}/orders");
+            request.Headers.Add("X-TF-PAGINATION-SKIP", skip.ToString());
+            request.Headers.Add("X-TF-PAGINATION-TAKE", take.ToString());
 
-            return orders;
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            return response;
         }
     }
 }
