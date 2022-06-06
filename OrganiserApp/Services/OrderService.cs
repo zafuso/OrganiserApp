@@ -23,5 +23,17 @@ namespace OrganiserApp.Services
 
             return response;
         }
+
+        public async Task<HttpResponseMessage> GetGuestListOrders(string EventUuid, int skip, int take)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"events/{EventUuid}/guestlistorders");
+            request.Headers.Add("X-TF-PAGINATION-SKIP", skip.ToString());
+            request.Headers.Add("X-TF-PAGINATION-TAKE", take.ToString());
+
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            return response;
+        }
     }
 }

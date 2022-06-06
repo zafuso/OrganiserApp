@@ -9,4 +9,10 @@ public partial class GuestListOverviewPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as GuestListOverviewViewModel).Init();
+    }
 }

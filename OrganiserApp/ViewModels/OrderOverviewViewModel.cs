@@ -102,9 +102,9 @@ namespace OrganiserApp.ViewModels
                     }
                     order.Products = products;
 
-                    CalculateOrderStatus(order);
-                    OrderList.Add(order);
-                }
+                    var formattedOrder = OrderHelper.CalculateOrderStatus(order);
+                    OrderList.Add(formattedOrder);
+                }                               
 
                 OrdersCount = OrderList.Count;
             }
@@ -154,49 +154,6 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedOrder", selectedOrder }
             });
-        }
-        
-        void CalculateOrderStatus(Order order)
-        {
-            switch (order.Status)
-            {
-                case OrderStatusType.COMPLETED:
-                    order.OrderStatus = "Completed";
-                    order.StatusIcon = "check_green.svg";
-                    order.StatusTextColor = Color.FromArgb("#3DDC97");
-                    break;
-                case OrderStatusType.REFUNDED:
-                    order.OrderStatus = "Refunded";
-                    order.StatusIcon = "error_open_red.svg";
-                    order.StatusTextColor = Color.FromArgb("#FF495C");
-                    break;
-                case OrderStatusType.REFUND_PENDING:
-                    order.OrderStatus = "Refund pending";
-                    order.StatusIcon = "warning_open_orange.svg";
-                    order.StatusTextColor = Color.FromArgb("#FFA400");
-                    break;
-                case OrderStatusType.PARTIALLY_REFUNDED:
-                    order.OrderStatus = "Partially Refunded";
-                    order.StatusIcon = "warning_open_orange.svg";
-                    order.StatusTextColor = Color.FromArgb("#3DDC97");
-                    break;
-                case OrderStatusType.PARTIALLY_CANCELED:
-                    order.OrderStatus = "Partially Cancelled";
-                    order.StatusIcon = "warning_open_orange.svg";
-                    order.StatusTextColor = Color.FromArgb("#3DDC97");
-                    break;
-                case OrderStatusType.RELEASED:
-                    order.OrderStatus = "Released";
-                    order.StatusIcon = "error_open_red.svg";
-                    order.StatusTextColor = Color.FromArgb("#FF495C");
-                    break;
-                case OrderStatusType.CANCELED:
-                    order.OrderStatus = "Cancelled";
-                    order.StatusIcon = "error_open_red.svg";
-                    order.StatusTextColor = Color.FromArgb("#FF495C");
-                    break;
-                default: break;
-            }
         }
     }
 }

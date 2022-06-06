@@ -71,6 +71,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopTicketsViewModel>();
         builder.Services.AddTransient<ShopTicketsGroupViewModel>();
         builder.Services.AddTransient<OrderDetailsViewModel>();
+        builder.Services.AddTransient<GuestListInvitationViewModel>();
 
         builder.Services.AddTransient<EventOverviewPage>();
         builder.Services.AddTransient<EventSettingsPage>();
@@ -90,6 +91,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ShopBypassLinkPage>();
         builder.Services.AddTransient<ShopEditNamePage>();
         builder.Services.AddTransient<OrderDetailsPage>();
+        builder.Services.AddTransient<GuestListInvitationPage>();
 
         return builder.Build();
 	}
