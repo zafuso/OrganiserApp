@@ -46,7 +46,7 @@ namespace OrganiserApp.Services
             return selectedEvent;
         }
 
-        public async Task PutEventAsync(Event selectedEvent)
+        public async Task<Event> PutEventAsync(Event selectedEvent)
         {
             var json = JsonConvert.SerializeObject(selectedEvent);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -61,6 +61,9 @@ namespace OrganiserApp.Services
             {
                 _ = Application.Current.MainPage.DisplayAlert("Event saved", "The event has been updated.", "OK");
             }
+
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Event>(responseJson);
         }
     }
 }

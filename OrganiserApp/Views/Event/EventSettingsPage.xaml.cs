@@ -74,6 +74,22 @@ public partial class EventSettingsPage : ContentPage
     private void Name_Unfocused(object sender, FocusEventArgs e)
     {
         Name.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        NameValidator.ForceValidate();
+
+        if (NameValidator.IsNotValid)
+        {
+            Name.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as EventSettingsViewModel).IsValidName = false;
+        }
+
+        if (NameValidator.IsValid)
+        {
+            Name.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as EventSettingsViewModel).IsValidName = true;
+        }
+
+        (BindingContext as EventSettingsViewModel).ValidateForm();
     }
 
     private void Description_Unfocused(object sender, FocusEventArgs e)
@@ -124,5 +140,24 @@ public partial class EventSettingsPage : ContentPage
     private void DownloadFromTime_Focused(object sender, FocusEventArgs e)
     {
         DownloadFromTime.BorderColor = Application.Current.Resources["Blue110"] as Color;
+    }
+
+    private void Name_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        NameValidator.ForceValidate();
+
+        if (NameValidator.IsNotValid)
+        {
+            Name.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as EventSettingsViewModel).IsValidName = false;
+        }
+
+        if (NameValidator.IsValid)
+        {
+            Name.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as EventSettingsViewModel).IsValidName = true;
+        }
+
+        (BindingContext as EventSettingsViewModel).ValidateForm();
     }
 }

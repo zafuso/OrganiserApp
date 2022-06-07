@@ -25,6 +25,12 @@ namespace OrganiserApp.ViewModels
         Venue selectedVenue;
 
         [ObservableProperty]
+        bool isValidName;
+
+        [ObservableProperty]
+        bool isValidForm;
+
+        [ObservableProperty]
         bool hasDownloadFrom;
 
         [ObservableProperty]
@@ -48,6 +54,12 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         DateTime endAtDate;
 
+        [ObservableProperty]
+        string minDateStartDate;
+
+        [ObservableProperty]
+        string minDateEndDate;
+
         public ObservableCollection<Venue> VenueList { get; set; } = new();
 
         private readonly VenueService venueService;
@@ -63,13 +75,15 @@ namespace OrganiserApp.ViewModels
         }
 
         public async void Init()
-        {
+        {            
             await GetVenuesAsync();
             BindEventProperties();
         }
 
         void BindEventProperties()
         {
+            MinDateStartDate = DateTime.Now.ToString("MM/dd/yyyy");
+
             // Get correct downloadsettings for radiobuttons
             if (selectedEvent.DownloadFrom != null)
             {
@@ -103,6 +117,8 @@ namespace OrganiserApp.ViewModels
 
                 EndAtDate = FormatHelper.FormatISO8601ToDate(selectedEvent.EndAt);
                 EndAtTime = FormatHelper.FormatISO8601ToTime(selectedEvent.EndAt);
+
+                MinDateEndDate = StartAtDate.ToString("MM/dd/yyyy");
             }
         }
 
@@ -163,7 +179,8 @@ namespace OrganiserApp.ViewModels
 
             try
             {
-                await eventService.PutEventAsync(selectedEvent);
+                SelectedEvent = await eventService.PutEventAsync(selectedEvent);
+                BindEventProperties();
             }
             catch (Exception e)
             {
@@ -183,6 +200,16 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedEvent", selectedEvent }
             });
+        }
+
+        public void ValidateForm()
+        {
+            IsValidForm = false;
+
+            if (IsValidName)
+            {
+                IsValidForm = true;
+            }
         }
     }
 }

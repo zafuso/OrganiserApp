@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:cmIcons="clr-namespace:CmIcons"
              x:Class="OrganiserApp.Views.Event.EventSettingsPage"
              Title="Settings"
@@ -20,20 +21,37 @@
                     Text="Name*"
                     Margin="16,0,0,0"
                     Style="{StaticResource LabelHeader}"/>
-                <Grid Grid.ColumnSpan="2">
+                <Grid Grid.ColumnSpan="2"
+                      RowDefinitions="*,Auto">
                     <Frame x:Name="Name"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
                            Margin="0">
                         <Entry  
-                        Grid.ColumnSpan="2"
-                        Margin="16,0"
-                        Unfocused="Name_Unfocused"
-                        Focused="Name_Focused"
-                        Text="{Binding SelectedEvent.Name}"/>
+                            Grid.ColumnSpan="2"
+                            Margin="16,0"
+                            Unfocused="Name_Unfocused"
+                            Focused="Name_Focused"
+                            TextChanged="Name_Entry_TextChanged"
+                            Text="{Binding SelectedEvent.Name}">
+                            <Entry.Behaviors>
+                                <toolkit:TextValidationBehavior
+                                    x:Name="NameValidator"
+                                    MinimumLength="1"
+                                    DecorationFlags="Trim"/>
+                            </Entry.Behaviors>
+                        </Entry>
                     </Frame>
+                    <Label
+                        Grid.Row="1"
+                        Text="Event name cannot be empty"
+                        IsVisible="{Binding IsNotValid, Source={x:Reference NameValidator}}"
+                        Margin="16,0,0,0"
+                        TextColor="{StaticResource Red100}"
+                        Style="{StaticResource LabelHeader}"/>
                 </Grid>
 
                 <Label
@@ -110,6 +128,7 @@
                             Margin="0">
                             <DatePicker
                                 Date="{Binding StartAtDate}"
+                                MinimumDate="{Binding MinDateStartDate}"
                                 Format="dd-MM-yyyy"
                                 Unfocused="StartAtDatePicker_Unfocused"
                                 Focused="StartAtDatePicker_Focused"
@@ -150,6 +169,7 @@
                             Margin="0">
                             <DatePicker
                                 Date="{Binding EndAtDate}"
+                                MinimumDate="{Binding MinDateEndDate}"
                                 Format="dd-MM-yyyy"
                                 Unfocused="EndAtDatePicker_Unfocused"
                                 Focused="EndAtDatePicker_Focused"
@@ -272,6 +292,7 @@
                             Padding="32,8"
                             HorizontalOptions="End"
                             Command="{Binding SaveEventSettingsCommand}"
+                            IsEnabled="{Binding IsValidForm}"
                             Style="{StaticResource ButtonSecondary}"/>
                 </VerticalStackLayout>
             </VerticalStackLayout>
