@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OrganiserApp.Enums;
 using OrganiserApp.Views.Event;
+using OrganiserApp.Views.Ticket;
 
 namespace OrganiserApp.ViewModels
 {
@@ -235,8 +236,14 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
-                await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketOverviewViewModel)}");
+                await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketOverviewPage)}");
             }
+        }
+
+        [ICommand]
+        async Task BackToTicketOverviewAsync()
+        {
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(TicketOverviewPage)}");
         }
     }
 }

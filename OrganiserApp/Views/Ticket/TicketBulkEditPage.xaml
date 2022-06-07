@@ -262,19 +262,27 @@
                                 OnColor="{StaticResource Blue110}"
                                 ThumbColor="{StaticResource Black10}"/>
                     </VerticalStackLayout>
-                    <Button Text="Save"
-                            Margin="0,16,0,32"
-                            Padding="32,8"
-                            HorizontalOptions="End"
-                            Command="{Binding UpdateTicketTypesCommand}"
-                            Style="{StaticResource ButtonSecondary}"/>
+                    <Grid Grid.ColumnSpan="2">
+                        <Button Text="Go Back"
+                                Margin="0,16,0,32"
+                                Padding="32,8"
+                                HorizontalOptions="Start"
+                                Command="{Binding BackToTicketOverviewCommand}"
+                                Style="{StaticResource ButtonSecondary}"/>
+                        <Button Text="Save"
+                                Margin="0,16,0,32"
+                                Padding="32,8"
+                                HorizontalOptions="End"
+                                Command="{Binding UpdateTicketTypesCommand}"
+                                Style="{StaticResource ButtonSecondary}"/>
+                    </Grid>
                 </VerticalStackLayout>
                 <ActivityIndicator
-                Grid.ColumnSpan="2"
-                HorizontalOptions="CenterAndExpand"
-                IsRunning="{Binding IsBusy}"
-                IsVisible="{Binding IsBusy}"
-                VerticalOptions="CenterAndExpand" />
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"
+                    VerticalOptions="CenterAndExpand" />
             </VerticalStackLayout>
         </Grid>
     </ScrollView>
