@@ -33,6 +33,33 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         Gender selectedGender;
 
+        [ObservableProperty]
+        bool isValidForm;
+
+        [ObservableProperty]
+        bool isValidEmail = false;
+
+        [ObservableProperty]
+        bool isValidFirstName = false;
+
+        [ObservableProperty]
+        bool isValidLastName = false;
+
+        [ObservableProperty]
+        bool isValidMobile = false;
+
+        [ObservableProperty]
+        bool isValidStreet = false;
+
+        [ObservableProperty]
+        bool isValidHouseNumber = false;
+
+        [ObservableProperty]
+        bool isValidZipcode = false;
+
+        [ObservableProperty]
+        bool isValidCity = false;
+
         string EventUuid;
 
         public OrderEditCustomerDataViewModel(CountryService countryService, IConnectivity connectivity, CustomerDataService customerDataService)
@@ -155,6 +182,41 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedOrder", SelectedOrder }
             });
+        }
+
+        public void ValidateForm()
+        {
+            IsValidForm = false;
+
+            if (IsValidEmail && IsValidFirstName && IsValidLastName)
+            {
+                IsValidForm = true;
+            }
+
+            if (SelectedOrder.CustomerData.Mobile.Length > 0 && !IsValidMobile)
+            {
+                isValidForm = false;
+            }
+
+            if (SelectedOrder.CustomerData.AddressLine1.Length > 0 && !IsValidStreet)
+            {
+                isValidForm = false;
+            }
+
+            if (SelectedOrder.CustomerData.AddressLine1BuildingNumber.Length > 0 && !IsValidHouseNumber)
+            {
+                isValidForm = false;
+            }
+
+            if (SelectedOrder.CustomerData.Zipcode.Length > 0 && !IsValidZipcode)
+            {
+                isValidForm = false;
+            }
+
+            if (SelectedOrder.CustomerData.City.Length > 0 && !IsValidCity)
+            {
+                isValidForm = false;
+            }
         }
     }
 }

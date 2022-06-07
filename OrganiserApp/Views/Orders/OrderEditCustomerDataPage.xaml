@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:OrderEditCustomerDataViewModel"
              x:Class="OrganiserApp.Views.Orders.OrderEditCustomerDataPage"
              Title="Edit customer details"
@@ -16,12 +17,14 @@
                     FontSize="40"/>
                 <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
                     <Label
-                    Text="First name"
+                    Text="First name*"
                     Margin="16,16,0,0"
                     Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="FirstName"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -31,17 +34,35 @@
                                 Margin="16,0"
                                 Unfocused="FirstName_Unfocused"
                                 Focused="FirstName_Focused"
-                        Text="{Binding SelectedOrder.CustomerData.FirstName}"/>
+                                TextChanged="FirstName_Entry_TextChanged"
+                                Text="{Binding SelectedOrder.CustomerData.FirstName}">
+                                <Entry.Behaviors>
+                                    <toolkit:TextValidationBehavior
+                                        x:Name="FirstNameValidator"
+                                        MinimumLength="2"
+                                        MaximumLength="256"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="First name should be between 2 and 256 characters"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference FirstNameValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
-                    Text="Last name"
+                    Text="Last name*"
                     Margin="16,16,0,0"
                     Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="LastName"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -51,17 +72,35 @@
                                 Margin="16,0"
                                 Unfocused="LastName_Unfocused"
                                 Focused="LastName_Focused"
-                        Text="{Binding SelectedOrder.CustomerData.LastName}"/>
+                                TextChanged="LastName_Entry_TextChanged"
+                                Text="{Binding SelectedOrder.CustomerData.LastName}">
+                                <Entry.Behaviors>
+                                    <toolkit:TextValidationBehavior
+                                        x:Name="LastNameValidator"
+                                        MinimumLength="2"
+                                        MaximumLength="128"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="Last name should be between 2 and 128 characters"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference LastNameValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
-                    Text="Email"
+                    Text="Email*"
                     Margin="16,16,0,0"
                     Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="Email"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -71,17 +110,33 @@
                                 Margin="16,0"
                                 Unfocused="Email_Unfocused"
                                 Focused="Email_Focused"
-                        Text="{Binding SelectedOrder.CustomerData.Email}"/>
+                                TextChanged="Email_Entry_TextChanged" 
+                                Text="{Binding SelectedOrder.CustomerData.Email}">
+                                <Entry.Behaviors>
+                                    <toolkit:EmailValidationBehavior
+                                        x:Name="EmailValidator"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="Invalid email address"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference EmailValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
                     Text="Mobile number"
                     Margin="16,16,0,0"
                     Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="Mobile"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -91,8 +146,25 @@
                                 Margin="16,0"
                                 Unfocused="Mobile_Unfocused"
                                 Focused="Mobile_Focused"
-                        Text="{Binding SelectedOrder.CustomerData.Mobile}"/>
+                                TextChanged="Mobile_Entry_TextChanged" 
+                                Text="{Binding SelectedOrder.CustomerData.Mobile}">
+                                <Entry.Behaviors>
+                                    <toolkit:TextValidationBehavior
+                                        x:Name="MobileValidator"
+                                        MinimumLength="0"
+                                        MaximumLength="20"
+                                        RegexPattern="^([0|\+[0-9]{1,5})?([0-9]{10})$"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="Invalid phone number"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference MobileValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
@@ -243,6 +315,7 @@
                             Padding="32,8"
                             HorizontalOptions="End"
                             Command="{Binding UpdateCustomerDataCommand}"
+                            IsEnabled="{Binding IsValidForm}"
                             Style="{StaticResource ButtonSecondary}"/>
                         <Button 
                         Text="Back"

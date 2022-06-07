@@ -22,7 +22,7 @@
                 
                 <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
                     <Label
-                        Text="First Name"
+                        Text="First Name*"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
                     <Grid Grid.ColumnSpan="2"
@@ -61,7 +61,7 @@
                     </Grid>
 
                     <Label
-                        Text="Last Name"
+                        Text="Last Name*"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
                     <Grid Grid.ColumnSpan="2"
@@ -100,7 +100,7 @@
                     </Grid>
 
                     <Label
-                        Text="Email"
+                        Text="Email*"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
                     <Grid Grid.ColumnSpan="2"
