@@ -28,13 +28,13 @@
                 </VerticalStackLayout>
                 <Button 
                     Grid.Row="1"
-                    Grid.Column="0"
-                    IsEnabled="{Binding IsValidOrder}"
+                    Grid.Column="0"                    
                     Style="{StaticResource ButtonSecondary}"
                     Text="Cancel order"
                     ImageSource="block_blue110.svg"
                     ContentLayout="Left, 4"
-                    Command="{Binding CancelOrderCommand}"/>
+                    Command="{Binding CancelOrderCommand}"
+                    IsEnabled="{Binding IsValidOrder}"/>
                 <Button 
                     Grid.Row="1"
                     Grid.Column="1"

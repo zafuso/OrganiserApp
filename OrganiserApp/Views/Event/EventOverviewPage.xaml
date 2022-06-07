@@ -226,10 +226,11 @@
 
                     <CollectionView.Footer>
                         <HorizontalStackLayout HorizontalOptions="Center" Margin="8">
-                            <Button Command="{Binding LoadMoreEventsCommand}" 
-                        Text="Load More"
-                        IsEnabled="{Binding CanLoadMore}"
-                        Style="{StaticResource ButtonSecondary}" />
+                        <Button  
+                            Text="Load More"
+                            Style="{StaticResource ButtonSecondary}" 
+                            Command="{Binding LoadMoreEventsCommand}"
+                            IsEnabled="{Binding CanLoadMore}"/>
                         </HorizontalStackLayout>
                     </CollectionView.Footer>
                 </CollectionView>

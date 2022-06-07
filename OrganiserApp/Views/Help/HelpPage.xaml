@@ -35,19 +35,19 @@
                                    Spacing="16"
                                    HorizontalOptions="CenterAndExpand">
                 <Button
-                    IsEnabled="{Binding IsNotBusy}"
                     Command="{Binding GoToHelpCenterCommand}"
                     ImageSource="help_open_white.svg"
                     ContentLayout="Left, 4"
                     Style="{StaticResource ButtonPrimary}"
-                    Text="Helpcenter"/>
-                <Button 
-                    IsEnabled="{Binding IsNotBusy}"
+                    Text="Helpcenter"
+                    IsEnabled="{Binding IsNotBusy}"/>
+                <Button
                     Command="{Binding EmailSupportCommand}"
                     ImageSource="email_white.svg"
                     ContentLayout="Left, 4"
                     Style="{StaticResource ButtonPrimary}"
-                    Text="E-mail Support" />
+                    Text="E-mail Support"
+                    IsEnabled="{Binding IsNotBusy}"/>
             </HorizontalStackLayout>
             
             <Label 
@@ -59,22 +59,22 @@
                                    Spacing="8"
                                    HorizontalOptions="Center">
                 <Button 
-                    IsEnabled="{Binding IsNotBusy}"
                     Command="{Binding GoToVisitorFaqCommand}"
                     HorizontalOptions="Center"
                     ImageSource="help_open_blue110.svg"
                     ContentLayout="Left, 4"
                     Style="{StaticResource ButtonSecondary}"
-                    Text="Visitor F.A.Q."/>
+                    Text="Visitor F.A.Q."
+                    IsEnabled="{Binding IsNotBusy}"/>
                 
-                <Button 
-                    IsEnabled="{Binding IsNotBusy}"
+                <Button                     
                     Command="{Binding StartWhatsAppChatCommand}"
                     ImageSource="whatsapp_blue110.svg"
                     ContentLayout="Left, 4"
                     HorizontalOptions="Center"
                     Style="{StaticResource ButtonSecondary}"
-                    Text="WhatsApp Chat"/>
+                    Text="WhatsApp Chat"
+                    IsEnabled="{Binding IsNotBusy}"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

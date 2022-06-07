@@ -36,9 +36,9 @@
                                 Style="{StaticResource LabelHeader}"
                                 FontSize="40"/>
                         <Button
-                            Margin="0,16,0,0"
-                            IsEnabled="{Binding IsNotBusy}"
+                            Margin="0,16,0,0"                            
                             Command="{Binding GoToCreateShopCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
                             ImageSource="add_white.svg"
                             ContentLayout="Left, 4"
                             HorizontalOptions="End"

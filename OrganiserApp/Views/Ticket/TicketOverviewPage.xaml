@@ -41,13 +41,13 @@
                                 FontSize="40"/>
                             <Button 
                                 Grid.Column="1"
-                                IsVisible="{Binding CanBulkEdit}"
-                                IsEnabled="{Binding CanBulkEdit}"
+                                IsVisible="{Binding CanBulkEdit}"                                
                                 Command="{Binding GoToBulkEditCommand}"
                                 ImageSource="edit_blue110.svg"
                                 ContentLayout="Left, 4"
                                 Style="{StaticResource ButtonSecondary}"
                                 Text="Bulk Edit"
+                                IsEnabled="{Binding CanBulkEdit}"
                                 HorizontalOptions="End"/>
                         </StackLayout>
                 </CollectionView.Header>
