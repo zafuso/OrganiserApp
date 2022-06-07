@@ -32,6 +32,12 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         GuestListInvitation invitation;
 
+        [ObservableProperty]
+        bool isValidForm;
+
+        [ObservableProperty]
+        bool isValidEmail = false;
+
         public GuestListInvitationViewModel(IConnectivity connectivity, TicketService ticketService, 
             CountryService countryService, OrderService orderService)
         {
@@ -54,6 +60,8 @@ namespace OrganiserApp.ViewModels
                 CustomerData = new(),
                 TicketTypes = new()
             };
+
+            IsValidForm = false;
 
             await GetTicketTypesAsync();
             await GetAvailableLanguagesAsync();
@@ -176,6 +184,16 @@ namespace OrganiserApp.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        public void ValidateForm()
+        {
+            IsValidForm = false;
+
+            if (IsValidEmail)
+            {
+                IsValidForm = true;
             }
         }
     }

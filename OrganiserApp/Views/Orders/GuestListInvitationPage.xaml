@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:OrganiserApp.Models"
              xmlns:viewmodel="clr-namespace:OrganiserApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:GuestListInvitationViewModel"
              x:Class="OrganiserApp.Views.Orders.GuestListInvitationPage"
              Title="Send Invitation">
@@ -66,21 +67,37 @@
                         Text="Email"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="Email"
-                           Grid.ColumnSpan="2"
-                           Padding="0"
-                           CornerRadius="24"
-                           BorderColor="{StaticResource Black10}"
-                           Margin="0">
+                               Grid.ColumnSpan="2"
+                               Grid.Row="0"
+                               Padding="0"
+                               CornerRadius="24"
+                               BorderColor="{StaticResource Black10}"
+                               Margin="0">
                             <Entry  
                                 Grid.ColumnSpan="2"
                                 Margin="16,0"
                                 Unfocused="Email_Unfocused"
                                 Focused="Email_Focused"
                                 Placeholder="john.smith@cm.com"
-                                Text="{Binding Invitation.CustomerData.Email}"/>
+                                TextChanged="Email_Entry_TextChanged"
+                                Text="{Binding Invitation.CustomerData.Email}">
+                                <Entry.Behaviors>
+                                    <toolkit:EmailValidationBehavior
+                                        x:Name="EmailValidator"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="Invalid email address"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference EmailValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
@@ -126,8 +143,7 @@
                     </VerticalStackLayout>
                     <CollectionView
                         ItemsSource="{Binding Invitation.TicketTypes}"
-                        SelectionMode="None"
-                        EmptyView="No tickets enabled for guestlist.">
+                        SelectionMode="None">
                         <CollectionView.Header>
                             <Grid ColumnDefinitions="*,*,Auto"
                                   Margin="0,16,0,0"
@@ -208,7 +224,8 @@
                         HorizontalOptions="End"
                         Style="{StaticResource ButtonSecondary}"
                         Text="Send Invitation"
-                        Command="{Binding SendGuestListInvitationCommand}"/>
+                        Command="{Binding SendGuestListInvitationCommand}"
+                        IsEnabled="{Binding IsValidForm}"/>
                 </VerticalStackLayout>
                 <ActivityIndicator
                     Grid.ColumnSpan="2"

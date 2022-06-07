@@ -64,5 +64,40 @@ public partial class GuestListInvitationPage : ContentPage
     private void Email_Unfocused(object sender, FocusEventArgs e)
     {
         Email.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        EmailValidator.ForceValidate();
+
+        if (EmailValidator.IsNotValid)
+        {
+            Email.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidEmail = false;
+        }
+
+        if (EmailValidator.IsValid)
+        {
+            Email.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidEmail = true;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
+    }
+
+    private void Email_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        EmailValidator.ForceValidate();
+
+        if (EmailValidator.IsNotValid)
+        {
+            Email.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidEmail = false;
+        }
+
+        if (EmailValidator.IsValid)
+        {
+            Email.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidEmail = false;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
     }
 }
