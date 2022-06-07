@@ -24,6 +24,22 @@ public partial class GuestListInvitationPage : ContentPage
     private void FirstName_Unfocused(object sender, FocusEventArgs e)
     {
         FirstName.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        FirstNameValidator.ForceValidate();
+
+        if (FirstNameValidator.IsNotValid)
+        {
+            FirstName.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidFirstName = false;
+        }
+
+        if (FirstNameValidator.IsValid)
+        {
+            FirstName.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidFirstName = true;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
     }
 
     private void LastName_Focused(object sender, FocusEventArgs e)
@@ -34,6 +50,22 @@ public partial class GuestListInvitationPage : ContentPage
     private void LastName_Unfocused(object sender, FocusEventArgs e)
     {
         LastName.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        LastNameValidator.ForceValidate();
+
+        if (LastNameValidator.IsNotValid)
+        {
+            LastName.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidLastName = false;
+        }
+
+        if (LastNameValidator.IsValid)
+        {
+            LastName.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidLastName = true;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
     }
 
     private void Note_Focused(object sender, FocusEventArgs e)
@@ -95,7 +127,45 @@ public partial class GuestListInvitationPage : ContentPage
         if (EmailValidator.IsValid)
         {
             Email.BorderColor = Application.Current.Resources["Green100"] as Color;
-            (BindingContext as GuestListInvitationViewModel).IsValidEmail = false;
+            (BindingContext as GuestListInvitationViewModel).IsValidEmail = true;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
+    }
+
+    private void LastName_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        LastNameValidator.ForceValidate();
+
+        if (LastNameValidator.IsNotValid)
+        {
+            LastName.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidLastName = false;
+        }
+
+        if (LastNameValidator.IsValid)
+        {
+            LastName.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidLastName = true;
+        }
+
+        (BindingContext as GuestListInvitationViewModel).ValidateForm();
+    }
+
+    private void FirstName_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        FirstNameValidator.ForceValidate();
+
+        if (FirstNameValidator.IsNotValid)
+        {
+            FirstName.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidFirstName = false;
+        }
+
+        if (FirstNameValidator.IsValid)
+        {
+            FirstName.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as GuestListInvitationViewModel).IsValidFirstName = true;
         }
 
         (BindingContext as GuestListInvitationViewModel).ValidateForm();

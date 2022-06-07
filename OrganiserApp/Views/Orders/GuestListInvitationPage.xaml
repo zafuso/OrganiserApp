@@ -25,9 +25,11 @@
                         Text="First Name"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="FirstName"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -38,17 +40,35 @@
                                 Unfocused="FirstName_Unfocused"
                                 Focused="FirstName_Focused"
                                 Placeholder="John"
-                                Text="{Binding Invitation.CustomerData.FirstName}"/>
+                                TextChanged="FirstName_Entry_TextChanged" 
+                                Text="{Binding Invitation.CustomerData.FirstName}">
+                                <Entry.Behaviors>
+                                    <toolkit:TextValidationBehavior
+                                        x:Name="FirstNameValidator"
+                                        MinimumLength="2"
+                                        MaximumLength="256"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="First name should be between 2 and 256 characters"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference FirstNameValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label
                         Text="Last Name"
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
-                    <Grid Grid.ColumnSpan="2">
+                    <Grid Grid.ColumnSpan="2"
+                          RowDefinitions="*,Auto">
                         <Frame x:Name="LastName"
                            Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Padding="0"
                            CornerRadius="24"
                            BorderColor="{StaticResource Black10}"
@@ -59,8 +79,24 @@
                                 Unfocused="LastName_Unfocused"
                                 Focused="LastName_Focused"
                                 Placeholder="Smith"
-                                Text="{Binding Invitation.CustomerData.LastName}"/>
+                                TextChanged="LastName_Entry_TextChanged"
+                                Text="{Binding Invitation.CustomerData.LastName}">
+                                <Entry.Behaviors>
+                                    <toolkit:TextValidationBehavior
+                                        x:Name="LastNameValidator"
+                                        MinimumLength="2"
+                                        MaximumLength="128"
+                                        DecorationFlags="Trim"/>
+                                </Entry.Behaviors>
+                            </Entry>
                         </Frame>
+                        <Label
+                            Grid.Row="1"
+                            Text="Last name should be between 2 and 128 characters"
+                            IsVisible="{Binding IsNotValid, Source={x:Reference LastNameValidator}}"
+                            Margin="16,0,0,0"
+                            TextColor="{StaticResource Red100}"
+                            Style="{StaticResource LabelHeader}"/>
                     </Grid>
 
                     <Label

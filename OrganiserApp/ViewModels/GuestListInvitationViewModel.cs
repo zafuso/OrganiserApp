@@ -38,6 +38,12 @@ namespace OrganiserApp.ViewModels
         [ObservableProperty]
         bool isValidEmail = false;
 
+        [ObservableProperty]
+        bool isValidFirstName = false;
+
+        [ObservableProperty]
+        bool isValidLastName = false;
+
         public GuestListInvitationViewModel(IConnectivity connectivity, TicketService ticketService, 
             CountryService countryService, OrderService orderService)
         {
@@ -168,10 +174,16 @@ namespace OrganiserApp.ViewModels
                     return;
                 }
 
-                IsBusy = true;
-
                 // Do not send invitation for tickettypes with amount 0
                 Invitation.TicketTypes.RemoveAll(ticket => ticket.Amount == 0);
+
+                if (Invitation.TicketTypes.Count == 0)
+                {
+                    await Shell.Current.DisplayAlert("Error!", "Please select at least one ticket for your invitation.", "OK");
+                    return;
+                }
+
+                IsBusy = true;
 
                 await orderService.SendGuestListInvitationAsync(EventUuid, Invitation, SelectedLanguage);
                 await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(GuestListOverviewPage)}");
@@ -191,7 +203,7 @@ namespace OrganiserApp.ViewModels
         {
             IsValidForm = false;
 
-            if (IsValidEmail)
+            if (IsValidEmail && IsValidFirstName && IsValidLastName)
             {
                 IsValidForm = true;
             }

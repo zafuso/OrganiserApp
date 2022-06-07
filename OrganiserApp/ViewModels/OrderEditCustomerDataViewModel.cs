@@ -151,7 +151,7 @@ namespace OrganiserApp.ViewModels
             if (SelectedOrder is null)
                 return;
 
-            await Shell.Current.GoToAsync($"/{nameof(TabBar)}/{nameof(OrderDetailsPage)}", true, new Dictionary<string, object>
+            await Shell.Current.GoToAsync($"//{nameof(TabBar)}/{nameof(OrderDetailsPage)}", true, new Dictionary<string, object>
             {
                 {"SelectedOrder", SelectedOrder }
             });
