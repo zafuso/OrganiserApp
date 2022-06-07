@@ -193,27 +193,7 @@ namespace OrganiserApp.ViewModels
                 IsValidForm = true;
             }
 
-            if (SelectedOrder.CustomerData.Mobile.Length > 0 && !IsValidMobile)
-            {
-                isValidForm = false;
-            }
-
-            if (SelectedOrder.CustomerData.AddressLine1.Length > 0 && !IsValidStreet)
-            {
-                isValidForm = false;
-            }
-
-            if (SelectedOrder.CustomerData.AddressLine1BuildingNumber.Length > 0 && !IsValidHouseNumber)
-            {
-                isValidForm = false;
-            }
-
-            if (SelectedOrder.CustomerData.Zipcode.Length > 0 && !IsValidZipcode)
-            {
-                isValidForm = false;
-            }
-
-            if (SelectedOrder.CustomerData.City.Length > 0 && !IsValidCity)
+            if (!IsValidMobile || !IsValidStreet || !IsValidHouseNumber || !IsValidZipcode || !IsValidCity)
             {
                 isValidForm = false;
             }

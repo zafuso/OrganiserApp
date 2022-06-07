@@ -151,7 +151,7 @@
                                 <Entry.Behaviors>
                                     <toolkit:TextValidationBehavior
                                         x:Name="MobileValidator"
-                                        MinimumLength="0"
+                                        MinimumLength="3"
                                         MaximumLength="20"
                                         RegexPattern="^([0|\+[0-9]{1,5})?([0-9]{10})$"
                                         DecorationFlags="Trim"/>
@@ -191,7 +191,7 @@
 
                     <Grid 
                         ColumnDefinitions="*,Auto" 
-                        ColumnSpacing="8"
+                        ColumnSpacing="16"
                         RowDefinitions="Auto,Auto">
                         <Label
                         Grid.Column="0"
@@ -200,18 +200,36 @@
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
                         <Grid Grid.Column="0"
-                              Grid.Row="1">
+                              Grid.Row="1"
+                              RowDefinitions="Auto,Auto">
                             <Frame x:Name="Street"
-                               Padding="0"
-                               CornerRadius="24"
-                               BorderColor="{StaticResource Black10}"
-                               Margin="0">
+                                   Grid.Row="0"
+                                   Padding="0"
+                                   CornerRadius="24"
+                                   BorderColor="{StaticResource Black10}"
+                                   Margin="0">
                                 <Entry  
                                     Margin="16,0"
                                     Unfocused="Street_Unfocused"
                                     Focused="Street_Focused"
-                            Text="{Binding SelectedOrder.CustomerData.AddressLine1}"/>
+                                    Text="{Binding SelectedOrder.CustomerData.AddressLine1}"
+                                    TextChanged="Street_Entry_TextChanged">
+                                    <Entry.Behaviors>
+                                        <toolkit:TextValidationBehavior
+                                            x:Name="StreetValidator"
+                                            MinimumLength="2"
+                                            MaximumLength="80"
+                                            DecorationFlags="Trim"/>
+                                    </Entry.Behaviors>
+                                </Entry>
                             </Frame>
+                            <Label
+                                Grid.Row="1"
+                                Text="Street should be between 2 and 80 characters"
+                                IsVisible="{Binding IsNotValid, Source={x:Reference StreetValidator}}"
+                                Margin="16,0,0,0"
+                                TextColor="{StaticResource Red100}"
+                                Style="{StaticResource LabelHeader}"/>
                         </Grid>
                         <Label
                         Grid.Column="1"
@@ -221,19 +239,39 @@
                         Style="{StaticResource LabelHeader}"/>
                         <Grid Grid.Column="1"
                               Grid.Row="1"
-                              HorizontalOptions="End">
+                              HorizontalOptions="End"
+                              RowDefinitions="Auto,Auto">
                             <Frame x:Name="HouseNumber"
-                               Padding="0"
-                               CornerRadius="24"
-                                WidthRequest="112"
-                               BorderColor="{StaticResource Black10}"
-                               Margin="0">
+                                   Padding="0"
+                                   Grid.Row="0"
+                                   CornerRadius="24"
+                                   WidthRequest="172"
+                                   HorizontalOptions="End"
+                                   BorderColor="{StaticResource Black10}"
+                                   Margin="0">
                                 <Entry  
                                     Margin="16,0"
                                     Unfocused="HouseNumber_Unfocused"
                                     Focused="HouseNumber_Focused"
-                            Text="{Binding SelectedOrder.CustomerData.AddressLine1BuildingNumber}"/>
+                                    TextChanged="House_Number_Entry_TextChanged"
+                                    Text="{Binding SelectedOrder.CustomerData.AddressLine1BuildingNumber}">
+                                    <Entry.Behaviors>
+                                        <toolkit:TextValidationBehavior
+                                            x:Name="HouseNumberValidator"
+                                            MinimumLength="1"
+                                            MaximumLength="15"
+                                            DecorationFlags="Trim"/>
+                                    </Entry.Behaviors>
+                                </Entry>
                             </Frame>
+                            <Label
+                                Grid.Row="1"
+                                Text="House number invalid"
+                                MaximumWidthRequest="148"
+                                IsVisible="{Binding IsNotValid, Source={x:Reference HouseNumberValidator}}"
+                                Margin="16,0,0,0"
+                                TextColor="{StaticResource Red100}"
+                                Style="{StaticResource LabelHeader}"/>
                         </Grid>
                     </Grid>
 
@@ -248,8 +286,11 @@
                         Margin="16,16,0,0"
                         Style="{StaticResource LabelHeader}"/>
                         <Grid Grid.Column="0"
-                              Grid.Row="1">
-                            <Frame x:Name="Zipcode"
+                              Grid.Row="1"
+                              RowDefinitions="Auto,Auto">
+                            <Frame 
+                               x:Name="Zipcode"
+                               Grid.Row="0"
                                Padding="0"
                                CornerRadius="24"
                                BorderColor="{StaticResource Black10}"
@@ -258,30 +299,66 @@
                                     Margin="16,0"
                                     Unfocused="Zipcode_Unfocused"
                                     Focused="Zipcode_Focused"
-                            Text="{Binding SelectedOrder.CustomerData.Zipcode}"/>
+                                    TextChanged="Zipcode_Entry_TextChanged"
+                                    Text="{Binding SelectedOrder.CustomerData.Zipcode}">
+                                    <Entry.Behaviors>
+                                        <toolkit:TextValidationBehavior
+                                            x:Name="ZipcodeValidator"
+                                            MinimumLength="3"
+                                            MaximumLength="15"
+                                            DecorationFlags="Trim"/>
+                                    </Entry.Behaviors>
+                                </Entry>
                             </Frame>
+                            <Label
+                                Grid.Row="1"
+                                Text="Zipcode should be between 3 and 15 characters"
+                                IsVisible="{Binding IsNotValid, Source={x:Reference ZipcodeValidator}}"
+                                Margin="16,0,0,16"
+                                TextColor="{StaticResource Red100}"
+                                Style="{StaticResource LabelHeader}"/>
                         </Grid>
                         <Label
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Text="City"
-                        Margin="16,16,0,0"
-                        Style="{StaticResource LabelHeader}"/>
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Text="City"
+                            Margin="16,16,0,0"
+                            Style="{StaticResource LabelHeader}"/>
                         <Grid Grid.Column="1"
                               Grid.Row="1"
+                              RowDefinitions="Auto,Auto"
                               HorizontalOptions="End">
                             <Frame x:Name="City"
                                Padding="0"
+                               Grid.Row="0"
                                CornerRadius="24"
                                WidthRequest="172"
+                               HorizontalOptions="End"
                                BorderColor="{StaticResource Black10}"
                                Margin="0">
                                 <Entry  
                                     Margin="16,0"
                                     Unfocused="City_Unfocused"
                                     Focused="City_Focused"
-                            Text="{Binding SelectedOrder.CustomerData.City}"/>
+                                    TextChanged="City_Entry_TextChanged"
+                                    Text="{Binding SelectedOrder.CustomerData.City}">
+                                    <Entry.Behaviors>
+                                        <toolkit:TextValidationBehavior
+                                            x:Name="CityValidator"
+                                            MinimumLength="2"
+                                            MaximumLength="80"
+                                            DecorationFlags="Trim"/>
+                                    </Entry.Behaviors>
+                                </Entry>
                             </Frame>
+                            <Label
+                                Grid.Row="1"
+                                MaximumWidthRequest="148"
+                                Text="City should be between 2 and 80 characters"
+                                IsVisible="{Binding IsNotValid, Source={x:Reference CityValidator}}"
+                                Margin="16,0,0,0"
+                                TextColor="{StaticResource Red100}"
+                                Style="{StaticResource LabelHeader}"/>
                         </Grid>
                     </Grid>
 

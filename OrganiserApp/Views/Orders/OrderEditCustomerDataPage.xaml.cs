@@ -127,6 +127,22 @@ public partial class OrderEditCustomerDataPage : ContentPage
     private void Street_Unfocused(object sender, FocusEventArgs e)
     {
         Street.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        StreetValidator.ForceValidate();
+
+        if (StreetValidator.IsNotValid)
+        {
+            Street.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidStreet = false;
+        }
+
+        if (StreetValidator.IsValid)
+        {
+            Street.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidStreet = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
     }
 
     private void HouseNumber_Focused(object sender, FocusEventArgs e)
@@ -137,6 +153,22 @@ public partial class OrderEditCustomerDataPage : ContentPage
     private void HouseNumber_Unfocused(object sender, FocusEventArgs e)
     {
         HouseNumber.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        HouseNumberValidator.ForceValidate();
+
+        if (HouseNumberValidator.IsNotValid)
+        {
+            HouseNumber.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidHouseNumber = false;
+        }
+
+        if (HouseNumberValidator.IsValid)
+        {
+            HouseNumber.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidHouseNumber = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
     }
 
     private void Zipcode_Focused(object sender, FocusEventArgs e)
@@ -147,6 +179,22 @@ public partial class OrderEditCustomerDataPage : ContentPage
     private void Zipcode_Unfocused(object sender, FocusEventArgs e)
     {
         Zipcode.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        ZipcodeValidator.ForceValidate();
+
+        if (ZipcodeValidator.IsNotValid)
+        {
+            Zipcode.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidZipcode = false;
+        }
+
+        if (ZipcodeValidator.IsValid)
+        {
+            Zipcode.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidZipcode = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
     }
 
     private void City_Focused(object sender, FocusEventArgs e)
@@ -157,6 +205,22 @@ public partial class OrderEditCustomerDataPage : ContentPage
     private void City_Unfocused(object sender, FocusEventArgs e)
     {
         City.BorderColor = Application.Current.Resources["Black10"] as Color;
+
+        CityValidator.ForceValidate();
+
+        if (CityValidator.IsNotValid)
+        {
+            City.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidCity = false;
+        }
+
+        if (CityValidator.IsValid)
+        {
+            City.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidCity = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
     }
 
     private void Picker_Focused(object sender, FocusEventArgs e)
@@ -250,6 +314,83 @@ public partial class OrderEditCustomerDataPage : ContentPage
         {
             Mobile.BorderColor = Application.Current.Resources["Green100"] as Color;
             (BindingContext as OrderEditCustomerDataViewModel).IsValidMobile = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
+    }
+
+    private void Street_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        StreetValidator.ForceValidate();
+
+        if (StreetValidator.IsNotValid)
+        {
+            Street.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidStreet = false;
+        }
+
+        if (StreetValidator.IsValid)
+        {
+            Street.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidStreet = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
+    }
+
+    private void House_Number_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        HouseNumberValidator.ForceValidate();
+
+        if (HouseNumberValidator.IsNotValid)
+        {
+            HouseNumber.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidHouseNumber = false;
+        }
+
+        if (HouseNumberValidator.IsValid)
+        {
+            HouseNumber.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidHouseNumber = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
+
+    }
+
+    private void Zipcode_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ZipcodeValidator.ForceValidate();
+
+        if (ZipcodeValidator.IsNotValid)
+        {
+            Zipcode.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidZipcode = false;
+        }
+
+        if (ZipcodeValidator.IsValid)
+        {
+            Zipcode.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidZipcode = true;
+        }
+
+        (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();
+    }
+
+    private void City_Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        CityValidator.ForceValidate();
+
+        if (CityValidator.IsNotValid)
+        {
+            City.BorderColor = Application.Current.Resources["Red100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidCity = false;
+        }
+
+        if (CityValidator.IsValid)
+        {
+            City.BorderColor = Application.Current.Resources["Green100"] as Color;
+            (BindingContext as OrderEditCustomerDataViewModel).IsValidCity = true;
         }
 
         (BindingContext as OrderEditCustomerDataViewModel).ValidateForm();

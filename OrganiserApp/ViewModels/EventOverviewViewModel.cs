@@ -50,6 +50,7 @@ namespace OrganiserApp.ViewModels
 
         public async void Init()
         {
+            searchQuery = String.Empty;
             skip = 0;
             Preferences.Clear();
             await GetEventListAsync();
