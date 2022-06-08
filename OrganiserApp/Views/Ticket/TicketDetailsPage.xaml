@@ -406,7 +406,7 @@
                                 OnColor="{StaticResource Blue110}"
                                 ThumbColor="{StaticResource Black10}"/>
                         <Label
-                            Text="Edit Personalization"
+                            Text="Enable Personalization"
                             Margin="16,16,0,0"
                             Style="{StaticResource LabelHeader}"/>
                     </HorizontalStackLayout>
