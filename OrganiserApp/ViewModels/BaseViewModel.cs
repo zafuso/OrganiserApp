@@ -17,5 +17,10 @@ namespace OrganiserApp.ViewModels
         string title;
 
         public bool IsNotBusy => !IsBusy;
+
+        public int Test_Double_Number_Function(int number)
+        {
+            return number + number;
+        }
     }
 }
