@@ -42,6 +42,11 @@ namespace OrganiserApp.ViewModels
             this.connectivity = connectivity;
         }
 
+        public OrderOverviewViewModel()
+        {
+
+        }
+
         public async void Init()
         {
             Title = "Orders";
@@ -91,20 +96,7 @@ namespace OrganiserApp.ViewModels
                 var orderList = new List<Order>();
                 foreach (var order in orders)
                 {
-                    var fullName = $"{order.CustomerData.FirstName} {order.CustomerData.LastName}";
-                    order.FullName = fullName.Length > 15 ? $"{fullName.Substring(0, 15)}..." : fullName;
-                    order.TotalBalanceInclVat = FormatHelper.FormatPrice(order.TotalBalanceInclVat);
-                    order.Completed = FormatHelper.FormatISO8601ToDateTime(order.CompletedAt);
-                    order.CompletedAt = FormatHelper.FormatISO8601ToDateOnlyString(order.CompletedAt);
-
-                    var products = 0;
-                    foreach (var ticket in order.TicketTypes)
-                    {
-                        products += ticket.Amount;
-                    }
-                    order.Products = products;
-
-                    var formattedOrder = OrderHelper.CalculateOrderStatus(order);
+                    var formattedOrder = FormatOrder(order);
                     orderList.Add(formattedOrder);
                 }
 
@@ -162,6 +154,24 @@ namespace OrganiserApp.ViewModels
             {
                 {"SelectedOrder", selectedOrder }
             });
+        }
+
+        public Order FormatOrder(Order order)
+        {
+            var fullName = $"{order.CustomerData.FirstName} {order.CustomerData.LastName}";
+            order.FullName = fullName.Length > 15 ? $"{fullName.Substring(0, 15)}..." : fullName;
+            order.TotalBalanceInclVat = FormatHelper.FormatPrice(order.TotalBalanceInclVat);
+            order.Completed = FormatHelper.FormatISO8601ToDateTime(order.CompletedAt);
+            order.CompletedAt = FormatHelper.FormatISO8601ToDateOnlyString(order.CompletedAt);
+
+            var products = 0;
+            foreach (var ticket in order.TicketTypes)
+            {
+                products += ticket.Amount;
+            }
+            order.Products = products;
+
+            return OrderHelper.CalculateOrderStatus(order);
         }
     }
 }
